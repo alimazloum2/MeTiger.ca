@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MeTiger Inc. — Delivering complex construction projects without drama</title>
+    <meta name="description" content="MeTiger Inc. — We deliver complex construction projects without drama. Engineering excellence, project management, and construction delivery." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="shortcut icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-0: #0b0f17;
+            --bg-1: #0e1420;
+            --bg-2: #0f1729;
+            --text-0: #e7eefc;
+            --text-1: #b9c4da;
+            --muted: #8fa3c7;
+            --primary: #6ea8fe; /* soft blue */
+            --secondary: #a78bfa; /* soft purple */
+            --accent: #34d399; /* mint */
+            --card: #121a2a;
+            --card-2: #111827;
+            --stroke: rgba(255,255,255,0.08);
+            --shadow: 0 10px 30px rgba(0,0,0,0.35), 0 6px 18px rgba(0,0,0,0.35);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 10px;
+            --maxw: 1200px;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            color: var(--text-0);
+            background: radial-gradient(1200px 800px at 10% -10%, #213055 0%, transparent 60%),
+                        radial-gradient(900px 700px at 100% 0%, #2b1d4a88 0%, transparent 55%),
+                        radial-gradient(1200px 700px at 50% 120%, #0b3b3b55 0%, transparent 60%),
+                        linear-gradient(180deg, var(--bg-0), var(--bg-2));
+            background-attachment: fixed;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        /* Header */
+        header {
+            position: sticky; top: 0; z-index: 50;
+            background: color-mix(in srgb, var(--bg-1) 74%, transparent);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--stroke);
+        }
+        .nav {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+        }
+        .brand {
+            display: flex; align-items: center; gap: 12px;
+            font-weight: 800; letter-spacing: 0.3px;
+        }
+        .brand-mark {
+            width: 34px; height: 34px; border-radius: 10px;
+            background: conic-gradient(from 210deg at 50% 50%, var(--secondary), var(--primary), var(--accent), var(--secondary));
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.05), 0 10px 30px rgba(80,120,255,0.25);
+        }
+        .brand span { font-family: Poppins, Inter, sans-serif; font-weight: 700; }
+        .brand-logo { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; box-shadow: 0 0 0 2px rgba(255,255,255,0.05), 0 10px 30px rgba(80,120,255,0.25); }
+        nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+        nav a { color: var(--text-1); font-weight: 500; font-size: 14px; opacity: 0.9; }
+        nav a:hover { color: var(--text-0); }
+        nav a.active { color: var(--primary); }
+
+        /* Sections */
+        section { padding: 90px 20px; }
+        .container { max-width: var(--maxw); margin: 0 auto; }
+        .eyebrow { color: var(--muted); letter-spacing: .18em; text-transform: uppercase; font-size: 12px; }
+        .h1 { font-family: Poppins, Inter, sans-serif; font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: 1.05; margin: 14px 0 14px; }
+        .lead { color: var(--text-1); font-size: clamp(16px, 2.2vw, 18px); max-width: 680px; }
+
+        /* Hero */
+        .hero { position: relative; overflow: clip; }
+        .hero .container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+        .cta-row { display: flex; align-items: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+        .btn {
+            appearance: none; border: 0; cursor: pointer; border-radius: 999px;
+            padding: 12px 18px; font-weight: 600; letter-spacing: 0.2px; transition: transform .15s ease, box-shadow .3s ease, background .3s ease;
+        }
+        .btn-primary { color: #071320; background: linear-gradient(180deg, #9ec2ff, #6ea8fe); box-shadow: 0 12px 30px rgba(110,168,254,0.35); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(110,168,254,0.45); }
+        .btn-ghost { color: var(--text-0); background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+        .hero-art {
+            position: relative; aspect-ratio: 1.1/1; border-radius: var(--radius-lg);
+            background:
+                radial-gradient(120px 120px at 25% 30%, rgba(110,168,254,.5), transparent 60%),
+                radial-gradient(150px 150px at 70% 65%, rgba(167,139,250,.45), transparent 60%),
+                radial-gradient(180px 180px at 60% 25%, rgba(52,211,153,.35), transparent 60%),
+                linear-gradient(180deg, #0f1629, #0b0f17);
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .hero-art::after {
+            content: ""; position: absolute; inset: -40% -30% -40% -30%; filter: blur(70px);
+            background: radial-gradient(500px 300px at 30% 20%, #6ea8fe22, transparent),
+                        radial-gradient(600px 350px at 70% 65%, #a78bfa22, transparent),
+                        radial-gradient(600px 400px at 60% 25%, #34d39922, transparent);
+            pointer-events: none;
+        }
+        .floating-badge {
+            position: absolute; right: 16px; bottom: 16px; padding: 10px 14px; border-radius: 12px;
+            background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); color: var(--text-1);
+            font-size: 12px; display: flex; gap: 8px; align-items: center;
+        }
+        .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(52,211,153,.7); animation: pulse 2.2s infinite; }
+        @keyframes pulse { 0%{ box-shadow: 0 0 0 0 rgba(52,211,153,.7);} 70%{ box-shadow: 0 0 0 12px rgba(52,211,153,0);} 100%{ box-shadow: 0 0 0 0 rgba(52,211,153,0);} }
+
+        /* Cards grid */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+        .card {
+            background: linear-gradient(180deg, #0e1526, #0d1322);
+            border: 1px solid var(--stroke); border-radius: var(--radius-md);
+            padding: 20px; box-shadow: var(--shadow);
+            transition: transform .2s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.45); border-color: rgba(255,255,255,0.14); }
+        .card h3 { margin: 10px 0 6px; font-family: Poppins, Inter, sans-serif; }
+        .card p { color: var(--text-1); }
+
+        .project-media { border-radius: 10px; overflow: hidden; aspect-ratio: 16/10; border: 1px solid var(--stroke); margin-bottom: 12px; }
+        .project-media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05) contrast(1.02); transition: transform .5s ease; }
+        .card:hover .project-media img { transform: scale(1.05); }
+
+        /* About */
+        .about {
+            position: relative;
+        }
+        .about .panel {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center;
+            background: linear-gradient(180deg, #0f1629, #0b0f17);
+            border: 1px solid var(--stroke); border-radius: var(--radius-lg); padding: 28px;
+        }
+        .about .illustration { aspect-ratio: 1.2/1; border-radius: var(--radius-md); background: radial-gradient(140px 140px at 30% 30%, #6ea8fe33, transparent 60%), radial-gradient(200px 170px at 75% 60%, #a78bfa33, transparent 60%), #0b101b; border: 1px solid var(--stroke); position: relative; overflow: hidden; }
+        .sparkle { position: absolute; width: 8px; height: 8px; background: #9ec2ff; border-radius: 50%; filter: blur(.5px); opacity: .9; animation: float 9s ease-in-out infinite; }
+        .sparkle:nth-child(2){ left: 18%; top: 22%; animation-duration: 10s; }
+        .sparkle:nth-child(3){ right: 16%; top: 50%; animation-duration: 12s; }
+        .sparkle:nth-child(4){ left: 45%; bottom: 12%; animation-duration: 11s; }
+        @keyframes float { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-10px);} }
+
+        /* Contact */
+        .contact-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
+        form { background: linear-gradient(180deg, #0f1629, #0b0f17); border: 1px solid var(--stroke); border-radius: var(--radius-md); padding: 18px; box-shadow: var(--shadow); }
+        label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 6px; }
+        input, textarea { width: 100%; padding: 12px 12px; border-radius: 10px; border: 1px solid var(--stroke); background: #0e1526; color: var(--text-0); font-size: 14px; }
+        textarea { min-height: 120px; resize: vertical; }
+        .error { color: #ffb4b4; font-size: 12px; min-height: 16px; padding-top: 4px; }
+
+        .map-placeholder { border-radius: var(--radius-md); border: 1px solid var(--stroke); background: radial-gradient(200px 160px at 25% 30%, #6ea8fe22, transparent 60%), radial-gradient(260px 200px at 80% 60%, #a78bfa22, transparent 60%), #0b101b; position: relative; box-shadow: var(--shadow); }
+        .map-placeholder::before { content: "620 Nine Mile Drive, Bedford, NS"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--muted); letter-spacing: .1em; text-transform: none; font-size: 14px; text-align: center; line-height: 1.4; }
+        .map-placeholder .pin { width: 12px; height: 12px; background: #ff6b6b; border-radius: 50%; position: absolute; left: 58%; top: 48%; box-shadow: 0 0 0 4px rgba(255,107,107,.25); }
+        .map-placeholder .pin::after { content: ""; position: absolute; width: 2px; height: 18px; background: #ff6b6b; left: 50%; transform: translateX(-50%); top: 10px; border-radius: 2px; }
+        .map-placeholder .pin::before { content: ""; position: absolute; width: 18px; height: 18px; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px dashed rgba(255,255,255,.2); animation: ping 3s infinite linear; }
+        @keyframes ping { to { transform: translate(-50%,-50%) rotate(360deg);} }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--stroke); padding: 22px 20px; color: var(--text-1); background: #0a0e16; }
+        .footer-row { max-width: var(--maxw); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+        .social { display: flex; gap: 12px; }
+        .social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--stroke); background: rgba(255,255,255,0.04); }
+        .social a:hover { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+        /* Utilities */
+        .spacer-xxl { height: 10px; }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .hero .container { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .about .panel { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 1000px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 820px) {
+            .grid-3 { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 560px) {
+            nav ul { display: none; }
+            .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            section { padding: 70px 16px; }
+            .nav { padding: 12px 16px; }
+        }
+
+        /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav">
+            <a href="#home" class="brand">
+                <img src="{{ url_for('static', filename='metiger_logo.jpg') }}" alt="MeTiger logo" class="brand-logo" />
+                <span>MeTiger Inc.</span>
+            </a>
+            <nav aria-label="Primary">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div>
+                <div class="eyebrow">MeTiger Inc.</div>
+                <h1 class="h1">Delivering complex construction projects without drama</h1>
+                <p class="lead">We partner with clients to plan, engineer, and construct resilient infrastructure. High-stakes, multi-phase construction programs — delivered with clarity, quality, and precision.</p>
+                <div class="cta-row">
+                    <a class="btn btn-primary" href="#contact">Start a project</a>
+                    <a class="btn btn-ghost" href="#services">Explore services</a>
+                            </div>
+                        </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="floating-badge"><span class="pulse"></span> Project status: On schedule</div>
+                        </div>
+                    </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about panel">
+                <div>
+                    <div class="eyebrow">About</div>
+                    <h2 class="h1" style="font-size: clamp(26px,4.5vw,40px); margin-top: 8px;">We turn blueprints into built reality</h2>
+                    <p class="lead">From infrastructure projects to complex facilities, our senior engineers and project managers align stakeholders, de-risk construction, and build with precision. Less delays, more results.</p>
+                    <div class="cta-row" style="margin-top: 18px;">
+                        <a class="btn btn-ghost" href="#projects">See our work</a>
+                    </div>
+                </div>
+                <div class="illustration">
+                    <span class="sparkle" style="left:12%; top:18%;"></span>
+                    <span class="sparkle"></span>
+                    <span class="sparkle"></span>
+                    <span class="sparkle"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="container">
+            <div class="eyebrow">Services</div>
+            <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">What we do</h2>
+            <div class="grid-4" style="margin-top: 18px;">
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#a78bfa,#6ea8fe);"></div>
+                        <h3>Electrical Engineering</h3>
+                    </div>
+                    <p>Design power systems, electrical infrastructure, and smart building solutions with safety and efficiency built-in.</p>
+                </article>
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#6ea8fe,#34d399);"></div>
+                        <h3>Project Management</h3>
+                    </div>
+                    <p>Electrical project planning, scheduling, and delivery coordination that connects design to completion.</p>
+                </article>
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#34d399,#a78bfa);"></div>
+                        <h3>Construction Documentation</h3>
+                    </div>
+                    <p>Get professional assistance preparing, reviewing, and managing change orders, RFIs, material submittals, and document logs & Change Order Support.</p>
+                </article>
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#ff6b6b,#ffa726);"></div>
+                        <h3>Tender Review & Cost Estimating</h3>
+                    </div>
+                    <p>We provide detailed tender package reviews, accurate project takeoffs, and comprehensive cost estimation services.</p>
+                </article>
+        </div>
+    </div>
+</section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <div class="eyebrow">Projects</div>
+            <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">Selected work</h2>
+            <div class="grid-3" style="margin-top: 18px;">
+                <article class="card">
+                    <div class="project-media">
+                        <img alt="Project platform dashboard" src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200&auto=format&fit=crop" />
+                    </div>
+                    <h3>Highway Infrastructure</h3>
+                    <p>Multi-lane highway construction with advanced drainage systems and zero-disruption traffic management.</p>
+                </article>
+                <article class="card">
+                    <div class="project-media">
+                        <img alt="Commercial building construction" src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1200&auto=format&fit=crop" />
+        </div>
+                    <h3>Commercial Complex</h3>
+                    <p>Modern office building with integrated MEP systems and sustainable construction practices.</p>
+                </article>
+                <article class="card">
+                    <div class="project-media">
+                        <img alt="Industrial facility" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" />
+                </div>
+                    <h3>Industrial Facility</h3>
+                    <p>Heavy industrial construction with specialized foundations and safety-compliant infrastructure.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <div class="eyebrow">Contact</div>
+            <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">Let's work together</h2>
+            <div class="contact-grid" style="margin-top: 18px;">
+                <form id="contactForm" action="/send_message" method="POST" novalidate>
+                    <input type="text" name="company" id="company" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px" aria-hidden="true">
+                    <input type="hidden" name="started_at" id="started_at" value="">
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Jane Doe" required />
+                        <div class="error" id="nameError"></div>
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+                        <div class="error" id="emailError"></div>
+                </div>
+                    <div>
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your project" required></textarea>
+                        <div class="error" id="messageError"></div>
+            </div>
+                    <div class="cf-challenge" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+                    <div class="cta-row" style="margin-top: 10px;">
+                        <button class="btn btn-primary" type="submit">Send message</button>
+                        <button class="btn btn-ghost" type="reset">Reset</button>
+                </div>
+                    <div class="error" id="formSuccess" style="color:#9ef7c1"></div>
+                </form>
+                <div id="map" style="min-height: 300px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--stroke); box-shadow: var(--shadow);"></div>
+        </div>
+    </div>
+</section>
+
+    <div class="spacer-xxl"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-row">
+            <div>© <span id="year"></span> MeTiger Inc. All rights reserved.</div>
+            <div class="social" aria-label="Social links">
+                <a href="https://www.linkedin.com/company/metiger" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 5.8c-.6.3-1.2.5-1.9.6.7-.4 1.2-1.1 1.4-1.9-.7.4-1.4.7-2.2.9a3.3 3.3 0 0 0-5.8 2.2c0 .3 0 .5.1.8-2.8-.1-5.4-1.5-7.1-3.7-.3.5-.4 1.1-.4 1.7 0 1.2.6 2.3 1.5 3-.5 0-1-.2-1.5-.4v.1c0 1.7 1.2 3.1 2.7 3.5-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.4 1.7 2.4 3.2 2.4A6.6 6.6 0 0 1 3 18.5c1.4.9 3.1 1.4 4.9 1.4 5.9 0 9.2-4.9 9.2-9.2v-.4c.6-.4 1.2-1 1.6-1.6z" fill="currentColor"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/metiger" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.94 5.5a1.94 1.94 0 1 1-3.87 0 1.94 1.94 0 0 1 3.87 0zM3.5 8.25h3.2v12.25H3.5V8.25zM10 8.25h3.06v1.67h.04c.43-.82 1.49-1.67 3.06-1.67 3.28 0 3.88 2.16 3.88 4.98v7.27h-3.2v-6.45c0-1.54-.03-3.52-2.14-3.52-2.14 0-2.47 1.67-2.47 3.4v6.57H10V8.25z" fill="currentColor"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/metiger" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener noreferrer">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-3 .6-3.6-1.4-3.6-1.4-.5-1.1-1.2-1.4-1.2-1.4-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.6 1.8 2.6 1.2.1-.8.4-1.3.7-1.6-2.4-.2-5-1.2-5-5.4 0-1.2.4-2.1 1.1-2.9-.1-.3-.5-1.5.1-3 0 0 .9-.3 3 1.1a10.2 10.2 0 0 1 5.4 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.7.1 3 .7.8 1.1 1.7 1.1 2.9 0 4.2-2.6 5.2-5.1 5.4.4.3.8 1 .8 2V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z" fill="currentColor"/></svg>
+            </a>
+        </div>
+    </div>
+    </footer>
+
+    <script>
+        // Smooth scroll offset for sticky header
+        function offsetAnchor(targetId) {
+            const header = document.querySelector('header');
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            const top = target.getBoundingClientRect().top + window.pageYOffset - (header?.offsetHeight || 0) - 8;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+
+        // Intercept nav clicks for offset scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                const hash = a.getAttribute('href');
+                if (!hash || hash === '#') return;
+                const id = hash.substring(1);
+                const el = document.getElementById(id);
+                if (!el) return;
+                e.preventDefault();
+                history.pushState(null, '', hash);
+                offsetAnchor(id);
+            });
+        });
+
+        // Active nav highlighting using IntersectionObserver
+        const sections = ['home','about','services','projects','contact']
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+        const linkFor = (id) => document.querySelector(`nav a[href="#${id}"]`);
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const link = linkFor(id);
+                if (!link) return;
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.01 });
+        sections.forEach(s => io.observe(s));
+
+        // Form validation
+        const form = document.getElementById('contactForm');
+        const nameEl = document.getElementById('name');
+        const emailEl = document.getElementById('email');
+        const messageEl = document.getElementById('message');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const messageError = document.getElementById('messageError');
+        const formSuccess = document.getElementById('formSuccess');
+
+        function validateEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+
+        function setError(el, errorEl, message) {
+            if (message) {
+                el.setAttribute('aria-invalid', 'true');
+                errorEl.textContent = message;
+            } else {
+                el.removeAttribute('aria-invalid');
+                errorEl.textContent = '';
+            }
+        }
+
+        [nameEl, emailEl, messageEl].forEach((el) => {
+            el.addEventListener('input', () => {
+                if (el === nameEl) setError(nameEl, nameError, nameEl.value.trim() ? '' : 'Please enter your name');
+                if (el === emailEl) setError(emailEl, emailError, validateEmail(emailEl.value) ? '' : 'Enter a valid email');
+                if (el === messageEl) setError(messageEl, messageError, messageEl.value.trim() ? '' : 'Please add a message');
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            formSuccess.textContent = '';
+            
+            const startedInput = document.getElementById('started_at');
+            if (startedInput) startedInput.value = (Date.now() / 1000).toString();
+            
+            const nameOk = nameEl.value.trim().length > 1;
+            const emailOk = validateEmail(emailEl.value);
+            const msgOk = messageEl.value.trim().length > 5;
+            
+            setError(nameEl, nameError, nameOk ? '' : 'Please enter your name');
+            setError(emailEl, emailError, emailOk ? '' : 'Enter a valid email');
+            setError(messageEl, messageError, msgOk ? '' : 'Please add a longer message');
+            
+            if (nameOk && emailOk && msgOk) {
+                try {
+                    const formData = new FormData(form);
+                    const response = await fetch('/send_message', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        formSuccess.textContent = result.message;
+                        form.reset();
+                    } else {
+                        formSuccess.textContent = result.message;
+                        formSuccess.style.color = '#ffb4b4';
+                    }
+                } catch (error) {
+                    formSuccess.textContent = 'Error sending message. Please try again.';
+                    formSuccess.style.color = '#ffb4b4';
+                }
+            }
+        });
+
+        // Dynamic year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // If the page loads with a hash, apply offset scroll
+        window.addEventListener('load', () => {
+            if (location.hash) {
+                const id = location.hash.replace('#','');
+                setTimeout(() => offsetAnchor(id), 0);
+            }
+        });
+
+        // Initialize Google Maps with custom dark styling
+        function initMap() {
+            const mapStyles = [
+                {
+                    "featureType": "all",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "all",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 13
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "color": "#144b53"
+                        },
+                        {
+                            "lightness": 14
+                        },
+                        {
+                            "weight": 1.4
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#08304b"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#0c4152"
+                        },
+                        {
+                            "lightness": 5
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "color": "#0b434f"
+                        },
+                        {
+                            "lightness": 25
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "color": "#0b3d51"
+                        },
+                        {
+                            "lightness": 16
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#146474"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#021019"
+                        }
+                    ]
+                }
+            ];
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: { lat: 44.70105, lng: -63.6859957 }, // 620 Nine Mile Drive, Bedford, NS
+                styles: mapStyles,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
+            });
+
+            const marker = new google.maps.Marker({
+                position: { lat: 44.70105, lng: -63.6859957 },
+                map: map,
+                title: "MeTiger Inc. - 620 Nine Mile Drive, Bedford, NS",
+                icon: {
+                    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="12" fill="#ff4444" stroke="#ffffff" stroke-width="2"/>
+                            <circle cx="16" cy="16" r="6" fill="#ffffff"/>
+                        </svg>
+                    `),
+                    scaledSize: new google.maps.Size(32, 32),
+                    anchor: new google.maps.Point(16, 16)
+                }
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="color: #000; font-family: Inter, sans-serif; padding: 8px;">
+                        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">MeTiger Inc.</div>
+                        <div style="font-size: 12px; color: #666;">620 Nine Mile Drive</div>
+                        <div style="font-size: 12px; color: #666;">Bedford, NS, Canada</div>
+                    </div>
+                `
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+        }
+    </script>
+    
+    <!-- Google Maps API -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb77hPKeHWS9uofrWtbEo6CuQejqohW0U&callback=initMap"></script>
+    
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</body>
+</html>
