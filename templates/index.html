@@ -368,7 +368,9 @@
                         <textarea id="message" name="message" placeholder="Tell us about your project" required></textarea>
                         <div class="error" id="messageError"></div>
             </div>
-                    <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+                    <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" style="margin: 10px 0; min-height: 65px; border: 1px solid #ccc; padding: 10px;">
+                        <p style="color: #666; font-size: 12px;">Loading CAPTCHA...</p>
+                    </div>
                     <!-- Debug: Site key = {{ TURNSTILE_SITE_KEY }} -->
                     <div class="cta-row" style="margin-top: 10px;">
                         <button class="btn btn-primary" type="submit">Send message</button>

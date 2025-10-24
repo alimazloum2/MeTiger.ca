@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Turnstile Test</title>
+</head>
+<body>
+    <h1>Turnstile Test</h1>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAB8Wgm9wM6xbP-yW"></div>
+    
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+        window.addEventListener('load', function() {
+            console.log('Page loaded');
+            if (typeof turnstile !== 'undefined') {
+                console.log('Turnstile loaded successfully');
+            } else {
+                console.log('Turnstile not loaded');
+            }
+        });
+    </script>
+</body>
+</html>
