@@ -368,7 +368,8 @@
                         <textarea id="message" name="message" placeholder="Tell us about your project" required></textarea>
                         <div class="error" id="messageError"></div>
             </div>
-                    <div class="cf-challenge" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+                    <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+                    <!-- Debug: Site key = {{ TURNSTILE_SITE_KEY }} -->
                     <div class="cta-row" style="margin-top: 10px;">
                         <button class="btn btn-primary" type="submit">Send message</button>
                         <button class="btn btn-ghost" type="reset">Reset</button>
@@ -713,5 +714,21 @@
     
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+        // Ensure Turnstile widget renders
+        window.addEventListener('load', function() {
+            if (typeof turnstile !== 'undefined') {
+                console.log('Turnstile loaded successfully');
+                // Force render if needed
+                const widget = document.querySelector('.cf-turnstile');
+                if (widget && !widget.hasChildNodes()) {
+                    console.log('Rendering Turnstile widget');
+                    turnstile.render(widget);
+                }
+            } else {
+                console.log('Turnstile not loaded');
+            }
+        });
+    </script>
 </body>
 </html>
