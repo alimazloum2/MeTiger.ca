@@ -368,7 +368,9 @@
                         <textarea id="message" name="message" placeholder="Tell us about your project" required></textarea>
                         <div class="error" id="messageError"></div>
             </div>
-                    <div class="cf-challenge" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+                    {% if TURNSTILE_SITE_KEY %}
+                    <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+                    {% endif %}
                     <div class="cta-row" style="margin-top: 10px;">
                         <button class="btn btn-primary" type="submit">Send message</button>
                         <button class="btn btn-ghost" type="reset">Reset</button>
@@ -478,9 +480,6 @@
             e.preventDefault();
             formSuccess.textContent = '';
             
-            const startedInput = document.getElementById('started_at');
-            if (startedInput) startedInput.value = (Date.now() / 1000).toString();
-            
             const nameOk = nameEl.value.trim().length > 1;
             const emailOk = validateEmail(emailEl.value);
             const msgOk = messageEl.value.trim().length > 5;
@@ -515,6 +514,10 @@
 
         // Dynamic year
         document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Set initial timestamp for anti-spam protection
+        const startedInput = document.getElementById('started_at');
+        if (startedInput) startedInput.value = (Date.now() / 1000).toString();
 
         // If the page loads with a hash, apply offset scroll
         window.addEventListener('load', () => {

@@ -51,6 +51,9 @@ def send_message():
     honeypot = request.form.get("company", "")
     started_at = request.form.get("started_at", "0")
     token = request.form.get("cf-turnstile-response", "")
+    
+    # Debug logging (remove in production)
+    print(f"Form data: name={name}, email={email}, started_at={started_at}, honeypot={honeypot}, token={'present' if token else 'missing'}")
 
     if honeypot:
         return jsonify(success=False, message="Bad request"), 400
@@ -62,18 +65,20 @@ def send_message():
     if time.time() - started < 3:
         return jsonify(success=False, message="Please take a moment and try again."), 400
 
-    if not TURNSTILE_SECRET or not token:
-        return jsonify(success=False, message="Verification failed."), 400
-    try:
-        r = requests.post(
-            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-            data={"secret": TURNSTILE_SECRET, "response": token, "remoteip": request.remote_addr},
-            timeout=5
-        )
-        if not r.json().get("success", False):
+    # Skip Turnstile validation if keys are not configured (for development)
+    if TURNSTILE_SECRET and app.config["TURNSTILE_SITE_KEY"]:
+        if not token:
             return jsonify(success=False, message="Verification failed."), 400
-    except Exception:
-        return jsonify(success=False, message="Verification failed."), 400
+        try:
+            r = requests.post(
+                "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+                data={"secret": TURNSTILE_SECRET, "response": token, "remoteip": request.remote_addr},
+                timeout=5
+            )
+            if not r.json().get("success", False):
+                return jsonify(success=False, message="Verification failed."), 400
+        except Exception:
+            return jsonify(success=False, message="Verification failed."), 400
 
     url_count = len(URL_RE.findall(msg))
     if url_count > 2:
