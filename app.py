@@ -21,6 +21,21 @@ def index():
                          TURNSTILE_SITE_KEY=app.config["TURNSTILE_SITE_KEY"],
                          START_TS=int(time.time()))
 
+@app.route("/debug")
+def debug():
+    return f"""
+    <html>
+    <head><title>Debug Info</title></head>
+    <body>
+        <h1>Debug Information</h1>
+        <p>Turnstile Site Key: {app.config['TURNSTILE_SITE_KEY']}</p>
+        <p>Turnstile Secret: {TURNSTILE_SECRET[:10] if TURNSTILE_SECRET else 'Not set'}...</p>
+        <div class="cf-turnstile" data-sitekey="{app.config['TURNSTILE_SITE_KEY']}"></div>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    </body>
+    </html>
+    """
+
 @app.route("/services")
 def services():
     return render_template("services.html")
