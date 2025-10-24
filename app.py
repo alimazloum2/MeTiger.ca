@@ -17,7 +17,9 @@ DISPOSABLE = {"mailinator.com","guerrillamail.com","10minutemail.com","tempmail.
 
 @app.route("/")
 def index():
-    return render_template("index.html", TURNSTILE_SITE_KEY=app.config["TURNSTILE_SITE_KEY"])
+    return render_template("index.html", 
+                         TURNSTILE_SITE_KEY=app.config["TURNSTILE_SITE_KEY"],
+                         START_TS=int(time.time()))
 
 @app.route("/services")
 def services():
@@ -104,8 +106,8 @@ def send_message():
 
 def send_contact_email(name, email, message):
     """Send contact form email using SendGrid"""
-    # SendGrid configuration
-    sg = sendgrid.SendGridAPIClient(api_key='SG.REDACTED_ROTATE_ME')
+    # SendGrid configuration using environment variables
+    sg = sendgrid.SendGridAPIClient(api_key=os.getenv('SENDGRID_API_KEY'))
     
     # Email content
     subject = f"New Contact Form Submission from {name}"
@@ -120,10 +122,10 @@ def send_contact_email(name, email, message):
     This message was sent from the MeTiger Inc. website contact form.
     """
     
-    # Create SendGrid mail object
+    # Create SendGrid mail object using environment variables
     mail = Mail(
-        from_email='info@metiger.ca',  # Sender (must be verified in SendGrid)
-        to_emails='info@metiger.ca',   # Recipient
+        from_email=os.getenv('FROM_EMAIL', 'no-reply@metiger.ca'),
+        to_emails=os.getenv('TO_EMAIL', 'info@metiger.ca'),
         subject=subject,
         plain_text_content=body
     )

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MeTiger Inc. — Delivering complex construction projects without drama</title>
+    <title>MeTiger Inc.. — Delivering complex construction projects without drama</title>
     <meta name="description" content="MeTiger Inc. — We deliver complex construction projects without drama. Engineering excellence, project management, and construction delivery." />
     
     <!-- Favicon -->
@@ -352,7 +352,7 @@
             <div class="contact-grid" style="margin-top: 18px;">
                 <form id="contactForm" action="/send_message" method="POST" novalidate>
                     <input type="text" name="company" id="company" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px" aria-hidden="true">
-                    <input type="hidden" name="started_at" id="started_at" value="">
+                    <input type="hidden" name="started_at" id="started_at" value="{{ START_TS }}">
                     <div>
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" placeholder="Jane Doe" required />
@@ -368,9 +368,7 @@
                         <textarea id="message" name="message" placeholder="Tell us about your project" required></textarea>
                         <div class="error" id="messageError"></div>
             </div>
-                    {% if TURNSTILE_SITE_KEY %}
-                    <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
-                    {% endif %}
+                    <div class="cf-challenge" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
                     <div class="cta-row" style="margin-top: 10px;">
                         <button class="btn btn-primary" type="submit">Send message</button>
                         <button class="btn btn-ghost" type="reset">Reset</button>
@@ -514,16 +512,18 @@
 
         // Dynamic year
         document.getElementById('year').textContent = new Date().getFullYear();
-        
-        // Set initial timestamp for anti-spam protection
-        const startedInput = document.getElementById('started_at');
-        if (startedInput) startedInput.value = (Date.now() / 1000).toString();
 
         // If the page loads with a hash, apply offset scroll
         window.addEventListener('load', () => {
             if (location.hash) {
                 const id = location.hash.replace('#','');
                 setTimeout(() => offsetAnchor(id), 0);
+            }
+            
+            // Fallback to ensure started_at always gets a timestamp
+            const startedInput = document.getElementById('started_at');
+            if (startedInput && !startedInput.value) {
+                startedInput.value = (Date.now() / 1000).toString();
             }
         });
 
