@@ -1,7 +1,7 @@
 # Cloudflare Turnstile Configuration
 # Copy these environment variables to your .env file or set them in your deployment environment
 
-TURNSTILE_SITE_KEY=your_site_key_here
+TURNSTILE_SITE_KEY=0x4AAAAAAB8Wgm9wM6xbP-yW
 TURNSTILE_SECRET=your_secret_key_here
 
 # To get these keys:
