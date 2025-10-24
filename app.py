@@ -29,6 +29,10 @@ def services():
 def projects():
     return render_template("projects.html")
 
+@app.route("/test_turnstile")
+def test_turnstile():
+    return render_template("test_turnstile.html")
+
 @app.route("/contact", methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
