@@ -2,15 +2,16 @@ from flask import Flask, render_template, request, flash, redirect, url_for, jso
 import os, re, time, requests
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import sendgrid
-from sendgrid.helpers.mail import Mail
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
 # Anti-spam configuration
-app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "")
-TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "")
+app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "0x4AAAAAAB8Wgm9wM6xbP-yW")
+TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "0x4AAAAAAB8Wglc6eIYv7TdX5w4Ud0gddV8")
 limiter = Limiter(get_remote_address, app=app, default_limits=["100/hour"])
 URL_RE = re.compile(r'https?://', re.I)
 DISPOSABLE = {"mailinator.com","guerrillamail.com","10minutemail.com","tempmail.dev","yopmail.com","getnada.com","trashmail.com"}
@@ -23,6 +24,10 @@ def index():
 
 @app.route("/debug")
 def debug():
+    sendgrid_key = os.getenv('SENDGRID_API_KEY', 'Not set')
+    from_email = os.getenv('FROM_EMAIL', 'Not set')
+    to_email = os.getenv('TO_EMAIL', 'Not set')
+    
     return f"""
     <html>
     <head><title>Debug Info</title></head>
@@ -30,6 +35,9 @@ def debug():
         <h1>Debug Information</h1>
         <p>Turnstile Site Key: {app.config['TURNSTILE_SITE_KEY']}</p>
         <p>Turnstile Secret: {TURNSTILE_SECRET[:10] if TURNSTILE_SECRET else 'Not set'}...</p>
+        <p>SendGrid API Key: {sendgrid_key[:10] if sendgrid_key != 'Not set' else 'Not set'}...</p>
+        <p>From Email: {from_email}</p>
+        <p>To Email: {to_email}</p>
         <div class="cf-turnstile" data-sitekey="{app.config['TURNSTILE_SITE_KEY']}"></div>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     </body>
@@ -118,40 +126,58 @@ def send_message():
 
     # Send email
     try:
+        # Temporarily hardcode SendGrid for testing
         send_contact_email(name, email, msg)
         return jsonify(success=True, message="Thanks — we'll get back to you"), 200
-    except Exception:
+    except Exception as e:
+        print(f"Email error: {e}")
         return jsonify(success=False, message="Error sending message. Please try again."), 500
 
 def send_contact_email(name, email, message):
-    """Send contact form email using SendGrid"""
-    # SendGrid configuration using environment variables
-    sg = sendgrid.SendGridAPIClient(api_key=os.getenv('SENDGRID_API_KEY'))
+    """Send contact form email using Microsoft SMTP"""
     
+    smtp_server = "smtp.office365.com"
+    smtp_port = 587
+    sender_email = "info@metiger.ca"  # Must match the authenticated account
+    smtp_user = os.environ.get("SMTP_USER")
+    smtp_password = os.environ.get("SMTP_PASSWORD")
+
+    if not smtp_user or not smtp_password:
+        raise ValueError("SMTP credentials not configured")
+
     # Email content
-    subject = f"New Contact Form Submission from {name}"
+    msg = MIMEMultipart()
+    msg['From'] = f"MeTiger Website <{sender_email}>"
+    msg['To'] = "info@metiger.ca"
+    msg['Subject'] = f"New Contact Form Submission from {name}"
+    msg['Reply-To'] = email  # Allow direct reply to the visitor
+
     body = f"""
     New contact form submission:
     
     Name: {name}
     Email: {email}
-    Message: {message}
+    
+    Message:
+    {message}
     
     ---
     This message was sent from the MeTiger Inc. website contact form.
     """
     
-    # Create SendGrid mail object using environment variables
-    mail = Mail(
-        from_email=os.getenv('FROM_EMAIL', 'no-reply@metiger.ca'),
-        to_emails=os.getenv('TO_EMAIL', 'info@metiger.ca'),
-        subject=subject,
-        plain_text_content=body
-    )
+    msg.attach(MIMEText(body, 'plain'))
     
     # Send email
-    response = sg.send(mail)
-    return response
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()  # Secure the connection
+        server.login(smtp_user, smtp_password)
+        server.send_message(msg)
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"SMTP Error: {e}")
+        raise e
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
