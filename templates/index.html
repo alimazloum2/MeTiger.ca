@@ -375,11 +375,41 @@
         @keyframes ping { to { transform: translate(-50%,-50%) rotate(360deg);} }
 
         /* Footer */
-        footer { border-top: 1px solid var(--stroke); padding: 22px 20px; color: var(--text-1); background: #0a0e16; }
-        .footer-row { max-width: var(--maxw); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
-        .social { display: flex; gap: 12px; }
-        .social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--stroke); background: rgba(255,255,255,0.04); }
-        .social a:hover { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+        footer { border-top: 1px solid var(--stroke); padding: 60px 20px 40px; color: var(--text-1); background: #080c14; font-size: 14px; }
+        .footer-grid {
+            max-width: var(--maxw); margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 2fr 1.5fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .footer-col { display: flex; flex-direction: column; gap: 12px; }
+        .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .footer-brand img { width: 48px; height: 48px; border-radius: 10px; }
+        .footer-brand span { font-family: Poppins, sans-serif; font-weight: 700; font-size: 20px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .footer-contact { display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+        .footer-contact a { color: #fff; transition: color 0.2s; }
+        .footer-contact a:hover { color: var(--primary); }
+        
+        .footer-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links a { color: var(--text-1); transition: color 0.2s; }
+        .footer-links a:hover { color: #fff; }
+        
+        .footer-social { display: flex; gap: 12px; justify-content: flex-end; }
+        .footer-social a { 
+            display: flex; align-items: center; justify-content: center; 
+            width: 40px; height: 40px; border-radius: 50%; background: #fff; color: #000;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .footer-social a:hover { transform: translateY(-2px); background: var(--primary); }
+        
+        .footer-bottom { 
+            max-width: var(--maxw); margin: 40px auto 0; padding-top: 20px; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            display: flex; justify-content: flex-end; 
+            font-size: 13px; color: var(--muted);
+        }
 
         /* Utilities */
         .spacer-xxl { height: 10px; }
@@ -403,6 +433,15 @@
             .nav { padding: 12px 16px; }
         }
 
+        @media (max-width: 1000px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+            .footer-social { justify-content: flex-start; }
+            .footer-bottom { justify-content: flex-start; }
+        }
+        @media (max-width: 600px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+        
         /* Motion preferences */
         @media (prefers-reduced-motion: reduce) {
             * { animation: none !important; transition: none !important; }
@@ -689,7 +728,17 @@
                 </div>
                     <div class="error" id="formSuccess" style="color:#9ef7c1"></div>
                 </form>
-                <div id="map" style="min-height: 300px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--stroke); box-shadow: var(--shadow);"></div>
+                <div class="map-container" style="min-height: 300px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--stroke); box-shadow: var(--shadow);">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836.787687678564!2d-63.68818438446554!3d44.70105377909927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4b5a206660636b97%3A0x6676367373076773!2s620%20Nine%20Mile%20Dr%2C%20Bedford%2C%20NS%20B4A%200H4!5e0!3m2!1sen!2sca!4v1677685621453!5m2!1sen!2sca" 
+                        width="100%" 
+                        height="300" 
+                        style="border:0; display: block;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
         </div>
     </div>
 </section>
@@ -698,25 +747,54 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-row">
-            <div>© 2025 MeTiger Inc. All rights reserved.</div>
-            <div style="display: flex; align-items: center; gap: 20px;">
-                <a href="https://network.procore.com/p/metiger-inc-bedford" rel="dofollow" title="Procore Partner" target="_blank" style="display: inline-block;">
-                    <img
-                        src="https://network.procore.com/assets/static/procore-black-badge.svg"
-                        alt="Procore Black Badge"
-                        style="height: 32px; filter: invert(1); opacity: 0.8;"
-                    />
-                </a>
-                <div class="social" aria-label="Social links">
-                    <a href="https://www.linkedin.com/company/metiger" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 5.8c-.6.3-1.2.5-1.9.6.7-.4 1.2-1.1 1.4-1.9-.7.4-1.4.7-2.2.9a3.3 3.3 0 0 0-5.8 2.2c0 .3 0 .5.1.8-2.8-.1-5.4-1.5-7.1-3.7-.3.5-.4 1.1-.4 1.7 0 1.2.6 2.3 1.5 3-.5 0-1-.2-1.5-.4v.1c0 1.7 1.2 3.1 2.7 3.5-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.4 1.7 2.4 3.2 2.4A6.6 6.6 0 0 1 3 18.5c1.4.9 3.1 1.4 4.9 1.4 5.9 0 9.2-4.9 9.2-9.2v-.4c.6-.4 1.2-1 1.6-1.6z" fill="currentColor"/></svg>
-                </a>
-                <a href="https://www.linkedin.com/company/metiger" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.94 5.5a1.94 1.94 0 1 1-3.87 0 1.94 1.94 0 0 1 3.87 0zM3.5 8.25h3.2v12.25H3.5V8.25zM10 8.25h3.06v1.67h.04c.43-.82 1.49-1.67 3.06-1.67 3.28 0 3.88 2.16 3.88 4.98v7.27h-3.2v-6.45c0-1.54-.03-3.52-2.14-3.52-2.14 0-2.47 1.67-2.47 3.4v6.57H10V8.25z" fill="currentColor"/></svg>
-                </a>
+        <div class="footer-grid">
+            <!-- Brand & Contact -->
+            <div class="footer-col">
+                <div class="footer-brand">
+                    <img src="{{ url_for('static', filename='images/metiger_logo.png') }}" alt="MeTiger logo" />
+                    <span>METIGER</span>
+                </div>
+                <div class="footer-contact">
+                    <div>+1 (782) 640-5557</div>
+                    <a href="mailto:info@metiger.ca">info@metiger.ca</a>
                 </div>
             </div>
+
+            <!-- Links Column 1 -->
+            <div class="footer-col">
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Modern Slavery Act Statement</a></li>
+                    <li><a href="#">Ethics</a></li>
+                </ul>
+            </div>
+
+            <!-- Links Column 2 -->
+            <div class="footer-col">
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Social -->
+            <div class="footer-col">
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/metiger" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.574-2.005.978-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="https://youtube.com" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            © 2025 MeTiger Inc. All rights reserved.
         </div>
     </footer>
 
@@ -830,8 +908,8 @@
             }
         });
 
-        // Dynamic year
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // Dynamic year - Removed as it is hardcoded in new footer
+        // document.getElementById('year').textContent = new Date().getFullYear();
 
         // If the page loads with a hash, apply offset scroll
         window.addEventListener('load', () => {
@@ -846,191 +924,7 @@
                 startedInput.value = (Date.now() / 1000).toString();
             }
         });
-
-        // Initialize Google Maps with custom dark styling
-        function initMap() {
-            const mapStyles = [
-                {
-                    "featureType": "all",
-                    "elementType": "labels.text.fill",
-                    "stylers": [
-                        {
-                            "color": "#ffffff"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "all",
-                    "elementType": "labels.text.stroke",
-                    "stylers": [
-                        {
-                            "color": "#000000"
-                        },
-                        {
-                            "lightness": 13
-                        }
-                    ]
-                },
-                {
-                    "featureType": "administrative",
-                    "elementType": "geometry.fill",
-                    "stylers": [
-                        {
-                            "color": "#000000"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "administrative",
-                    "elementType": "geometry.stroke",
-                    "stylers": [
-                        {
-                            "color": "#144b53"
-                        },
-                        {
-                            "lightness": 14
-                        },
-                        {
-                            "weight": 1.4
-                        }
-                    ]
-                },
-                {
-                    "featureType": "landscape",
-                    "elementType": "all",
-                    "stylers": [
-                        {
-                            "color": "#08304b"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "poi",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "color": "#0c4152"
-                        },
-                        {
-                            "lightness": 5
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road.highway",
-                    "elementType": "geometry.fill",
-                    "stylers": [
-                        {
-                            "color": "#000000"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road.highway",
-                    "elementType": "geometry.stroke",
-                    "stylers": [
-                        {
-                            "color": "#0b434f"
-                        },
-                        {
-                            "lightness": 25
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road.arterial",
-                    "elementType": "geometry.fill",
-                    "stylers": [
-                        {
-                            "color": "#000000"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road.arterial",
-                    "elementType": "geometry.stroke",
-                    "stylers": [
-                        {
-                            "color": "#0b3d51"
-                        },
-                        {
-                            "lightness": 16
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road.local",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "color": "#000000"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "transit",
-                    "elementType": "all",
-                    "stylers": [
-                        {
-                            "color": "#146474"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "water",
-                    "elementType": "all",
-                    "stylers": [
-                        {
-                            "color": "#021019"
-                        }
-                    ]
-                }
-            ];
-
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: { lat: 44.70105, lng: -63.6859957 }, // 620 Nine Mile Drive, Bedford, NS
-                styles: mapStyles,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false
-            });
-
-            const marker = new google.maps.Marker({
-                position: { lat: 44.70105, lng: -63.6859957 },
-                map: map,
-                title: "MeTiger Inc. - 620 Nine Mile Drive, Bedford, NS",
-                icon: {
-                    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="12" fill="#ff4444" stroke="#ffffff" stroke-width="2"/>
-                            <circle cx="16" cy="16" r="6" fill="#ffffff"/>
-                        </svg>
-                    `),
-                    scaledSize: new google.maps.Size(32, 32),
-                    anchor: new google.maps.Point(16, 16)
-                }
-            });
-
-            const infoWindow = new google.maps.InfoWindow({
-                content: `
-                    <div style="color: #000; font-family: Inter, sans-serif; padding: 8px;">
-                        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">MeTiger Inc.</div>
-                        <div style="font-size: 12px; color: #666;">620 Nine Mile Drive</div>
-                        <div style="font-size: 12px; color: #666;">Bedford, NS, Canada</div>
-                    </div>
-                `
-            });
-
-            marker.addListener("click", () => {
-                infoWindow.open(map, marker);
-            });
-        }
     </script>
-    
-    <!-- Google Maps API -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb77hPKeHWS9uofrWtbEo6CuQejqohW0U&callback=initMap"></script>
-    
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script>
