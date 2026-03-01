@@ -1,5 +1,10 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import os, re, time, requests
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import smtplib
