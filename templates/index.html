@@ -89,12 +89,111 @@
         section { padding: 90px 20px; }
         .container { max-width: var(--maxw); margin: 0 auto; }
         .eyebrow { color: var(--muted); letter-spacing: .18em; text-transform: uppercase; font-size: 12px; }
-        .h1 { font-family: Poppins, Inter, sans-serif; font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: 1.05; margin: 14px 0 14px; }
-        .lead { color: var(--text-1); font-size: clamp(16px, 2.2vw, 18px); max-width: 680px; }
+        .h1 { font-family: Poppins, Inter, sans-serif; font-weight: 800; font-size: clamp(24px, 4vw, 40px); line-height: 1.05; margin: 14px 0 14px; }
+        .lead { color: var(--text-1); font-size: clamp(14px, 1.8vw, 16px); max-width: 680px; }
 
         /* Hero */
         .hero { position: relative; overflow: clip; }
-        .hero .container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+        .hero .container { display: block; }
+        .hero .panel {
+            display: block;
+            background: transparent;
+            border: 1px solid var(--stroke); border-radius: var(--radius-lg); padding: 28px;
+        }
+        .hero-art {
+            position: relative; aspect-ratio: 1.1/1; border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, #0b101b 0%, #0a0e16 50%, #0f1629 100%);
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .hero-art .dot {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(120, 200, 255, 0.95);
+            box-shadow:
+                0 0 10px 3px rgba(120, 200, 255, 0.9),
+                0 0 30px 10px rgba(120, 200, 255, 0.35),
+                0 0 80px 30px rgba(120, 200, 255, 0.18);
+            pointer-events: none;
+            animation: dot-pulse 2.8s ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+        .hero-art .d1 { left: 22%; top: 72%; animation-delay: 0s; }
+        .hero-art .d2 { left: 52%; top: 59%; animation-delay: 0.6s; }
+        .hero-art .d3 { left: 83%; top: 28%; animation-delay: 1.2s; }
+        
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.35); opacity: 1; }
+        }
+        .hero-slogan {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            font-family: 'Poppins', 'Montserrat', Inter, sans-serif;
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 1.3;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .hero-slogan .line1,
+        .hero-slogan .line2 {
+            font-weight: 400;
+            text-shadow: 0 0 10px rgba(0, 174, 239, 0.6), 0 0 20px rgba(0, 174, 239, 0.4);
+        }
+        .hero-slogan .line3 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 174, 239, 0.8), 0 0 30px rgba(0, 174, 239, 0.5);
+            background: linear-gradient(135deg, #ffffff 0%, #00AEEF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @media (max-width: 768px) {
+            .hero-slogan {
+                top: 15px;
+                left: 20px;
+                font-size: 16px;
+            }
+            .hero-slogan .line3 {
+                font-size: 8px;
+            }
+        }
+        .ns-card {
+            position: relative; display: block; overflow: hidden; border-radius: 16px;
+        }
+        .ns-card img {
+            display: block; width: 100%; height: auto;
+        }
+        .ns-card .dot {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(120, 200, 255, 0.95);
+            box-shadow: 0 0 10px 3px rgba(120, 200, 255, 0.9), 0 0 30px 10px rgba(120, 200, 255, 0.35), 0 0 80px 30px rgba(120, 200, 255, 0.18);
+            pointer-events: none; animation: dot-pulse 2.8s ease-in-out infinite; mix-blend-mode: screen;
+        }
+        .ns-card .d1 { left: 22%; top: 72%; animation-delay: 0s; }
+        .ns-card .d2 { left: 52%; top: 59%; animation-delay: 0.6s; }
+        .ns-card .d3 { left: 83%; top: 28%; animation-delay: 1.2s; }
+        .floating-badge {
+            position: absolute; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.8);
+            color: white; padding: 8px 12px; border-radius: 20px; font-size: 12px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .pulse {
+            width: 8px; height: 8px; background: #4ade80; border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.35); opacity: 1; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
         .cta-row { display: flex; align-items: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
         .btn {
             appearance: none; border: 0; cursor: pointer; border-radius: 999px;
@@ -105,23 +204,47 @@
         .btn-ghost { color: var(--text-0); background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); }
         .btn-ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
 
-        .hero-art {
-            position: relative; aspect-ratio: 1.1/1; border-radius: var(--radius-lg);
-            background:
-                radial-gradient(120px 120px at 25% 30%, rgba(110,168,254,.5), transparent 60%),
-                radial-gradient(150px 150px at 70% 65%, rgba(167,139,250,.45), transparent 60%),
-                radial-gradient(180px 180px at 60% 25%, rgba(52,211,153,.35), transparent 60%),
-                linear-gradient(180deg, #0f1629, #0b0f17);
-            border: 1px solid var(--stroke);
-            box-shadow: var(--shadow);
-            overflow: hidden;
+        .ns-overlay {
+            position: absolute; inset: 0; width: 100%; height: 100%; 
+            pointer-events: none; mix-blend-mode: screen; z-index: 2;
         }
-        .hero-art::after {
-            content: ""; position: absolute; inset: -40% -30% -40% -30%; filter: blur(70px);
-            background: radial-gradient(500px 300px at 30% 20%, #6ea8fe22, transparent),
-                        radial-gradient(600px 350px at 70% 65%, #a78bfa22, transparent),
-                        radial-gradient(600px 400px at 60% 25%, #34d39922, transparent);
+        .ns-trace {
+            fill: none; stroke: #66b5ff; stroke-width: 1.6;
+            stroke-linecap: round; stroke-linejoin: round;
+            filter: drop-shadow(0 0 6px rgba(102,181,255,.9)) drop-shadow(0 0 20px rgba(102,181,255,.35));
+            opacity: .95;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .ns-trace { animation: none; }
+            .ns-spark { display: none; }
+        }
+        .hero-art::before {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(15, 22, 41, 0.7) 0%, rgba(11, 15, 23, 0.8) 100%);
             pointer-events: none;
+        }
+        .hero-art .dot {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(120, 200, 255, 0.95);
+            box-shadow:
+                0 0 10px 3px rgba(120, 200, 255, 0.9),
+                0 0 30px 10px rgba(120, 200, 255, 0.35),
+                0 0 80px 30px rgba(120, 200, 255, 0.18);
+            pointer-events: none;
+            animation: dot-pulse 2.8s ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+        .hero-art .d1 { left: 22%; top: 72%; animation-delay: 0s; }
+        .hero-art .d2 { left: 52%; top: 59%; animation-delay: 0.6s; }
+        .hero-art .d3 { left: 83%; top: 28%; animation-delay: 1.2s; }
+        
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.35); opacity: 1; }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .hero-art .dot { animation: none; }
         }
         .floating-badge {
             position: absolute; right: 16px; bottom: 16px; padding: 10px 14px; border-radius: 12px;
@@ -153,16 +276,88 @@
             position: relative;
         }
         .about .panel {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;
             background: linear-gradient(180deg, #0f1629, #0b0f17);
-            border: 1px solid var(--stroke); border-radius: var(--radius-lg); padding: 28px;
+            border: 1px solid var(--stroke); border-radius: var(--radius-lg); padding: 20px;
         }
-        .about .illustration { aspect-ratio: 1.2/1; border-radius: var(--radius-md); background: radial-gradient(140px 140px at 30% 30%, #6ea8fe33, transparent 60%), radial-gradient(200px 170px at 75% 60%, #a78bfa33, transparent 60%), #0b101b; border: 1px solid var(--stroke); position: relative; overflow: hidden; }
-        .sparkle { position: absolute; width: 8px; height: 8px; background: #9ec2ff; border-radius: 50%; filter: blur(.5px); opacity: .9; animation: float 9s ease-in-out infinite; }
-        .sparkle:nth-child(2){ left: 18%; top: 22%; animation-duration: 10s; }
-        .sparkle:nth-child(3){ right: 16%; top: 50%; animation-duration: 12s; }
-        .sparkle:nth-child(4){ left: 45%; bottom: 12%; animation-duration: 11s; }
-        @keyframes float { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-10px);} }
+        .about .panel > div:first-child {
+            max-width: 90%;
+            padding: 10px 0;
+        }
+        .about .illustration {
+            aspect-ratio: 1.2/1; border-radius: var(--radius-md); 
+            background: url("{{ url_for('static', filename='images/metiger-ns-ca.png') }}") center/cover;
+            border: 1px solid var(--stroke); 
+            position: relative; overflow: hidden;
+        }
+        .about .illustration::before {
+            content: ""; position: absolute; inset: 0;
+            background: 
+                radial-gradient(3px 3px at 20% 25%, rgba(6, 182, 212, 0.4), transparent),
+                radial-gradient(2px 2px at 60% 20%, rgba(59, 130, 246, 0.3), transparent),
+                radial-gradient(3px 3px at 80% 40%, rgba(139, 92, 246, 0.2), transparent),
+                radial-gradient(2px 2px at 30% 60%, rgba(6, 182, 212, 0.3), transparent),
+                radial-gradient(3px 3px at 70% 75%, rgba(59, 130, 246, 0.4), transparent),
+                radial-gradient(2px 2px at 15% 85%, rgba(139, 92, 246, 0.2), transparent);
+            animation: network-pulse 6s ease-in-out infinite;
+        }
+        .about .illustration::after {
+            content: ""; position: absolute; inset: 0;
+            background: 
+                linear-gradient(45deg, transparent 48%, rgba(6, 182, 212, 0.1) 49%, rgba(6, 182, 212, 0.1) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(59, 130, 246, 0.08) 49%, rgba(59, 130, 246, 0.08) 51%, transparent 52%),
+                linear-gradient(30deg, transparent 48%, rgba(139, 92, 246, 0.06) 49%, rgba(139, 92, 246, 0.06) 51%, transparent 52%);
+            animation: connection-flow 8s ease-in-out infinite;
+        }
+        .network-node {
+            position: absolute;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: rgba(6, 182, 212, 0.6);
+            animation: node-glow 4s ease-in-out infinite;
+        }
+        .network-node:nth-child(1) { top: 25%; left: 20%; animation-delay: 0s; }
+        .network-node:nth-child(2) { top: 20%; left: 60%; animation-delay: 1s; }
+        .network-node:nth-child(3) { top: 40%; left: 80%; animation-delay: 2s; }
+        .network-node:nth-child(4) { top: 60%; left: 30%; animation-delay: 3s; }
+        .network-node:nth-child(5) { top: 75%; left: 70%; animation-delay: 4s; }
+        .network-node:nth-child(6) { top: 85%; left: 15%; animation-delay: 5s; }
+        
+        @keyframes network-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        @keyframes connection-flow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.4; }
+        }
+        @keyframes node-glow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.3); }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .about .illustration::before,
+            .about .illustration::after,
+            .network-node {
+                animation: none;
+            }
+        }
+        
+        @media (max-width: 560px) {
+            .network-node:nth-child(4),
+            .network-node:nth-child(5),
+            .network-node:nth-child(6) {
+                display: none;
+            }
+        }
+        .about .illustration .slogan {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
 
         /* Contact */
         .contact-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
@@ -221,7 +416,7 @@
     <header>
         <div class="nav">
             <a href="#home" class="brand">
-                <img src="{{ url_for('static', filename='metiger_logo.jpg') }}" alt="MeTiger logo" class="brand-logo" />
+                <img src="{{ url_for('static', filename='images/metiger_logo.png') }}" alt="MeTiger logo" class="brand-logo" />
                 <span>MeTiger Inc.</span>
             </a>
             <nav aria-label="Primary">
@@ -238,16 +433,48 @@
     <!-- Hero -->
     <section id="home" class="hero">
         <div class="container">
-            <div>
-                <div class="eyebrow">MeTiger Inc.</div>
-                <h1 class="h1">Delivering complex construction projects without drama</h1>
-                <p class="lead">We partner with clients to plan, engineer, and construct resilient infrastructure. High-stakes, multi-phase construction programs — delivered with clarity, quality, and precision.</p>
-                <div class="cta-row">
-                    <a class="btn btn-primary" href="#contact">Start a project</a>
-                    <a class="btn btn-ghost" href="#services">Explore services</a>
-                            </div>
-                        </div>
+            <div class="hero panel">
+                <div>
+                    <div class="eyebrow">MeTiger Inc.</div>
+                    <h1 class="h1">Delivering complex construction projects without drama</h1>
+                    <p class="lead">We partner with clients to plan, engineer, and construct resilient infrastructure. High-stakes, multi-phase construction programs — delivered with clarity, quality, and precision.</p>
+                    <div class="cta-row">
+                        <a class="btn btn-primary" href="#contact">Start a project</a>
+                        <a class="btn btn-ghost" href="#services">Explore services</a>
+                    </div>
+                </div>
+            </div>
             <div class="hero-art" aria-hidden="true">
+                <svg class="ns-overlay" viewBox="0 0 803 647" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <path id="ns-path" class="ns-trace" pathLength="1000" d="M242.5 473.915C240.833 478.581 233.5 493.515 217.5 515.915L191.5 543.915L164.5 571.915L140.5 587.915L128.5 598.915L121.5 571.915L108.5 605.915L84.5 632.915L77.5 643.915L55.5 627.915L49.5 605.915L40.5 571.915H33.5L24.5 587.915L9.5 571.915L1.5 524.915V493.915L18.5 453.915L49.5 427.915L40.5 407.915L217.5 306.915L228.5 286.915L238.5 295.915L242.5 320.915L262.5 306.915L296.5 299.915L358.5 286.915L277.5 281.915L228.5 272.915L199.5 286.915H164.5L210.5 242.915L234.5 206.915L271.5 180.915L313.5 206.915L361.5 221.915L408.5 225.915L472.5 247.915L537.5 206.915V238.915L564.5 256.915L595.5 242.915L586.5 196.915L595.5 167.915L630.5 117.915L671.5 53.9146L701.5 15.9146L725.5 1.91455L733.5 10.9146L743.5 31.9146L720.5 126.915L743.5 133.915L767.5 140.915L792.5 151.915V167.915L800.5 180.915L767.5 211.915L733.5 242.915C718.167 247.581 686.3 256.915 681.5 256.915C676.7 256.915 657.5 261.581 648.5 263.915L630.5 272.915L614.5 286.915L595.5 299.915H609.5L664.5 306.915L620.5 320.915L547.5 347.915L533.5 358.915L500.5 374.915L472.5 390.915L431.5 407.915L384.5 418.915H358.5L335.5 431.915L332.5 442.915V462.915H313.5L286.5 448.915L277.5 418.915L271.5 427.915V453.915L262.5 448.915L249.5 442.915L234.5 448.915V462.915L242.5 473.915Z" />
+                    
+                    <use href="#ns-path" class="ns-seg"
+                         stroke="#66b5ff" stroke-width="2" fill="none"
+                         style="filter: drop-shadow(0 0 10px rgba(102,181,255,.9))
+                                         drop-shadow(0 0 28px rgba(102,181,255,.4));
+                                mix-blend-mode: screen;"
+                         stroke-dasharray="60 940" stroke-dashoffset="0">
+                        <animate id="traceAnim"
+                                 attributeName="stroke-dashoffset"
+                                 from="0" to="-1000"
+                                 dur="8s" repeatCount="indefinite"
+                                 calcMode="linear" />
+                    </use>
+
+                    <circle r="4" fill="#d6ecff"
+                            style="filter: drop-shadow(0 0 8px rgba(190,230,255,.95))
+                                            drop-shadow(0 0 26px rgba(120,200,255,.45));
+                                   mix-blend-mode: screen;">
+                        <animateMotion dur="8s" repeatCount="indefinite"
+                                       rotate="auto" calcMode="linear"
+                                       begin="traceAnim.begin">
+                            <mpath xlink:href="#ns-path"/>
+                        </animateMotion>
+                    </circle>
+                </svg>
+                <div class="dot d1"></div>
+                <div class="dot d2"></div>
+                <div class="dot d3"></div>
                 <div class="floating-badge"><span class="pulse"></span> Project status: On schedule</div>
                         </div>
                     </div>
@@ -259,17 +486,24 @@
             <div class="about panel">
                 <div>
                     <div class="eyebrow">About</div>
-                    <h2 class="h1" style="font-size: clamp(26px,4.5vw,40px); margin-top: 8px;">We turn blueprints into built reality</h2>
-                    <p class="lead">From infrastructure projects to complex facilities, our senior engineers and project managers align stakeholders, de-risk construction, and build with precision. Less delays, more results.</p>
+                    <h2 class="h1" style="font-size: clamp(26px,4.5vw,40px); margin-top: 8px;">The team behind seamless delivery</h2>
+                    <p class="lead">We work quietly behind the scenes to de-risk construction, keep trades moving, and protect the schedule. Senior engineering oversight and disciplined project management deliver what matters less noise, more outcomes.</p>
                     <div class="cta-row" style="margin-top: 18px;">
-                        <a class="btn btn-ghost" href="#projects">See our work</a>
+                        <a class="btn btn-ghost" href="#projects">Explore projects</a>
                     </div>
                 </div>
                 <div class="illustration">
-                    <span class="sparkle" style="left:12%; top:18%;"></span>
-                    <span class="sparkle"></span>
-                    <span class="sparkle"></span>
-                    <span class="sparkle"></span>
+                    <div class="hero-slogan">
+                        <div class="line1">Built in Nova Scotia.</div>
+                        <div class="line2">Made for Canada.</div>
+                        <div class="line3">Strong • Focused • Relentless</div>
+                    </div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
                 </div>
             </div>
         </div>
@@ -283,31 +517,94 @@
             <div class="grid-4" style="margin-top: 18px;">
                 <article class="card">
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#a78bfa,#6ea8fe);"></div>
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow1" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <circle cx="19" cy="19" r="12" fill="none" stroke="#00AEEF" stroke-width="2" filter="url(#glow1)"/>
+                            <path d="M19,8 L25,16 L21,16 L22,24 L15,16 L19,16" fill="none" stroke="#00AEEF" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
                         <h3>Electrical Engineering</h3>
                     </div>
-                    <p>Design power systems, electrical infrastructure, and smart building solutions with safety and efficiency built-in.</p>
+                    <p>More than design, we bridge engineering intent with construction execution. MeTiger provides coordinated, code-compliant electrical solutions that enhance safety, energy efficiency, and reliability across every project stage.</p>
                 </article>
                 <article class="card">
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#6ea8fe,#34d399);"></div>
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow2" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <line x1="8" y1="12" x2="30" y2="12" stroke="#20B2AA" stroke-width="2" filter="url(#glow2)"/>
+                            <line x1="8" y1="19" x2="30" y2="19" stroke="#20B2AA" stroke-width="2"/>
+                            <line x1="8" y1="26" x2="30" y2="26" stroke="#20B2AA" stroke-width="2"/>
+                            <circle cx="10" cy="12" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <circle cx="10" cy="19" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <circle cx="10" cy="26" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <path d="M12,10 L16,14 L12,18" fill="none" stroke="#20B2AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12,17 L16,21 L12,25" fill="none" stroke="#20B2AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                         <h3>Project Management</h3>
                     </div>
-                    <p>Electrical project planning, scheduling, and delivery coordination that connects design to completion.</p>
+                    <p>Working behind the scenes to keep every detail aligned before it becomes a problem. MeTiger reviews scopes, tracks RFIs and submittals, and guides subcontract negotiations to ensure the work flows with fewer change orders and no surprises later. We prepare and review cost forecasts, progress claims, and subcontract invoices with accuracy and fairness, maintaining control of budgets and cash flow. Every stage is managed quietly but effectively, connecting design intent, cost, and field execution so projects stay steady from start to finish.</p>
                 </article>
                 <article class="card">
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#34d399,#a78bfa);"></div>
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow3" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect x="8" y="6" width="22" height="28" rx="2" fill="none" stroke="#10B981" stroke-width="2" filter="url(#glow3)"/>
+                            <rect x="10" y="8" width="18" height="24" rx="1" fill="none" stroke="#10B981" stroke-width="1.5"/>
+                            <rect x="12" y="10" width="14" height="20" rx="1" fill="none" stroke="#10B981" stroke-width="1.5"/>
+                            <line x1="14" y1="14" x2="24" y2="14" stroke="#10B981" stroke-width="1"/>
+                            <line x1="14" y1="18" x2="22" y2="18" stroke="#10B981" stroke-width="1"/>
+                            <line x1="14" y1="22" x2="20" y2="22" stroke="#10B981" stroke-width="1"/>
+                        </svg>
                         <h3>Construction Documentation</h3>
                     </div>
-                    <p>Get professional assistance preparing, reviewing, and managing change orders, RFIs, material submittals, and document logs & Change Order Support.</p>
+                    <p>Supporting both tender and construction phases, preparing RFQs, tender front-end packages, and addenda before award, then managing CDs, CCNs, and CCOs after award to keep scope, cost, and drawings fully aligned.</p>
                 </article>
                 <article class="card">
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#ff6b6b,#ffa726);"></div>
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow4" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect x="8" y="8" width="22" height="22" rx="3" fill="none" stroke="#FF6B6B" stroke-width="2" filter="url(#glow4)"/>
+                            <rect x="10" y="10" width="18" height="18" rx="2" fill="none" stroke="#FF6B6B" stroke-width="1.5"/>
+                            <line x1="12" y1="14" x2="26" y2="14" stroke="#FF6B6B" stroke-width="1"/>
+                            <line x1="12" y1="18" x2="24" y2="18" stroke="#FF6B6B" stroke-width="1"/>
+                            <line x1="12" y1="22" x2="22" y2="22" stroke="#FF6B6B" stroke-width="1"/>
+                            <circle cx="28" cy="10" r="2" fill="none" stroke="#FF6B6B" stroke-width="1.5"/>
+                            <path d="M26,8 L30,8 L30,12" fill="none" stroke="#FF6B6B" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
                         <h3>Tender Review & Cost Estimating</h3>
                     </div>
-                    <p>We provide detailed tender package reviews, accurate project takeoffs, and comprehensive cost estimation services.</p>
+                    <p>Supporting both builders and clients with a fresh, experienced eye. We review drawings, verify quantities, and help prepare organized trade packages, bringing clarity, balance, and efficiency to every tender.</p>
                 </article>
         </div>
     </div>
@@ -321,24 +618,24 @@
             <div class="grid-3" style="margin-top: 18px;">
                 <article class="card">
                     <div class="project-media">
-                        <img alt="Project platform dashboard" src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200&auto=format&fit=crop" />
+                        <img alt="Modern school exterior construction" src="{{ url_for('static', filename='images/west-bedford-school.jpg') }}" />
                     </div>
-                    <h3>Highway Infrastructure</h3>
-                    <p>Multi-lane highway construction with advanced drainage systems and zero-disruption traffic management.</p>
+                    <h3>Institutional Building – West Bedford School</h3>
+                    <p>Provided project management and coordination support for the new West Bedford School, a 253,000 sq ft pre-primary to grade 12 facility delivered under a collaborative design-build model. MeTiger contributed behind the scenes to electrical coordination, design reviews, and construction management support focused on energy efficiency and timely delivery.</p>
                 </article>
                 <article class="card">
                     <div class="project-media">
-                        <img alt="Commercial building construction" src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1200&auto=format&fit=crop" />
-        </div>
-                    <h3>Commercial Complex</h3>
-                    <p>Modern office building with integrated MEP systems and sustainable construction practices.</p>
+                        <img alt="Hospital corridor electrical work" src="{{ url_for('static', filename='images/hospital-facility.jpg') }}" />
+                    </div>
+                    <h3>Healthcare Facility Renovation – QEII Hospital Integration Work</h3>
+                    <p>Supported electrical integration and renovation work at the QEII Health Sciences Centre, including UPS and ATS upgrades. Focused on phased execution, minimizing disruption to ongoing hospital operations, and ensuring compliance with healthcare safety and electrical standards.</p>
                 </article>
                 <article class="card">
                     <div class="project-media">
-                        <img alt="Industrial facility" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" />
-                </div>
-                    <h3>Industrial Facility</h3>
-                    <p>Heavy industrial construction with specialized foundations and safety-compliant infrastructure.</p>
+                        <img alt="Solar farm infrastructure" src="{{ url_for('static', filename='images/nsp-solar.jpg') }}" />
+                    </div>
+                    <h3>Energy & Infrastructure Project – Nova Scotia Power Solar Initiative</h3>
+                    <p>Assisted with project coordination, engineering input, and construction management for Nova Scotia Power's solar program and related substation upgrades. Work emphasized reliability, schedule alignment, and seamless integration with existing infrastructure.</p>
                 </article>
             </div>
         </div>
@@ -349,18 +646,34 @@
         <div class="container">
             <div class="eyebrow">Contact</div>
             <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">Let's work together</h2>
+            <div style="display: flex; gap: 28px; flex-wrap: wrap; margin-top: 12px; align-items: flex-start;">
+                <div>
+                    <a href="tel:+17826405557" style="display: flex; align-items: center; gap: 8px; color: var(--text-1); font-size: 15px; transition: color .2s;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        +1 (782) 640-5557
+                    </a>
+                    <span style="display: block; font-size: 10px; color: var(--muted); margin-top: 3px; padding-left: 28px; opacity: 0.8;">Phone line active starting March 08, 2026</span>
+                </div>
+                <div>
+                    <a href="mailto:info@metiger.ca" style="display: flex; align-items: center; gap: 8px; color: var(--text-1); font-size: 15px; transition: color .2s;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        info@metiger.ca
+                    </a>
+                    <span style="display: block; font-size: 10px; color: var(--accent); margin-top: 3px; padding-left: 28px; opacity: 0.9;">Email is active — feel free to reach out anytime</span>
+                </div>
+            </div>
             <div class="contact-grid" style="margin-top: 18px;">
                 <form id="contactForm" action="/send_message" method="POST" novalidate>
                     <input type="text" name="company" id="company" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px" aria-hidden="true">
                     <input type="hidden" name="started_at" id="started_at" value="{{ START_TS }}">
                     <div>
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Jane Doe" required />
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required />
                         <div class="error" id="nameError"></div>
                     </div>
                     <div>
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required />
                         <div class="error" id="emailError"></div>
                 </div>
                     <div>
@@ -368,9 +681,7 @@
                         <textarea id="message" name="message" placeholder="Tell us about your project" required></textarea>
                         <div class="error" id="messageError"></div>
             </div>
-                    <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" style="margin: 10px 0; min-height: 65px; border: 1px solid #ccc; padding: 10px;">
-                        <p style="color: #666; font-size: 12px;">Loading CAPTCHA...</p>
-                    </div>
+                    <div id="turnstile-widget" class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" style="margin: 10px 0; min-height: 65px; border: 1px solid #ccc; padding: 10px;"></div>
                     <!-- Debug: Site key = {{ TURNSTILE_SITE_KEY }} -->
                     <div class="cta-row" style="margin-top: 10px;">
                         <button class="btn btn-primary" type="submit">Send message</button>
@@ -388,19 +699,25 @@
     <!-- Footer -->
     <footer>
         <div class="footer-row">
-            <div>© <span id="year"></span> MeTiger Inc. All rights reserved.</div>
-            <div class="social" aria-label="Social links">
-                <a href="https://www.linkedin.com/company/metiger" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
+            <div>© 2025 MeTiger Inc. All rights reserved.</div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="https://network.procore.com/p/metiger-inc-bedford" rel="dofollow" title="Procore Partner" target="_blank" style="display: inline-block;">
+                    <img
+                        src="https://network.procore.com/assets/static/procore-black-badge.svg"
+                        alt="Procore Black Badge"
+                        style="height: 32px; filter: invert(1); opacity: 0.8;"
+                    />
+                </a>
+                <div class="social" aria-label="Social links">
+                    <a href="https://www.linkedin.com/company/metiger" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 5.8c-.6.3-1.2.5-1.9.6.7-.4 1.2-1.1 1.4-1.9-.7.4-1.4.7-2.2.9a3.3 3.3 0 0 0-5.8 2.2c0 .3 0 .5.1.8-2.8-.1-5.4-1.5-7.1-3.7-.3.5-.4 1.1-.4 1.7 0 1.2.6 2.3 1.5 3-.5 0-1-.2-1.5-.4v.1c0 1.7 1.2 3.1 2.7 3.5-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.4 1.7 2.4 3.2 2.4A6.6 6.6 0 0 1 3 18.5c1.4.9 3.1 1.4 4.9 1.4 5.9 0 9.2-4.9 9.2-9.2v-.4c.6-.4 1.2-1 1.6-1.6z" fill="currentColor"/></svg>
                 </a>
                 <a href="https://www.linkedin.com/company/metiger" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.94 5.5a1.94 1.94 0 1 1-3.87 0 1.94 1.94 0 0 1 3.87 0zM3.5 8.25h3.2v12.25H3.5V8.25zM10 8.25h3.06v1.67h.04c.43-.82 1.49-1.67 3.06-1.67 3.28 0 3.88 2.16 3.88 4.98v7.27h-3.2v-6.45c0-1.54-.03-3.52-2.14-3.52-2.14 0-2.47 1.67-2.47 3.4v6.57H10V8.25z" fill="currentColor"/></svg>
                 </a>
-                <a href="https://www.linkedin.com/company/metiger" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener noreferrer">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-3 .6-3.6-1.4-3.6-1.4-.5-1.1-1.2-1.4-1.2-1.4-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.6 1.8 2.6 1.2.1-.8.4-1.3.7-1.6-2.4-.2-5-1.2-5-5.4 0-1.2.4-2.1 1.1-2.9-.1-.3-.5-1.5.1-3 0 0 .9-.3 3 1.1a10.2 10.2 0 0 1 5.4 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.7.1 3 .7.8 1.1 1.7 1.1 2.9 0 4.2-2.6 5.2-5.1 5.4.4.3.8 1 .8 2V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z" fill="currentColor"/></svg>
-            </a>
+                </div>
+            </div>
         </div>
-    </div>
     </footer>
 
     <script>
@@ -717,20 +1034,17 @@
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script>
-        // Ensure Turnstile widget renders
+        // Prevent duplicate Turnstile widgets
         window.addEventListener('load', function() {
-            if (typeof turnstile !== 'undefined') {
-                console.log('Turnstile loaded successfully');
-                // Force render if needed
-                const widget = document.querySelector('.cf-turnstile');
-                if (widget && !widget.hasChildNodes()) {
-                    console.log('Rendering Turnstile widget');
-                    turnstile.render(widget);
+            // Remove any duplicate widgets
+            const widgets = document.querySelectorAll('.cf-turnstile');
+            if (widgets.length > 1) {
+                for (let i = 1; i < widgets.length; i++) {
+                    widgets[i].remove();
                 }
-            } else {
-                console.log('Turnstile not loaded');
             }
         });
     </script>
 </body>
+</html>
 </html>
