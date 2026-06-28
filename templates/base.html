@@ -5,7 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ title or "MeTiger Inc. - Construction Project Management" }}{% endblock %}</title>
     <meta name="description" content="{% block description %}Professional construction project management services. On schedule, on budget, no surprises.{% endblock %}">
-    
+
+    <!-- Canonical & social metadata -->
+    <link rel="canonical" href="https://metiger.ca{{ request.path }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MeTiger Inc.">
+    <meta property="og:title" content="{{ self.title() }}">
+    <meta property="og:description" content="{{ self.description() }}">
+    <meta property="og:url" content="https://metiger.ca{{ request.path }}">
+    <meta property="og:image" content="https://metiger.ca/static/images/metiger_logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ self.title() }}">
+    <meta name="twitter:description" content="{{ self.description() }}">
+    <meta name="twitter:image" content="https://metiger.ca/static/images/metiger_logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="shortcut icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+
+    <!-- Structured data for search & answer engines -->
+    {% include 'partials/structured_data.html' %}
+
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -32,66 +53,14 @@
             background-position: center;
         }
     </style>
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e982110364ec48489332c306a57acd30"}'></script>
+    <!-- End Cloudflare Web Analytics -->
 </head>
 <body class="bg-gray-50 text-gray-900">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <a href="{{ url_for('index') }}" class="text-2xl font-bold text-metiger-blue">
-                        MeTiger Inc.
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Home
-                        </a>
-                        <a href="{{ url_for('services') }}" class="{% if request.endpoint == 'services' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Services
-                        </a>
-                        <a href="{{ url_for('projects') }}" class="{% if request.endpoint == 'projects' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Projects
-                        </a>
-                        <a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Contact
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-700 hover:text-metiger-blue focus:outline-none focus:text-metiger-blue">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Navigation -->
-        <div id="mobile-menu" class="md:hidden hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-                <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} block px-3 py-2 rounded-md text-base font-medium">
-                    Home
-                </a>
-                <a href="{{ url_for('services') }}" class="{% if request.endpoint == 'services' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} block px-3 py-2 rounded-md text-base font-medium">
-                    Services
-                </a>
-                <a href="{{ url_for('projects') }}" class="{% if request.endpoint == 'projects' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} block px-3 py-2 rounded-md text-base font-medium">
-                    Projects
-                </a>
-                <a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}bg-metiger-blue text-white{% else %}text-gray-700 hover:text-metiger-blue{% endif %} block px-3 py-2 rounded-md text-base font-medium">
-                    Contact
-                </a>
-            </div>
-        </div>
-    </nav>
+    <!-- Header (shared dark header, identical to homepage) -->
+    {% include 'partials/site_header.html' %}
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -111,158 +80,9 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-metiger-blue text-white">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">MeTiger Inc.</h3>
-                    <p class="text-gray-300 mb-4">
-                        Professional construction project management services. 
-                        On schedule, on budget, no surprises.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ url_for('index') }}" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="{{ url_for('services') }}" class="text-gray-300 hover:text-white transition-colors">Services</a></li>
-                        <li><a href="{{ url_for('projects') }}" class="text-gray-300 hover:text-white transition-colors">Projects</a></li>
-                        <li><a href="{{ url_for('contact') }}" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
-                    <div class="text-gray-300 space-y-2">
-                        <p>📧 info@metiger.com</p>
-                        <p>📞 (555) 123-4567</p>
-                        <p>📍 123 Construction Ave<br>Building City, BC 12345</p>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-600 mt-8 pt-8 text-center text-gray-300">
-                <p>&copy; <script>document.write(new Date().getFullYear())</script> MeTiger Inc. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer (shared dark footer, identical to homepage) -->
+    {% include 'partials/site_footer.html' %}
 
-    <!-- Chat Widget -->
-    <div id="chat-widget" class="fixed bottom-4 right-4 z-50">
-        <div id="chat-button" class="bg-metiger-blue text-white p-4 rounded-full shadow-lg cursor-pointer hover:bg-blue-700 transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-            </svg>
-        </div>
-        
-        <div id="chat-window" class="hidden bg-white rounded-lg shadow-xl w-80 h-96 flex flex-col">
-            <div class="bg-metiger-blue text-white p-4 rounded-t-lg flex justify-between items-center">
-                <h3 class="font-semibold">Chat with MeTiger</h3>
-                <button id="chat-close" class="text-white hover:text-gray-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-2">
-                <div class="bg-gray-100 rounded-lg p-3">
-                    <p class="text-sm">Hello! I'm here to help with your construction project management questions. How can I assist you today?</p>
-                </div>
-            </div>
-            <div class="p-4 border-t">
-                <div class="flex space-x-2">
-                    <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-metiger-blue">
-                    <button id="chat-send" class="bg-metiger-blue text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
-                        Send
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Chat widget functionality
-        const chatButton = document.getElementById('chat-button');
-        const chatWindow = document.getElementById('chat-window');
-        const chatClose = document.getElementById('chat-close');
-        const chatInput = document.getElementById('chat-input');
-        const chatSend = document.getElementById('chat-send');
-        const chatMessages = document.getElementById('chat-messages');
-
-        let isOpen = false;
-
-        chatButton.addEventListener('click', function() {
-            isOpen = !isOpen;
-            chatWindow.classList.toggle('hidden');
-            if (isOpen) {
-                chatInput.focus();
-            }
-        });
-
-        chatClose.addEventListener('click', function() {
-            isOpen = false;
-            chatWindow.classList.add('hidden');
-        });
-
-        function addMessage(message, isUser = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = isUser ? 'bg-metiger-blue text-white rounded-lg p-3 ml-8' : 'bg-gray-100 rounded-lg p-3 mr-8';
-            messageDiv.innerHTML = `<p class="text-sm">${message}</p>`;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function getAIResponse(userMessage) {
-            const responses = [
-                "That's a great question! Our team specializes in construction project management and can help with scheduling, budgeting, and coordination.",
-                "We offer comprehensive project management services including preconstruction planning, project controls, and change management.",
-                "Our experienced team has managed projects ranging from small renovations to large commercial developments.",
-                "We'd be happy to discuss your specific project needs. Feel free to contact us for a consultation.",
-                "MeTiger Inc. has a proven track record of delivering projects on time and within budget.",
-                "Our services include project planning, cost control, schedule management, and quality assurance.",
-                "We can help streamline your construction process and minimize risks through effective project management.",
-                "For more detailed information about our services, please visit our Services page or contact us directly."
-            ];
-            
-            // Simple keyword-based responses
-            const lowerMessage = userMessage.toLowerCase();
-            if (lowerMessage.includes('cost') || lowerMessage.includes('budget') || lowerMessage.includes('price')) {
-                return "We provide detailed cost analysis and budget management services. Our team can help you stay within budget while maintaining quality standards.";
-            } else if (lowerMessage.includes('schedule') || lowerMessage.includes('timeline') || lowerMessage.includes('time')) {
-                return "Our project scheduling services ensure your construction project stays on track. We use advanced scheduling tools and techniques to manage timelines effectively.";
-            } else if (lowerMessage.includes('contact') || lowerMessage.includes('meet') || lowerMessage.includes('consultation')) {
-                return "We'd love to discuss your project! You can reach us at (555) 123-4567 or email info@metiger.com. We offer free initial consultations.";
-            } else {
-                return responses[Math.floor(Math.random() * responses.length)];
-            }
-        }
-
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (message) {
-                addMessage(message, true);
-                chatInput.value = '';
-                
-                // Simulate AI response delay
-                setTimeout(() => {
-                    const response = getAIResponse(message);
-                    addMessage(response, false);
-                }, 1000);
-            }
-        }
-
-        chatSend.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    </script>
+    <!-- (mobile-menu JS removed — the shared dark header has no hamburger menu) -->
 </body>
 </html>

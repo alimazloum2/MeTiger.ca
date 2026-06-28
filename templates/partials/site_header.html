@@ -1,0 +1,38 @@
+{# Shared site header (dark, sticky). Included by base.html and index.html so
+   every page renders the identical header. Self-contained: hardcoded colors +
+   own fonts, so it works on pages that do NOT define the homepage's CSS vars.
+   Links use in-page #anchors on the homepage (smooth-scroll) and /#anchors
+   elsewhere so they navigate back to the homepage sections. #}
+{% set home = request.endpoint == 'index' %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, #0e1420 74%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.08); font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  header .nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+  header .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: 0.3px; color: #e7eefc; text-decoration: none; }
+  header .brand span { font-family: Poppins, Inter, sans-serif; font-weight: 700; }
+  header .brand-logo { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; box-shadow: 0 0 0 2px rgba(255,255,255,0.05), 0 10px 30px rgba(80,120,255,0.25); }
+  header nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+  header nav a { color: #b9c4da; font-weight: 500; font-size: 14px; opacity: 0.9; text-decoration: none; }
+  header nav a:hover { color: #e7eefc; }
+  header nav a.active { color: #6ea8fe; opacity: 1; }
+  @media (max-width: 560px) { header nav ul { display: none; } }
+</style>
+
+<header>
+    <div class="nav">
+        <a href="{{ '#home' if home else '/' }}" class="brand">
+            <img src="{{ url_for('static', filename='images/metiger_logo.png') }}" alt="MeTiger logo" class="brand-logo" />
+            <span>MeTiger Inc.</span>
+        </a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="{{ '#about' if home else '/#about' }}">About</a></li>
+                <li><a href="{{ '#services' if home else '/#services' }}">Services</a></li>
+                <li><a href="{{ '#projects' if home else '/#projects' }}">Projects</a></li>
+                <li><a href="/estimate-calculator"{% if request.endpoint == 'estimate_calculator' %} class="active"{% endif %}>Estimate Calculator</a></li>
+                <li><a href="{{ '#faq' if home else '/#faq' }}">FAQ</a></li>
+                <li><a href="{{ '#contact' if home else '/#contact' }}">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>

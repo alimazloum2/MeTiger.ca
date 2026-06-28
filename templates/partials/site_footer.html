@@ -1,0 +1,236 @@
+{# Shared site footer (dark). Included by base.html and index.html so every page
+   renders the identical footer + the Vision/Mission/etc. modals it links to.
+   Self-contained: hardcoded colors + own modal JS, so it works on pages that do
+   NOT define the homepage's CSS variables (e.g. the light base.html pages). #}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 60px 20px 40px; color: #b9c4da; background: #080c14; font-size: 14px; }
+  .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 40px; }
+  .footer-col { display: flex; flex-direction: column; gap: 12px; }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-brand img { width: 48px; height: 48px; border-radius: 10px; }
+  .footer-brand span { font-family: Poppins, sans-serif; font-weight: 700; font-size: 20px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+  .footer-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: row; flex-wrap: wrap; gap: 28px; align-items: center; }
+  .footer-links a { color: #b9c4da; transition: color 0.2s; font-weight: 500; text-decoration: none; cursor: pointer; }
+  .footer-links a:hover { color: #fff; }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; color: #000; transition: transform 0.2s, background 0.2s; }
+  .footer-social a:hover { transform: translateY(-2px); background: #6ea8fe; }
+  .footer-bottom { max-width: 1200px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: flex-end; font-size: 13px; color: #8fa3c7; }
+  @media (max-width: 1000px) {
+    .footer-grid { flex-direction: column; align-items: flex-start; gap: 30px; }
+    .footer-social { justify-content: flex-start; }
+    .footer-bottom { justify-content: flex-start; }
+  }
+  @media (max-width: 600px) { .footer-grid { width: 100%; } }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
+  .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+  .modal-content { background: #0e1420; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 6px 18px rgba(0,0,0,0.35); padding: 30px; color: #b9c4da; }
+  .modal-content h2 { color: #fff; margin-top: 0; font-family: Poppins, sans-serif; }
+  .modal-content h3 { color: #fff; font-size: 16px; margin: 20px 0 10px; }
+  .modal-content p { line-height: 1.6; margin-bottom: 12px; font-size: 14px; }
+  .modal-content ul { padding-left: 20px; margin-bottom: 12px; }
+  .modal-content li { margin-bottom: 6px; }
+  .modal-close { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #8fa3c7; cursor: pointer; font-size: 24px; transition: color 0.2s; }
+  .modal-close:hover { color: #fff; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+
+<footer>
+    <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-col">
+            <div class="footer-brand">
+                <img src="{{ url_for('static', filename='images/metiger_logo.png') }}" alt="MeTiger logo" />
+                <span>METIGER</span>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="footer-col footer-nav">
+            <ul class="footer-links">
+                <li><a href="#" id="privacy-trigger">Privacy Policy</a></li>
+                <li><a href="#" id="vision-trigger">Vision</a></li>
+                <li><a href="#" id="mission-trigger">Mission</a></li>
+                <li><a href="#" id="values-trigger">Core Values</a></li>
+                <li><a href="#" id="leadership-trigger">Leadership Principles</a></li>
+                <li><a href="/#contact">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-col">
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/metiger" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="https://www.youtube.com/@MeTigerCa" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 MeTiger Inc. All rights reserved.
+    </div>
+</footer>
+
+<!-- Privacy Policy Modal -->
+<div id="privacy-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h2>Privacy Policy</h2>
+        <div style="font-size: 13px; color: #8fa3c7; margin-bottom: 20px;">MeTiger Inc. — Updated March 1, 2026</div>
+
+        <p>MeTiger Inc. (“MeTiger,” “we,” “us,” or “our”) is a project management and consulting firm serving clients in the United States. Our registered office is located in Halifax, Nova Scotia, Canada.</p>
+        <p>This Privacy Policy explains how we handle personal information through our website, metiger.ca.</p>
+
+        <h3>Information We Collect</h3>
+        <p>We only collect personal information that you voluntarily submit through our website contact form.</p>
+        <p>The information collected is limited to what you enter in the form, which may include:</p>
+        <ul>
+            <li>Name</li>
+            <li>Email address</li>
+            <li>Phone number (if provided)</li>
+            <li>Company name (if provided)</li>
+            <li>Message content</li>
+        </ul>
+        <p>We do not use tracking tools, advertising pixels, analytics services, or user accounts.</p>
+
+        <h3>How Information Is Used</h3>
+        <p>When you submit the contact form:</p>
+        <ul>
+            <li>The information is transmitted to our server hosted on Oracle Cloud Infrastructure.</li>
+            <li>The message is sent directly to our business email inbox.</li>
+            <li>We use the information solely to respond to your inquiry and communicate with you.</li>
+        </ul>
+        <p>We do not store the information in a website database. We do not use it for marketing automation. We do not sell, rent, or share it with third parties.</p>
+
+        <h3>Data Retention</h3>
+        <p>We retain email communications only as long as reasonably necessary for business and record-keeping purposes.</p>
+
+        <h3>Security</h3>
+        <p>We take reasonable technical and administrative measures to protect information transmitted through our website. However, no method of internet transmission or electronic storage is completely secure.</p>
+
+        <h3>Cross-Border Processing</h3>
+        <p>MeTiger serves clients in the United States. Because our company is registered in Canada and uses cloud infrastructure that may operate in either country, email communications you send through this site may be processed or stored in Canada or the United States.</p>
+
+        <h3>Your Rights</h3>
+        <p>You may request access to or deletion of personal information you have submitted by contacting us.</p>
+
+        <h3>Contact</h3>
+        <p>If you have any questions about this Privacy Policy or wish to request access to or deletion of personal information you have submitted, please send us an email at the email address displayed in the website.</p>
+
+        <div style="margin-top: 30px; font-size: 13px; color: #8fa3c7; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+            MeTiger Inc.<br>
+            Halifax, Nova Scotia, Canada
+        </div>
+    </div>
+</div>
+
+<!-- Vision Modal -->
+<div id="vision-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h2>Vision</h2>
+        <div style="margin-top: 20px;">
+            <p>“To be the estimating partner contractors and general contractors trust most for fast, scope-complete electrical bids.”</p>
+        </div>
+    </div>
+</div>
+
+<!-- Mission Modal -->
+<div id="mission-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h2>Mission</h2>
+        <div style="margin-top: 20px;">
+            <p>“To turn complex electrical drawing sets into clear, bid-ready estimates — giving contractors accuracy, speed, and scope certainty on every tender.”</p>
+        </div>
+    </div>
+</div>
+
+<!-- Core Values Modal -->
+<div id="values-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h2>Core Values</h2>
+
+        <h3>Integrity</h3>
+        <p>We do what we say.</p>
+
+        <h3>Accountability</h3>
+        <p>We own the outcome.</p>
+
+        <h3>Transparency</h3>
+        <p>We communicate clearly and proactively.</p>
+
+        <h3>Innovation</h3>
+        <p>We continuously improve systems, processes, and thinking.</p>
+
+        <h3>Collaboration</h3>
+        <p>We build together; success is shared.</p>
+
+        <h3>Respect</h3>
+        <p>We value people, time, and expertise.</p>
+
+        <h3>Excellence</h3>
+        <p>We execute with discipline and precision.</p>
+    </div>
+</div>
+
+<!-- Leadership Principles Modal -->
+<div id="leadership-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h2>Leadership Principles</h2>
+        <ul style="margin-top: 20px;">
+            <li>Lead with Structural Integrity</li>
+            <li>Prioritize People and Safety</li>
+            <li>Build Trust Through Transparency</li>
+            <li>Lead with Purpose; Deliver with Precision</li>
+            <li>Empower the Team; Elevate the Project</li>
+            <li>Innovate Responsibly</li>
+            <li>Close with Pride</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    (function () {
+        // Generic modal logic for the shared footer links.
+        function setupModal(triggerId, modalId) {
+            const trigger = document.getElementById(triggerId);
+            const modal = document.getElementById(modalId);
+            if (!trigger || !modal) return;
+
+            const closeBtn = modal.querySelector('.modal-close');
+
+            const openModal = (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+            const closeModal = () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            trigger.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+            });
+        }
+
+        setupModal('privacy-trigger', 'privacy-modal');
+        setupModal('vision-trigger', 'vision-modal');
+        setupModal('mission-trigger', 'mission-modal');
+        setupModal('values-trigger', 'values-modal');
+        setupModal('leadership-trigger', 'leadership-modal');
+    })();
+</script>
