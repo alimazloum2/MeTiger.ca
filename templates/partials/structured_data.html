@@ -1,0 +1,122 @@
+<!-- Organization / WebSite / ProfessionalService structured data (JSON-LD).
+     Shared by index.html and base.html. Edit business facts here only. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://metiger.ca/#organization",
+      "name": "MeTiger Inc.",
+      "legalName": "MeTiger Inc.",
+      "url": "https://metiger.ca/",
+      "logo": "https://metiger.ca/static/images/metiger_logo.png",
+      "image": "https://metiger.ca/static/images/metiger_logo.png",
+      "email": "info@metiger.ca",
+      "telephone": "+1-782-640-5557",
+      "foundingDate": "2022",
+      "slogan": "Electrical estimating, delivered without drama.",
+      "description": "MeTiger Inc. is a commercial and industrial electrical estimating consultancy registered in Nova Scotia, Canada, serving electrical contractors and general contractors across Florida and Texas. Services include NEC-based electrical estimating and takeoffs, bid review, construction documentation, electrical design support, and project management. Packages are delivered remotely under NDA.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "620 Nine Mile Drive",
+        "addressLocality": "Bedford",
+        "addressRegion": "NS",
+        "postalCode": "B4A 0H4",
+        "addressCountry": "CA"
+      },
+      "areaServed": [
+        { "@type": "State", "name": "Florida" },
+        { "@type": "State", "name": "Texas" }
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/company/metiger",
+        "https://www.youtube.com/@MeTigerCa",
+        "https://network.procore.com/p/metiger-inc-bedford"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://metiger.ca/#website",
+      "url": "https://metiger.ca/",
+      "name": "MeTiger Inc.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://metiger.ca/#organization" }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://metiger.ca/#service",
+      "name": "MeTiger Inc.",
+      "url": "https://metiger.ca/",
+      "image": "https://metiger.ca/static/images/metiger_logo.png",
+      "email": "info@metiger.ca",
+      "telephone": "+1-782-640-5557",
+      "priceRange": "$$",
+      "parentOrganization": { "@id": "https://metiger.ca/#organization" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "620 Nine Mile Drive",
+        "addressLocality": "Bedford",
+        "addressRegion": "NS",
+        "postalCode": "B4A 0H4",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 44.70105,
+        "longitude": -63.68818
+      },
+      "areaServed": [
+        { "@type": "State", "name": "Florida" },
+        { "@type": "State", "name": "Texas" }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Electrical Estimating Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Commercial & Industrial Electrical Estimating",
+              "description": "NEC-based takeoffs and labor pricing built straight from your PDF or DWG drawing set. Material, devices, conduit, conductors, and gear, counted by system and priced with NECA labor units, delivered bid-ready on an agreed delivery window."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Electrical Takeoffs & Bid Review",
+              "description": "Standalone quantity takeoffs and an independent second set of eyes on your drawings and quantities before you submit, focused on the scope gaps that erode margin after award."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Construction Documentation",
+              "description": "Tender and construction-phase documentation: RFQs, front-end packages, and addenda before award; CDs, CCNs, and CCOs after award, keeping scope, cost, and drawings aligned."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Electrical Design Support",
+              "description": "Code-compliant electrical coordination support that bridges design intent and field execution, working alongside the engineer of record. MeTiger provides estimating and design support, not sealed or stamped engineering."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Project Management",
+              "description": "Scope, RFI, submittal, and change-order tracking that keeps electrical work flowing with fewer surprises and fewer change orders."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+</script>

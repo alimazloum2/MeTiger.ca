@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title or "MeTiger Inc. - Construction Project Management" }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}Professional construction project management services. On schedule, on budget, no surprises.{% endblock %}">
+
+    <!-- Canonical & social metadata -->
+    <link rel="canonical" href="https://metiger.ca{{ request.path }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MeTiger Inc.">
+    <meta property="og:title" content="{{ self.title() }}">
+    <meta property="og:description" content="{{ self.description() }}">
+    <meta property="og:url" content="https://metiger.ca{{ request.path }}">
+    <meta property="og:image" content="https://metiger.ca/static/images/metiger_logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ self.title() }}">
+    <meta name="twitter:description" content="{{ self.description() }}">
+    <meta name="twitter:image" content="https://metiger.ca/static/images/metiger_logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="shortcut icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+
+    <!-- Structured data for search & answer engines -->
+    {% include 'partials/structured_data.html' %}
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'metiger-blue': '#004c97',
+                        'metiger-orange': '#ff6b35',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #004c97 0%, #0066cc 100%);
+        }
+        .hero-bg {
+            background: linear-gradient(rgba(0, 76, 151, 0.8), rgba(0, 76, 151, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f8fafc" width="1200" height="600"/><g fill="%23e2e8f0"><rect x="0" y="0" width="200" height="200"/><rect x="400" y="0" width="200" height="200"/><rect x="800" y="0" width="200" height="200"/><rect x="200" y="200" width="200" height="200"/><rect x="600" y="200" width="200" height="200"/><rect x="1000" y="200" width="200" height="200"/><rect x="0" y="400" width="200" height="200"/><rect x="400" y="400" width="200" height="200"/><rect x="800" y="400" width="200" height="200"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e982110364ec48489332c306a57acd30"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Header (shared dark header, identical to homepage) -->
+    {% include 'partials/site_header.html' %}
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                {% for category, message in messages %}
+                    <div class="{% if category == 'success' %}bg-green-100 border-green-400 text-green-700{% else %}bg-red-100 border-red-400 text-red-700{% endif %} px-4 py-3 rounded border" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer (shared dark footer, identical to homepage) -->
+    {% include 'partials/site_footer.html' %}
+
+    <!-- (mobile-menu JS removed — the shared dark header has no hamburger menu) -->
+</body>
+</html>

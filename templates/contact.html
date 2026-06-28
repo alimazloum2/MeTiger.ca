@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - MeTiger Inc.{% endblock %}
+{% block description %}Get in touch with MeTiger Inc. for your construction project management needs. Free consultation available.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="gradient-bg py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+            Contact Us
+        </h1>
+        <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+            Ready to start your next construction project? Get in touch with our team for a free consultation and project assessment.
+        </p>
+    </div>
+</section>
+
+<!-- Contact Form and Info -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    Fill out the form below and we'll get back to you within 24 hours. All consultations are completely free and confidential.
+                </p>
+                
+                <form method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <input type="text" id="name" name="name" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-metiger-blue focus:border-transparent transition-colors">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-metiger-blue focus:border-transparent transition-colors">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Company/Organization</label>
+                        <input type="text" id="company" name="company" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-metiger-blue focus:border-transparent transition-colors">
+                    </div>
+                    
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-metiger-blue focus:border-transparent transition-colors">
+                    </div>
+                    
+                    <div>
+                        <label for="project_type" class="block text-sm font-medium text-gray-700 mb-2">Project Type</label>
+                        <select id="project_type" name="project_type" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-metiger-blue focus:border-transparent transition-colors">
+                            <option value="">Select a project type</option>
+                            <option value="commercial">Commercial Building</option>
+                            <option value="residential">Residential Development</option>
+                            <option value="infrastructure">Infrastructure</option>
+                            <option value="healthcare">Healthcare Facility</option>
+                            <option value="industrial">Industrial</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="budget" class="block text-sm font-medium text-gray-700 mb-2">Estimated Budget</label>
+                        <select id="budget" name="budget" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-metiger-blue focus:border-transparent transition-colors">
+                            <option value="">Select budget range</option>
+                            <option value="under-1m">Under $1M</option>
+                            <option value="1m-5m">$1M - $5M</option>
+                            <option value="5m-10m">$5M - $10M</option>
+                            <option value="10m-25m">$10M - $25M</option>
+                            <option value="25m-50m">$25M - $50M</option>
+                            <option value="over-50m">Over $50M</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Project Details *</label>
+                        <textarea id="message" name="message" rows="5" required 
+                                  placeholder="Please describe your project, timeline, and any specific requirements..."
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-metiger-blue focus:border-transparent transition-colors resize-vertical"></textarea>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <input type="checkbox" id="newsletter" name="newsletter" 
+                               class="mt-1 h-4 w-4 text-metiger-blue focus:ring-metiger-blue border-gray-300 rounded">
+                        <label for="newsletter" class="ml-3 text-sm text-gray-600">
+                            I would like to receive updates about MeTiger Inc. services and industry insights.
+                        </label>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-metiger-blue text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Contact Information -->
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    We're here to help with all your construction project management needs. Reach out to us through any of the channels below.
+                </p>
+                
+                <div class="space-y-8">
+                    <!-- Office Address -->
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-metiger-blue rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Registered Office</h3>
+                            <p class="text-gray-600">
+                                620 Nine Mile Drive<br>
+                                Bedford, NS B4A 0H4<br>
+                                Canada
+                            </p>
+                            <p class="text-sm text-gray-500 mt-2">Serving clients across the United States.</p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-metiger-blue rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Email</h3>
+                            <p class="text-gray-600">info@metiger.ca</p>
+                            <p class="text-sm text-gray-500">We respond within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Why Choose MeTiger Inc.?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                We bring decades of experience and proven methodologies to every project we manage.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-metiger-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Proven Track Record</h3>
+                <p class="text-gray-600">95% of our projects are completed on time and within budget, with zero major safety incidents.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-metiger-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Advanced Technology</h3>
+                <p class="text-gray-600">State-of-the-art project management tools and software for optimal efficiency and transparency.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-metiger-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Expert Team</h3>
+                <p class="text-gray-600">Certified project managers with deep construction industry expertise and continuous training.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-20 bg-metiger-blue">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            Ready to Get Started?
+        </h2>
+        <p class="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
+            Don't wait to start your next successful construction project. Contact us today for a free consultation and project assessment.
+        </p>
+        <div class="flex justify-center">
+            <a href="mailto:info@metiger.ca" class="bg-metiger-orange text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-colors shadow-lg">
+                Email Us
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+
+
+

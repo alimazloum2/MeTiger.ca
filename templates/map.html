@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MeTiger Inc. - Location Map</title>
+  <style>
+    /* This sets the map's size on the page */
+    #map {
+      height: 100vh; /* Full screen height */
+      width: 100%;
+    }
+    /* This removes default browser margins */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script>
+    // This is the main function that creates the map
+    function initMap() {
+      // 1. The location to center the map on (620 Nine Mile Drive, Bedford, NS)
+      const location = { lat: 44.7110, lng: -63.6814 };
+
+      // 2. The Map object
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15, // How zoomed in the map starts
+        center: location,
+        disableDefaultUI: true, // Hides the default map controls (zoom, etc.)
+        styles: [
+          {
+            "featureType": "all",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#ffffff"
+              }
+            ]
+          },
+          {
+            "featureType": "all",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#000000"
+              },
+              {
+                "lightness": 13
+              }
+            ]
+          },
+          {
+            "featureType": "administrative",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#000000"
+              }
+            ]
+          },
+          {
+            "featureType": "administrative",
+            "elementType": "geometry.stroke",
+            "stylers": [
+              {
+                "color": "#144b53"
+              },
+              {
+                "lightness": 14
+              },
+              {
+                "weight": 1.4
+              }
+            ]
+          },
+          {
+            "featureType": "landscape",
+            "elementType": "all",
+            "stylers": [
+              {
+                "color": "#08304b"
+              }
+            ]
+          },
+          {
+            "featureType": "poi",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#0c4152"
+              },
+              {
+                "lightness": 5
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#000000"
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "geometry.stroke",
+            "stylers": [
+              {
+                "color": "#0b434f"
+              },
+              {
+                "lightness": 25
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#000000"
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "geometry.stroke",
+            "stylers": [
+              {
+                "color": "#0b3d51"
+              },
+              {
+                "lightness": 16
+              }
+            ]
+          },
+          {
+            "featureType": "road.local",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#000000"
+              }
+            ]
+          },
+          {
+            "featureType": "transit",
+            "elementType": "all",
+            "stylers": [
+              {
+                "color": "#146474"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "all",
+            "stylers": [
+              {
+                "color": "#021019"
+              }
+            ]
+          }
+        ]
+      });
+
+      // 3. The Marker object
+      const marker = new google.maps.Marker({
+        position: location,
+        map: map,
+      });
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb77hPKeHWS9uofrWtbEo6CuQejqohW0U&callback=initMap">
+  </script>
+
+</body>
+</html>

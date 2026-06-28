@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Projects - MeTiger Inc.{% endblock %}
+{% block description %}Explore our portfolio of successful construction projects. From commercial buildings to infrastructure development, see how we deliver results.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="gradient-bg py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+            Our Projects
+        </h1>
+        <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+            Discover our portfolio of successful construction projects that showcase our expertise in project management and delivery excellence.
+        </p>
+    </div>
+</section>
+
+<!-- Featured Projects -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Featured Projects
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Each project represents our commitment to excellence, innovation, and client satisfaction.
+            </p>
+        </div>
+
+        <!-- Project 1: Walmart Supercenter, Pembroke Pines -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+            <div class="order-2 lg:order-1">
+                <img alt="Aerial view of a Walmart Supercenter retail building"
+                     src="{{ url_for('static', filename='images/placeholder.jpg') }}"
+                     class="w-full h-80 rounded-lg object-cover" />
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="h-full flex flex-col justify-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Retail Remodel – Walmart Supercenter, Pembroke Pines FL</h3>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Provided electrical estimating and engineering support for the interior remodel of a high-volume Walmart Supercenter (Store #2591-1004) in Pembroke Pines, FL. Scope covered lighting upgrades, refrigeration power, and back-of-house electrical modifications, coordinated around live store operations to minimize disruption to retail trading.
+                    </p>
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6 inline-block">
+                        <div class="text-2xl font-bold text-metiger-blue">50+</div>
+                        <div class="text-sm text-gray-600">Retail remodels delivered across FL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2: CAVA Doral -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+            <div>
+                <div class="h-full flex flex-col justify-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Restaurant Tenant Improvement – CAVA Doral, FL</h3>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Delivered electrical estimating and coordination for a new CAVA restaurant build-out in Doral, FL. Work covered kitchen power, hood interlocks, dining-area lighting, and tenant connection coordination with the landlord's base building, supporting an on-time opening for a national hospitality client.
+                    </p>
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6 inline-block">
+                        <div class="text-2xl font-bold text-metiger-blue">$12M+</div>
+                        <div class="text-sm text-gray-600">FL electrical scope estimated</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img alt="Modern restaurant interior with open kitchen"
+                     src="{{ url_for('static', filename='images/placeholder.jpg') }}"
+                     class="w-full h-80 rounded-lg object-cover" />
+            </div>
+        </div>
+
+        <!-- Project 3: Hernando County Lift Stations -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="order-2 lg:order-1">
+                <img alt="Municipal wastewater lift station with control enclosure"
+                     src="{{ url_for('static', filename='images/placeholder.jpg') }}"
+                     class="w-full h-80 rounded-lg object-cover" />
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="h-full flex flex-col justify-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Utility Infrastructure – Lift Station Electrical, Hernando County FL</h3>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Engineering and estimating support for municipal lift station electrical packages in Hernando County, FL. Scope spanned pump control panels, SCADA tie-ins, generator and ATS provisions, and utility coordination across multiple stations under a county-wide wastewater upgrade program.
+                    </p>
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6 inline-block">
+                        <div class="text-lg font-bold text-metiger-blue">Hernando · Pasco · Hillsborough</div>
+                        <div class="text-sm text-gray-600">Counties served</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Statistics -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Project Success Metrics
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Our track record speaks for itself. Here's how we measure success across all our projects.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center bg-white rounded-lg p-8 shadow-lg">
+                <div class="text-4xl font-bold text-metiger-blue mb-2">95%</div>
+                <div class="text-gray-600 mb-2">On-Time Delivery</div>
+                <p class="text-sm text-gray-500">Projects completed on or ahead of schedule</p>
+            </div>
+            <div class="text-center bg-white rounded-lg p-8 shadow-lg">
+                <div class="text-4xl font-bold text-metiger-blue mb-2">98%</div>
+                <div class="text-gray-600 mb-2">Budget Compliance</div>
+                <p class="text-sm text-gray-500">Projects delivered within budget</p>
+            </div>
+            <div class="text-center bg-white rounded-lg p-8 shadow-lg">
+                <div class="text-4xl font-bold text-metiger-blue mb-2">100%</div>
+                <div class="text-gray-600 mb-2">Safety Record</div>
+                <p class="text-sm text-gray-500">Zero major safety incidents</p>
+            </div>
+            <div class="text-center bg-white rounded-lg p-8 shadow-lg">
+                <div class="text-4xl font-bold text-metiger-blue mb-2">150+</div>
+                <div class="text-gray-600 mb-2">Projects Completed</div>
+                <p class="text-sm text-gray-500">Successfully delivered projects</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-20 bg-metiger-blue">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            Ready to Start Your Next Project?
+        </h2>
+        <p class="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
+            Join the ranks of successful clients who have trusted MeTiger Inc. to deliver their construction projects on time and within budget.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{ url_for('contact') }}" class="bg-metiger-orange text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-colors shadow-lg">
+                Start Your Project
+            </a>
+            <a href="{{ url_for('services') }}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-metiger-blue transition-colors">
+                Our Services
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+
+
+

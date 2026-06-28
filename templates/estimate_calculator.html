@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Electrical Estimate Calculator | MeTiger Inc.{% endblock %}
+{% block description %}Free electrical estimate worksheet — build a fast budget for commercial and industrial electrical fit-outs using your own unit prices, by MeTiger Inc.{% endblock %}
+
+{% block content %}
+{% raw %}
+<div class="mt-calc" id="estimate-calculator">
+  <style>
+    .mt-calc {
+      --ink: #e7eefc; --slate: #1a2238; --paper: #0b0f17; --card: #0e1526;
+      --line: rgba(255,255,255,0.10); --muted: #8fa3c7; --amber: #6ea8fe; --amber-soft: rgba(110,168,254,0.25);
+      --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--paper); color: var(--ink); font-family: var(--sans);
+      line-height: 1.5; padding: clamp(1.25rem, 4vw, 3rem) 1rem 4rem; -webkit-font-smoothing: antialiased;
+    }
+    .mt-calc * { box-sizing: border-box; }
+    .mt-calc .mt-wrap { max-width: 1060px; margin: 0 auto; }
+    .mt-calc .mt-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); font-weight: 700; margin: 0 0 0.6rem; }
+    .mt-calc h1 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 0.6rem; font-weight: 800; }
+    .mt-calc .mt-lede { color: var(--muted); max-width: 62ch; margin: 0 0 2rem; }
+    .mt-calc .mt-grid { display: grid; grid-template-columns: 1fr 360px; gap: 1.5rem; align-items: start; }
+    @media (max-width: 880px) { .mt-calc .mt-grid { grid-template-columns: 1fr; } }
+    .mt-calc .mt-sheet { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    .mt-calc .mt-group + .mt-group { border-top: 1px solid var(--line); }
+    .mt-calc .mt-group-head { display: flex; align-items: baseline; justify-content: space-between; padding: 0.85rem 1.1rem; background: var(--slate); color: #fff; }
+    .mt-calc .mt-group-head .mt-g-title { font-weight: 700; font-size: 0.92rem; letter-spacing: 0.02em; }
+    .mt-calc .mt-group-head .mt-g-unit { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; }
+    .mt-calc .mt-cols { grid-template-columns: 1fr 64px 104px 96px; }
+    .mt-calc .mt-row, .mt-calc .mt-col-head { display: grid; gap: 0.6rem; align-items: center; }
+    .mt-calc .mt-row { padding: 0.55rem 1.1rem; }
+    .mt-calc .mt-row + .mt-row { border-top: 1px solid var(--line); }
+    .mt-calc .mt-row .mt-item { font-size: 0.9rem; min-width: 0; }
+    .mt-calc .mt-row input { width: 100%; padding: 0.45rem 0.5rem; border: 1px solid var(--line); border-radius: 6px; font-family: var(--mono); font-size: 0.88rem; text-align: right; background: #0b1220; color: var(--ink); }
+    .mt-calc .mt-row input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-soft); }
+    .mt-calc .mt-line-total { font-family: var(--mono); text-align: right; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+    .mt-calc .mt-line-total.zero { color: #55617a; }
+    .mt-calc .mt-col-head { padding: 0.5rem 1.1rem; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); }
+    .mt-calc .mt-col-head span:nth-child(n+2) { text-align: right; }
+    .mt-calc .mt-add { padding: 0.5rem 1.1rem 0.9rem; }
+    .mt-calc .mt-add p { margin: 0; font-size: 0.78rem; color: var(--muted); }
+    .mt-calc .mt-oandp { margin-top: 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 1rem 1.1rem; display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+    .mt-calc .mt-oandp label { font-size: 0.9rem; font-weight: 600; }
+    .mt-calc .mt-oandp input { width: 84px; padding: 0.45rem 0.55rem; border: 1px solid var(--line); border-radius: 6px; font-family: var(--mono); text-align: right; font-size: 0.95rem; background: #0b1220; color: var(--ink); }
+    .mt-calc .mt-oandp input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-soft); }
+    .mt-calc .mt-oandp .mt-hint { font-size: 0.8rem; color: var(--muted); }
+    .mt-calc .mt-readout { position: sticky; top: 1rem; }
+    .mt-calc .mt-readout-card { background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 1.4rem 1.3rem; }
+    .mt-calc .mt-readout-card h2 { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 1rem; font-weight: 700; }
+    .mt-calc .mt-stat { display: flex; justify-content: space-between; align-items: baseline; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+    .mt-calc .mt-stat .mt-k { color: var(--muted); font-size: 0.86rem; }
+    .mt-calc .mt-stat .mt-v { font-family: var(--mono); font-size: 1.02rem; font-variant-numeric: tabular-nums; }
+    .mt-calc .mt-total { padding-top: 1rem; margin-top: 0.3rem; }
+    .mt-calc .mt-total .mt-k { color: var(--ink); font-weight: 700; font-size: 0.95rem; }
+    .mt-calc .mt-total .mt-v { color: var(--amber); font-size: 1.7rem; font-weight: 700; font-variant-numeric: tabular-nums; transition: color 0.18s ease; }
+    .mt-calc .mt-readout-note { font-size: 0.74rem; color: var(--muted); margin: 0.9rem 0 0; line-height: 1.45; }
+    .mt-calc .mt-cta { margin-top: 1rem; background: #15233f; color: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 1.2rem 1.3rem; text-align: left; }
+    .mt-calc .mt-cta p { margin: 0 0 0.85rem; font-size: 0.92rem; line-height: 1.45; }
+    .mt-calc .mt-cta a { display: inline-block; background: linear-gradient(180deg, #9ec2ff, #6ea8fe); color: #071320; text-decoration: none; font-weight: 700; padding: 0.6rem 1.1rem; border-radius: 7px; font-size: 0.9rem; }
+    .mt-calc .mt-cta a:hover { background: #9ec2ff; color: #071320; }
+    .mt-calc .mt-disclaimer { max-width: 1060px; margin: 2rem auto 0; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; line-height: 1.5; }
+    @media (prefers-reduced-motion: reduce) { .mt-calc * { transition: none !important; } }
+  </style>
+  <div class="mt-wrap">
+    <p class="mt-eyebrow">MeTiger Tools</p>
+    <h1>Electrical Estimate Worksheet</h1>
+    <p class="mt-lede">Build a fast budget for a commercial or industrial fit-out using <strong>your own</strong> unit prices. Enter quantities and your installed cost per item, organized by electrical system, and the worksheet totals it for you. Your numbers, your estimate — a planning aid, not a bid.</p>
+    <div class="mt-grid">
+      <div>
+        <div class="mt-sheet" id="mt-sheet">
+          <div class="mt-col-head mt-cols"><span>Item</span><span>Qty</span><span>Unit cost $</span><span>Line total</span></div>
+          <div class="mt-add"><p>Unit cost is your installed price per item (material + labor). Leave a line blank to skip it.</p></div>
+        </div>
+        <div class="mt-oandp">
+          <label for="mt-oandp-input">Overhead &amp; profit</label>
+          <input type="number" id="mt-oandp-input" min="0" step="1" value="0" inputmode="decimal" aria-label="Overhead and profit percentage">
+          <span style="font-family:var(--mono)">%</span>
+          <span class="mt-hint">Optional — applied to the subtotal.</span>
+        </div>
+      </div>
+      <div class="mt-readout">
+        <div class="mt-readout-card">
+          <h2>Your estimate</h2>
+          <div class="mt-stat"><span class="mt-k">Subtotal</span><span class="mt-v" id="mt-out-sub">$0</span></div>
+          <div class="mt-stat"><span class="mt-k">Overhead &amp; profit</span><span class="mt-v" id="mt-out-oandp">$0</span></div>
+          <div class="mt-stat mt-total"><span class="mt-k">Estimated total</span><span class="mt-v" id="mt-out-total">$0</span></div>
+          <p class="mt-readout-note">Built from the unit prices you entered. It does not include permits, taxes, bonding, or gear lead-time premiums unless you priced them in.</p>
+        </div>
+        <div class="mt-cta">
+          <p>Want a scope-complete number you can bid with? Send your PDF or DWG set and get a full electrical takeoff, under NDA.</p>
+          <a href="/#contact">Get a quote</a>
+        </div>
+      </div>
+    </div>
+    <p class="mt-disclaimer"><strong>Planning worksheet only.</strong> This tool totals the unit prices you enter and is not a bid, a price quote, or a guarantee of cost. It does not account for the full drawing set, specifications, site conditions, or scope gaps. MeTiger Inc. provides electrical estimating, takeoffs, and design support, and does not provide sealed or stamped engineering services.</p>
+  </div>
+  <script>
+  (function () {
+    var GROUPS = [
+      { group: "Lighting", unit: "each", items: [
+        { id: "tr", name: "2x4 LED troffer" }, { id: "wr", name: "Strip / wrap fixture" },
+        { id: "dl", name: "Recessed downlight" }, { id: "ex", name: "Exit / emergency unit" },
+        { id: "oc", name: "Lighting control / occ sensor" } ]},
+      { group: "Power & Devices", unit: "each", items: [
+        { id: "rx", name: "Duplex receptacle" }, { id: "gf", name: "GFCI receptacle" },
+        { id: "sw", name: "Wall switch" }, { id: "jc", name: "Equipment / junction connection" },
+        { id: "mc2", name: "Motor connection" } ]},
+      { group: "Distribution", unit: "each", items: [
+        { id: "pn", name: "Panelboard" }, { id: "ds", name: "Disconnect / safety switch" },
+        { id: "tx", name: "Transformer" } ]},
+      { group: "Raceway & Wire", unit: "per LF", items: [
+        { id: "e34", name: "EMT 3/4\" w/ conductors" }, { id: "e10", name: "EMT 1\" w/ conductors" },
+        { id: "mcc", name: "MC cable" } ]}
+    ];
+    var qty = {}, cost = {};
+    var sheet = document.getElementById("mt-sheet");
+    var addNote = sheet.querySelector(".mt-add");
+    var oandpInput = document.getElementById("mt-oandp-input");
+    function money(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
+    GROUPS.forEach(function (g) {
+      var groupEl = document.createElement("div"); groupEl.className = "mt-group";
+      var head = document.createElement("div"); head.className = "mt-group-head";
+      head.innerHTML = '<span class="mt-g-title">' + g.group + '</span><span class="mt-g-unit">' + g.unit + '</span>';
+      groupEl.appendChild(head);
+      g.items.forEach(function (it) {
+        var row = document.createElement("div"); row.className = "mt-row mt-cols";
+        row.innerHTML = '<div class="mt-item">' + it.name + '</div>' +
+          '<input type="number" min="0" step="1" inputmode="numeric" data-q="' + it.id + '" aria-label="Quantity of ' + it.name + '" placeholder="0">' +
+          '<input type="number" min="0" step="0.01" inputmode="decimal" data-c="' + it.id + '" aria-label="Unit cost for ' + it.name + '" placeholder="0.00">' +
+          '<div class="mt-line-total zero" data-line="' + it.id + '">$0</div>';
+        groupEl.appendChild(row);
+      });
+      sheet.insertBefore(groupEl, addNote);
+    });
+    function recalc() {
+      var sub = 0;
+      GROUPS.forEach(function (g) { g.items.forEach(function (it) {
+        var line = (qty[it.id] || 0) * (cost[it.id] || 0); sub += line;
+        var cell = sheet.querySelector('[data-line="' + it.id + '"]');
+        cell.textContent = money(line); cell.classList.toggle("zero", line <= 0);
+      }); });
+      var pct = parseFloat(oandpInput.value) || 0; var oandp = sub * (pct / 100);
+      document.getElementById("mt-out-sub").textContent = money(sub);
+      document.getElementById("mt-out-oandp").textContent = money(oandp);
+      document.getElementById("mt-out-total").textContent = money(sub + oandp);
+    }
+    sheet.addEventListener("input", function (e) {
+      var q = e.target.getAttribute("data-q"); var c = e.target.getAttribute("data-c");
+      if (q) { qty[q] = parseFloat(e.target.value) || 0; recalc(); }
+      if (c) { cost[c] = parseFloat(e.target.value) || 0; recalc(); }
+    });
+    oandpInput.addEventListener("input", recalc);
+    recalc();
+  })();
+  </script>
+</div>
+{% endraw %}
+{% endblock %}

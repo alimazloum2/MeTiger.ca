@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Commercial & Industrial Electrical Estimating | MeTiger Inc.</title>
+    <meta name="description" content="NEC-based electrical takeoffs, labor pricing, and bid-ready packages for commercial and industrial contractors across Florida and Texas. Remote and NDA-protected." />
+
+    <!-- Canonical & social metadata -->
+    <link rel="canonical" href="https://metiger.ca/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MeTiger Inc." />
+    <meta property="og:title" content="Commercial &amp; Industrial Electrical Estimating | MeTiger Inc." />
+    <meta property="og:description" content="NEC-based electrical takeoffs, labor pricing, and bid-ready packages for commercial and industrial contractors across Florida and Texas. Remote and NDA-protected." />
+    <meta property="og:url" content="https://metiger.ca/" />
+    <meta property="og:image" content="https://metiger.ca/static/images/metiger_logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Commercial &amp; Industrial Electrical Estimating | MeTiger Inc." />
+    <meta name="twitter:description" content="NEC-based electrical takeoffs, labor pricing, and bid-ready packages for commercial and industrial contractors across Florida and Texas. Remote and NDA-protected." />
+    <meta name="twitter:image" content="https://metiger.ca/static/images/metiger_logo.png" />
+
+    <!-- Structured data for search & answer engines -->
+    {% include 'partials/structured_data.html' %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "https://metiger.ca/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does MeTiger Inc. do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MeTiger Inc. is a commercial and industrial electrical estimating consultancy. We turn contractors' drawing sets into clean, bid-ready electrical packages — NEC-based takeoffs, labor pricing with NECA labor units, and scope clarity — for electrical contractors and general contractors across Florida and Texas. Every package is handled remotely under NDA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is MeTiger Inc. located and what areas does it serve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MeTiger Inc. is based in Nova Scotia, Canada, at 620 Nine Mile Drive, Bedford, NS B4A 0H4, and provides electrical estimating remotely for contractors across Florida and Texas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What services does MeTiger Inc. offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MeTiger offers five services: commercial and industrial electrical estimating (NEC-based takeoffs and NECA labor pricing); electrical takeoffs and bid review; construction documentation (RFQs, addenda, CDs, CCNs, and CCOs); electrical design support alongside the engineer of record; and project management (scope, RFI, submittal, and change-order tracking)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of projects has MeTiger Inc. worked on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Recent electrical estimating work includes a Walmart Supercenter retail remodel in Pembroke Pines, FL; a CAVA restaurant tenant improvement in Doral, FL; and municipal wastewater lift station electrical packages in Hernando County, FL."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I contact MeTiger Inc.?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can reach MeTiger Inc. by email at info@metiger.ca or by phone at +1 (782) 640-5557. You can also use the contact form at metiger.ca."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="shortcut icon" type="image/jpeg" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='metiger_logo.jpg') }}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-0: #0b0f17;
+            --bg-1: #0e1420;
+            --bg-2: #0f1729;
+            --text-0: #e7eefc;
+            --text-1: #b9c4da;
+            --muted: #8fa3c7;
+            --primary: #6ea8fe; /* soft blue */
+            --secondary: #a78bfa; /* soft purple */
+            --accent: #34d399; /* mint */
+            --card: #121a2a;
+            --card-2: #111827;
+            --stroke: rgba(255,255,255,0.08);
+            --shadow: 0 10px 30px rgba(0,0,0,0.35), 0 6px 18px rgba(0,0,0,0.35);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 10px;
+            --maxw: 1200px;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { min-height: 100%; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            color: var(--text-0);
+            background: radial-gradient(1200px 800px at 10% -10%, #213055 0%, transparent 60%),
+                        radial-gradient(900px 700px at 100% 0%, #2b1d4a88 0%, transparent 55%),
+                        radial-gradient(1200px 700px at 50% 120%, #0b3b3b55 0%, transparent 60%),
+                        linear-gradient(180deg, var(--bg-0), var(--bg-2));
+            background-attachment: fixed;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        /* Header */
+        header {
+            position: sticky; top: 0; z-index: 50;
+            background: color-mix(in srgb, var(--bg-1) 74%, transparent);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--stroke);
+        }
+        .nav {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+        }
+        .brand {
+            display: flex; align-items: center; gap: 12px;
+            font-weight: 800; letter-spacing: 0.3px;
+        }
+        .brand-mark {
+            width: 34px; height: 34px; border-radius: 10px;
+            background: conic-gradient(from 210deg at 50% 50%, var(--secondary), var(--primary), var(--accent), var(--secondary));
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.05), 0 10px 30px rgba(80,120,255,0.25);
+        }
+        .brand span { font-family: Poppins, Inter, sans-serif; font-weight: 700; }
+        .brand-logo { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; box-shadow: 0 0 0 2px rgba(255,255,255,0.05), 0 10px 30px rgba(80,120,255,0.25); }
+        nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+        nav a { color: var(--text-1); font-weight: 500; font-size: 14px; opacity: 0.9; }
+        nav a:hover { color: var(--text-0); }
+        nav a.active { color: var(--primary); }
+
+        /* Sections */
+        section { padding: 90px 20px; }
+        .container { max-width: var(--maxw); margin: 0 auto; }
+        .eyebrow { color: var(--muted); letter-spacing: .18em; text-transform: uppercase; font-size: 12px; }
+        .h1 { font-family: Poppins, Inter, sans-serif; font-weight: 800; font-size: clamp(24px, 4vw, 40px); line-height: 1.05; margin: 14px 0 14px; }
+        .lead { color: var(--text-1); font-size: clamp(14px, 1.8vw, 16px); max-width: 680px; }
+
+        /* Hero */
+        .hero { position: relative; overflow: clip; }
+        .hero .container { display: block; }
+        .hero .panel {
+            display: block;
+            background: transparent;
+            border: 1px solid var(--stroke); border-radius: var(--radius-lg); padding: 28px;
+        }
+        .hero-art {
+            position: relative; aspect-ratio: 1.1/1; border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, #0b101b 0%, #0a0e16 50%, #0f1629 100%);
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .hero-art .dot {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(120, 200, 255, 0.95);
+            box-shadow:
+                0 0 10px 3px rgba(120, 200, 255, 0.9),
+                0 0 30px 10px rgba(120, 200, 255, 0.35),
+                0 0 80px 30px rgba(120, 200, 255, 0.18);
+            pointer-events: none;
+            animation: dot-pulse 2.8s ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+        .hero-art .d1 { left: 22%; top: 72%; animation-delay: 0s; }
+        .hero-art .d2 { left: 52%; top: 59%; animation-delay: 0.6s; }
+        .hero-art .d3 { left: 83%; top: 28%; animation-delay: 1.2s; }
+        
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.35); opacity: 1; }
+        }
+        .hero-slogan {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            font-family: 'Poppins', 'Montserrat', Inter, sans-serif;
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 1.3;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .hero-slogan .line1,
+        .hero-slogan .line2 {
+            font-weight: 400;
+            text-shadow: 0 0 10px rgba(0, 174, 239, 0.6), 0 0 20px rgba(0, 174, 239, 0.4);
+        }
+        .hero-slogan .line3 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 174, 239, 0.8), 0 0 30px rgba(0, 174, 239, 0.5);
+            background: linear-gradient(135deg, #ffffff 0%, #00AEEF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @media (max-width: 768px) {
+            .hero-slogan {
+                top: 15px;
+                left: 20px;
+                font-size: 16px;
+            }
+            .hero-slogan .line3 {
+                font-size: 8px;
+            }
+        }
+        .ns-card {
+            position: relative; display: block; overflow: hidden; border-radius: 16px;
+        }
+        .ns-card img {
+            display: block; width: 100%; height: auto;
+        }
+        .ns-card .dot {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(120, 200, 255, 0.95);
+            box-shadow: 0 0 10px 3px rgba(120, 200, 255, 0.9), 0 0 30px 10px rgba(120, 200, 255, 0.35), 0 0 80px 30px rgba(120, 200, 255, 0.18);
+            pointer-events: none; animation: dot-pulse 2.8s ease-in-out infinite; mix-blend-mode: screen;
+        }
+        .ns-card .d1 { left: 22%; top: 72%; animation-delay: 0s; }
+        .ns-card .d2 { left: 52%; top: 59%; animation-delay: 0.6s; }
+        .ns-card .d3 { left: 83%; top: 28%; animation-delay: 1.2s; }
+        .floating-badge {
+            position: absolute; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.8);
+            color: white; padding: 8px 12px; border-radius: 20px; font-size: 12px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .pulse {
+            width: 8px; height: 8px; background: #4ade80; border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.35); opacity: 1; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .cta-row { display: flex; align-items: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+        .btn {
+            appearance: none; border: 0; cursor: pointer; border-radius: 999px;
+            padding: 12px 18px; font-weight: 600; letter-spacing: 0.2px; transition: transform .15s ease, box-shadow .3s ease, background .3s ease;
+        }
+        .btn-primary { color: #071320; background: linear-gradient(180deg, #9ec2ff, #6ea8fe); box-shadow: 0 12px 30px rgba(110,168,254,0.35); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(110,168,254,0.45); }
+        .btn-ghost { color: var(--text-0); background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+        .ns-overlay {
+            position: absolute; inset: 0; width: 100%; height: 100%; 
+            pointer-events: none; mix-blend-mode: screen; z-index: 2;
+        }
+        .ns-trace {
+            fill: none; stroke: #66b5ff; stroke-width: 1.6;
+            stroke-linecap: round; stroke-linejoin: round;
+            filter: drop-shadow(0 0 6px rgba(102,181,255,.9)) drop-shadow(0 0 20px rgba(102,181,255,.35));
+            opacity: .95;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .ns-trace { animation: none; }
+            .ns-spark { display: none; }
+        }
+        .hero-art::before {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(15, 22, 41, 0.7) 0%, rgba(11, 15, 23, 0.8) 100%);
+            pointer-events: none;
+        }
+        .hero-art .dot {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(120, 200, 255, 0.95);
+            box-shadow:
+                0 0 10px 3px rgba(120, 200, 255, 0.9),
+                0 0 30px 10px rgba(120, 200, 255, 0.35),
+                0 0 80px 30px rgba(120, 200, 255, 0.18);
+            pointer-events: none;
+            animation: dot-pulse 2.8s ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+        .hero-art .d1 { left: 22%; top: 72%; animation-delay: 0s; }
+        .hero-art .d2 { left: 52%; top: 59%; animation-delay: 0.6s; }
+        .hero-art .d3 { left: 83%; top: 28%; animation-delay: 1.2s; }
+        
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.35); opacity: 1; }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .hero-art .dot { animation: none; }
+        }
+        .floating-badge {
+            position: absolute; right: 16px; bottom: 16px; padding: 10px 14px; border-radius: 12px;
+            background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); color: var(--text-1);
+            font-size: 12px; display: flex; gap: 8px; align-items: center;
+        }
+        .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(52,211,153,.7); animation: pulse 2.2s infinite; }
+        @keyframes pulse { 0%{ box-shadow: 0 0 0 0 rgba(52,211,153,.7);} 70%{ box-shadow: 0 0 0 12px rgba(52,211,153,0);} 100%{ box-shadow: 0 0 0 0 rgba(52,211,153,0);} }
+
+        /* Cards grid */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+        .card {
+            background: linear-gradient(180deg, #0e1526, #0d1322);
+            border: 1px solid var(--stroke); border-radius: var(--radius-md);
+            padding: 20px; box-shadow: var(--shadow);
+            transition: transform .2s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.45); border-color: rgba(255,255,255,0.14); }
+        .card h3 { margin: 10px 0 6px; font-family: Poppins, Inter, sans-serif; }
+        .card p { color: var(--text-1); }
+
+        .project-media { border-radius: 10px; overflow: hidden; aspect-ratio: 16/10; border: 1px solid var(--stroke); margin-bottom: 12px; }
+        .project-media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05) contrast(1.02); transition: transform .5s ease; }
+        .card:hover .project-media img { transform: scale(1.05); }
+
+        /* About */
+        .about {
+            position: relative;
+        }
+        .about .panel {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;
+            background: linear-gradient(180deg, #0f1629, #0b0f17);
+            border: 1px solid var(--stroke); border-radius: var(--radius-lg); padding: 20px;
+        }
+        .about .panel > div:first-child {
+            max-width: 90%;
+            padding: 10px 0;
+        }
+        .about .illustration {
+            aspect-ratio: 1.2/1; border-radius: var(--radius-md); 
+            background: url("{{ url_for('static', filename='images/metiger-ns-ca.png') }}") center/cover;
+            border: 1px solid var(--stroke); 
+            position: relative; overflow: hidden;
+        }
+        .about .illustration::before {
+            content: ""; position: absolute; inset: 0;
+            background: 
+                radial-gradient(3px 3px at 20% 25%, rgba(6, 182, 212, 0.4), transparent),
+                radial-gradient(2px 2px at 60% 20%, rgba(59, 130, 246, 0.3), transparent),
+                radial-gradient(3px 3px at 80% 40%, rgba(139, 92, 246, 0.2), transparent),
+                radial-gradient(2px 2px at 30% 60%, rgba(6, 182, 212, 0.3), transparent),
+                radial-gradient(3px 3px at 70% 75%, rgba(59, 130, 246, 0.4), transparent),
+                radial-gradient(2px 2px at 15% 85%, rgba(139, 92, 246, 0.2), transparent);
+            animation: network-pulse 6s ease-in-out infinite;
+        }
+        .about .illustration::after {
+            content: ""; position: absolute; inset: 0;
+            background: 
+                linear-gradient(45deg, transparent 48%, rgba(6, 182, 212, 0.1) 49%, rgba(6, 182, 212, 0.1) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(59, 130, 246, 0.08) 49%, rgba(59, 130, 246, 0.08) 51%, transparent 52%),
+                linear-gradient(30deg, transparent 48%, rgba(139, 92, 246, 0.06) 49%, rgba(139, 92, 246, 0.06) 51%, transparent 52%);
+            animation: connection-flow 8s ease-in-out infinite;
+        }
+        .network-node {
+            position: absolute;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: rgba(6, 182, 212, 0.6);
+            animation: node-glow 4s ease-in-out infinite;
+        }
+        .network-node:nth-child(1) { top: 25%; left: 20%; animation-delay: 0s; }
+        .network-node:nth-child(2) { top: 20%; left: 60%; animation-delay: 1s; }
+        .network-node:nth-child(3) { top: 40%; left: 80%; animation-delay: 2s; }
+        .network-node:nth-child(4) { top: 60%; left: 30%; animation-delay: 3s; }
+        .network-node:nth-child(5) { top: 75%; left: 70%; animation-delay: 4s; }
+        .network-node:nth-child(6) { top: 85%; left: 15%; animation-delay: 5s; }
+        
+        @keyframes network-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        @keyframes connection-flow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.4; }
+        }
+        @keyframes node-glow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.3); }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .about .illustration::before,
+            .about .illustration::after,
+            .network-node {
+                animation: none;
+            }
+        }
+        
+        @media (max-width: 560px) {
+            .network-node:nth-child(4),
+            .network-node:nth-child(5),
+            .network-node:nth-child(6) {
+                display: none;
+            }
+        }
+        .about .illustration .slogan {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Contact */
+        .contact-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
+        form { background: linear-gradient(180deg, #0f1629, #0b0f17); border: 1px solid var(--stroke); border-radius: var(--radius-md); padding: 18px; box-shadow: var(--shadow); }
+        label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 6px; }
+        input, textarea { width: 100%; padding: 12px 12px; border-radius: 10px; border: 1px solid var(--stroke); background: #0e1526; color: var(--text-0); font-size: 14px; }
+        textarea { min-height: 120px; resize: vertical; }
+        .error { color: #ffb4b4; font-size: 12px; min-height: 16px; padding-top: 4px; }
+
+        .map-placeholder { border-radius: var(--radius-md); border: 1px solid var(--stroke); background: radial-gradient(200px 160px at 25% 30%, #6ea8fe22, transparent 60%), radial-gradient(260px 200px at 80% 60%, #a78bfa22, transparent 60%), #0b101b; position: relative; box-shadow: var(--shadow); }
+        .map-placeholder::before { content: "620 Nine Mile Drive, Bedford, NS"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--muted); letter-spacing: .1em; text-transform: none; font-size: 14px; text-align: center; line-height: 1.4; }
+        .map-placeholder .pin { width: 12px; height: 12px; background: #ff6b6b; border-radius: 50%; position: absolute; left: 58%; top: 48%; box-shadow: 0 0 0 4px rgba(255,107,107,.25); }
+        .map-placeholder .pin::after { content: ""; position: absolute; width: 2px; height: 18px; background: #ff6b6b; left: 50%; transform: translateX(-50%); top: 10px; border-radius: 2px; }
+        .map-placeholder .pin::before { content: ""; position: absolute; width: 18px; height: 18px; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px dashed rgba(255,255,255,.2); animation: ping 3s infinite linear; }
+        @keyframes ping { to { transform: translate(-50%,-50%) rotate(360deg);} }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--stroke); padding: 60px 20px 40px; color: var(--text-1); background: #080c14; font-size: 14px; }
+        .footer-grid {
+            max-width: var(--maxw); margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .footer-col { display: flex; flex-direction: column; gap: 12px; }
+        .footer-brand { display: flex; align-items: center; gap: 12px; }
+        .footer-brand img { width: 48px; height: 48px; border-radius: 10px; }
+        .footer-brand span { font-family: Poppins, sans-serif; font-weight: 700; font-size: 20px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .footer-links { 
+            list-style: none; padding: 0; margin: 0; 
+            display: flex; flex-direction: row; flex-wrap: wrap; 
+            gap: 28px; 
+            align-items: center;
+        }
+        .footer-links a { color: var(--text-1); transition: color 0.2s; font-weight: 500; }
+        .footer-links a:hover { color: #fff; }
+        
+        .footer-social { display: flex; gap: 12px; }
+        .footer-social a { 
+            display: flex; align-items: center; justify-content: center; 
+            width: 40px; height: 40px; border-radius: 50%; background: #fff; color: #000;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .footer-social a:hover { transform: translateY(-2px); background: var(--primary); }
+        
+        .footer-bottom { 
+            max-width: var(--maxw); margin: 40px auto 0; padding-top: 20px; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            display: flex; justify-content: flex-end; 
+            font-size: 13px; color: var(--muted);
+        }
+
+        /* Utilities */
+        .spacer-xxl { height: 10px; }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .hero .container { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .about .panel { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 1000px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 820px) {
+            .grid-3 { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 560px) {
+            nav ul { display: none; }
+            .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            section { padding: 70px 16px; }
+            .nav { padding: 12px 16px; }
+        }
+
+        /* Footer Responsive */
+        @media (max-width: 1000px) {
+            .footer-grid { 
+                flex-direction: column; 
+                align-items: flex-start;
+                gap: 30px; 
+            }
+            .footer-social { justify-content: flex-start; }
+            .footer-bottom { justify-content: flex-start; }
+        }
+        @media (max-width: 600px) {
+            .footer-grid { width: 100%; }
+        }
+        
+        /* Crypto payment gate (revealed after Turnstile passes) */
+        #crypto-section { display: none; opacity: 0; transition: opacity .3s ease; }
+        #crypto-section.visible { opacity: 1; }
+        @media (prefers-reduced-motion: reduce) {
+            #crypto-section { transition: none; }
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000;
+            display: none; justify-content: center; align-items: center; padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-content {
+            background: var(--bg-1); border: 1px solid var(--stroke); border-radius: var(--radius-lg);
+            max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;
+            position: relative; box-shadow: var(--shadow);
+            padding: 30px; color: var(--text-1);
+        }
+        .modal-content h2 { color: #fff; margin-top: 0; font-family: Poppins, sans-serif; }
+        .modal-content h3 { color: #fff; font-size: 16px; margin: 20px 0 10px; }
+        .modal-content p { line-height: 1.6; margin-bottom: 12px; font-size: 14px; }
+        .modal-content ul { padding-left: 20px; margin-bottom: 12px; }
+        .modal-content li { margin-bottom: 6px; }
+        .modal-close {
+            position: absolute; top: 15px; right: 15px; background: transparent; border: none;
+            color: var(--muted); cursor: pointer; font-size: 24px; transition: color 0.2s;
+        }
+        .modal-close:hover { color: #fff; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    {% include 'partials/site_header.html' %}
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero panel">
+                <div>
+                    <div class="eyebrow">MeTiger Inc.</div>
+                    <h1 class="h1">Electrical estimating, delivered without drama.</h1>
+                    <p class="lead">MeTiger turns your drawing set into a clean, bid-ready electrical package — NEC-based takeoffs, labor pricing, and scope clarity for commercial and industrial contractors across Florida and Texas. Every package is handled under NDA.</p>
+                    <div class="cta-row">
+                        <a class="btn btn-primary" href="#contact">Get a quote</a>
+                        <a class="btn btn-ghost" href="#services">Explore services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <svg class="ns-overlay" viewBox="0 0 803 647" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <path id="ns-path" class="ns-trace" pathLength="1000" d="M242.5 473.915C240.833 478.581 233.5 493.515 217.5 515.915L191.5 543.915L164.5 571.915L140.5 587.915L128.5 598.915L121.5 571.915L108.5 605.915L84.5 632.915L77.5 643.915L55.5 627.915L49.5 605.915L40.5 571.915H33.5L24.5 587.915L9.5 571.915L1.5 524.915V493.915L18.5 453.915L49.5 427.915L40.5 407.915L217.5 306.915L228.5 286.915L238.5 295.915L242.5 320.915L262.5 306.915L296.5 299.915L358.5 286.915L277.5 281.915L228.5 272.915L199.5 286.915H164.5L210.5 242.915L234.5 206.915L271.5 180.915L313.5 206.915L361.5 221.915L408.5 225.915L472.5 247.915L537.5 206.915V238.915L564.5 256.915L595.5 242.915L586.5 196.915L595.5 167.915L630.5 117.915L671.5 53.9146L701.5 15.9146L725.5 1.91455L733.5 10.9146L743.5 31.9146L720.5 126.915L743.5 133.915L767.5 140.915L792.5 151.915V167.915L800.5 180.915L767.5 211.915L733.5 242.915C718.167 247.581 686.3 256.915 681.5 256.915C676.7 256.915 657.5 261.581 648.5 263.915L630.5 272.915L614.5 286.915L595.5 299.915H609.5L664.5 306.915L620.5 320.915L547.5 347.915L533.5 358.915L500.5 374.915L472.5 390.915L431.5 407.915L384.5 418.915H358.5L335.5 431.915L332.5 442.915V462.915H313.5L286.5 448.915L277.5 418.915L271.5 427.915V453.915L262.5 448.915L249.5 442.915L234.5 448.915V462.915L242.5 473.915Z" />
+                    
+                    <use href="#ns-path" class="ns-seg"
+                         stroke="#66b5ff" stroke-width="2" fill="none"
+                         style="filter: drop-shadow(0 0 10px rgba(102,181,255,.9))
+                                         drop-shadow(0 0 28px rgba(102,181,255,.4));
+                                mix-blend-mode: screen;"
+                         stroke-dasharray="60 940" stroke-dashoffset="0">
+                        <animate id="traceAnim"
+                                 attributeName="stroke-dashoffset"
+                                 from="0" to="-1000"
+                                 dur="8s" repeatCount="indefinite"
+                                 calcMode="linear" />
+                    </use>
+
+                    <circle r="4" fill="#d6ecff"
+                            style="filter: drop-shadow(0 0 8px rgba(190,230,255,.95))
+                                            drop-shadow(0 0 26px rgba(120,200,255,.45));
+                                   mix-blend-mode: screen;">
+                        <animateMotion dur="8s" repeatCount="indefinite"
+                                       rotate="auto" calcMode="linear"
+                                       begin="traceAnim.begin">
+                            <mpath xlink:href="#ns-path"/>
+                        </animateMotion>
+                    </circle>
+                </svg>
+                <div class="dot d1"></div>
+                <div class="dot d2"></div>
+                <div class="dot d3"></div>
+                <div class="floating-badge"><span class="pulse"></span> Project status: On schedule</div>
+                        </div>
+                    </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about panel">
+                <div>
+                    <div class="eyebrow">About</div>
+                    <h2 class="h1" style="font-size: clamp(26px,4.5vw,40px); margin-top: 8px;">A senior set of eyes on your electrical bid.</h2>
+                    <p class="lead">MeTiger works quietly behind the scenes so your bid goes out complete. We read the drawings the way they will be built, count every system, and price the work with NECA labor units — closing the scope gaps that turn into change orders after award. Senior estimating discipline, fewer surprises, no drama.</p>
+                    <div class="cta-row" style="margin-top: 18px;">
+                        <a class="btn btn-ghost" href="#projects">Explore projects</a>
+                    </div>
+                </div>
+                <div class="illustration">
+                    <div class="hero-slogan">
+                        <div class="line1">Based in Nova Scotia.</div>
+                        <div class="line2">Estimating for Florida and Texas.</div>
+                        <div class="line3">Strong • Focused • Relentless</div>
+                    </div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="container">
+            <div class="eyebrow">Services</div>
+            <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">What we do</h2>
+            <div class="grid-4" style="margin-top: 18px;">
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow1" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <circle cx="19" cy="19" r="12" fill="none" stroke="#00AEEF" stroke-width="2" filter="url(#glow1)"/>
+                            <path d="M19,8 L25,16 L21,16 L22,24 L15,16 L19,16" fill="none" stroke="#00AEEF" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Commercial & Industrial Electrical Estimating</h3>
+                    </div>
+                    <p>NEC-based takeoffs and labor pricing built straight from your PDF or DWG drawing set. Material, devices, conduit, conductors, and gear — counted by system and priced with NECA labor units. Delivered bid-ready, on a delivery window agreed up front.</p>
+                </article>
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow2" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <line x1="8" y1="12" x2="30" y2="12" stroke="#20B2AA" stroke-width="2" filter="url(#glow2)"/>
+                            <line x1="8" y1="19" x2="30" y2="19" stroke="#20B2AA" stroke-width="2"/>
+                            <line x1="8" y1="26" x2="30" y2="26" stroke="#20B2AA" stroke-width="2"/>
+                            <circle cx="10" cy="12" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <circle cx="10" cy="19" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <circle cx="10" cy="26" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <path d="M12,10 L16,14 L12,18" fill="none" stroke="#20B2AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12,17 L16,21 L12,25" fill="none" stroke="#20B2AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Electrical Takeoffs & Bid Review</h3>
+                    </div>
+                    <p>Standalone quantity takeoffs when you need the counts, and an independent second set of eyes on your drawings and quantities before you submit — focused on the scope gaps that erode margin after award.</p>
+                </article>
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow3" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect x="8" y="6" width="22" height="28" rx="2" fill="none" stroke="#10B981" stroke-width="2" filter="url(#glow3)"/>
+                            <rect x="10" y="8" width="18" height="24" rx="1" fill="none" stroke="#10B981" stroke-width="1.5"/>
+                            <rect x="12" y="10" width="14" height="20" rx="1" fill="none" stroke="#10B981" stroke-width="1.5"/>
+                            <line x1="14" y1="14" x2="24" y2="14" stroke="#10B981" stroke-width="1"/>
+                            <line x1="14" y1="18" x2="22" y2="18" stroke="#10B981" stroke-width="1"/>
+                            <line x1="14" y1="22" x2="20" y2="22" stroke="#10B981" stroke-width="1"/>
+                        </svg>
+                        <h3>Construction Documentation</h3>
+                    </div>
+                    <p>Tender and construction-phase documentation: RFQs, front-end packages, and addenda before award; CDs, CCNs, and CCOs after, keeping scope, cost, and drawings aligned.</p>
+                </article>
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow4" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect x="8" y="8" width="22" height="22" rx="3" fill="none" stroke="#FF6B6B" stroke-width="2" filter="url(#glow4)"/>
+                            <rect x="10" y="10" width="18" height="18" rx="2" fill="none" stroke="#FF6B6B" stroke-width="1.5"/>
+                            <line x1="12" y1="14" x2="26" y2="14" stroke="#FF6B6B" stroke-width="1"/>
+                            <line x1="12" y1="18" x2="24" y2="18" stroke="#FF6B6B" stroke-width="1"/>
+                            <line x1="12" y1="22" x2="22" y2="22" stroke="#FF6B6B" stroke-width="1"/>
+                            <circle cx="28" cy="10" r="2" fill="none" stroke="#FF6B6B" stroke-width="1.5"/>
+                            <path d="M26,8 L30,8 L30,12" fill="none" stroke="#FF6B6B" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <h3>Electrical Design Support</h3>
+                    </div>
+                    <p>Code-compliant electrical coordination support that bridges design intent and field execution, working alongside the engineer of record. MeTiger provides estimating and design support, not sealed or stamped engineering.</p>
+                </article>
+                <article class="card">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <svg width="38" height="38" viewBox="0 0 38 38" style="flex-shrink: 0;">
+                            <defs>
+                                <filter id="glow5" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <line x1="8" y1="12" x2="30" y2="12" stroke="#20B2AA" stroke-width="2" filter="url(#glow5)"/>
+                            <line x1="8" y1="19" x2="30" y2="19" stroke="#20B2AA" stroke-width="2"/>
+                            <line x1="8" y1="26" x2="30" y2="26" stroke="#20B2AA" stroke-width="2"/>
+                            <circle cx="10" cy="12" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <circle cx="10" cy="19" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <circle cx="10" cy="26" r="2" fill="none" stroke="#20B2AA" stroke-width="1.5"/>
+                            <path d="M12,10 L16,14 L12,18" fill="none" stroke="#20B2AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12,17 L16,21 L12,25" fill="none" stroke="#20B2AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Project Management</h3>
+                    </div>
+                    <p>Scope, RFI, submittal, and change-order tracking that keeps electrical work flowing with fewer surprises and fewer change orders.</p>
+                </article>
+        </div>
+    </div>
+</section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <div class="eyebrow">Projects</div>
+            <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">Selected work</h2>
+            <div class="grid-3" style="margin-top: 18px;">
+                <article class="card">
+                    <div class="project-media">
+                        <img alt="Aerial view of a Walmart Supercenter retail building" src="{{ url_for('static', filename='images/placeholder.jpg') }}" />
+                    </div>
+                    <h3>Retail Remodel – Walmart Supercenter, Pembroke Pines FL</h3>
+                    <p>Provided electrical estimating and engineering support for the interior remodel of a high-volume Walmart Supercenter (Store #2591-1004) in Pembroke Pines, FL. Scope covered lighting upgrades, refrigeration power, and back-of-house electrical modifications, coordinated around live store operations to minimize disruption to retail trading.</p>
+                </article>
+                <article class="card">
+                    <div class="project-media">
+                        <img alt="Modern restaurant interior with open kitchen" src="{{ url_for('static', filename='images/placeholder.jpg') }}" />
+                    </div>
+                    <h3>Restaurant Tenant Improvement – CAVA Doral, FL</h3>
+                    <p>Delivered electrical estimating and coordination for a new CAVA restaurant build-out in Doral, FL. Work covered kitchen power, hood interlocks, dining-area lighting, and tenant connection coordination with the landlord's base building, supporting an on-time opening for a national hospitality client.</p>
+                </article>
+                <article class="card">
+                    <div class="project-media">
+                        <img alt="Municipal wastewater lift station with control enclosure" src="{{ url_for('static', filename='images/placeholder.jpg') }}" />
+                    </div>
+                    <h3>Utility Infrastructure – Lift Station Electrical, Hernando County FL</h3>
+                    <p>Engineering and estimating support for municipal lift station electrical packages in Hernando County, FL. Scope spanned pump control panels, SCADA tie-ins, generator and ATS provisions, and utility coordination across multiple stations under a county-wide wastewater upgrade program.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <div class="eyebrow">Contact</div>
+            <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">Let's work together</h2>
+            <div id="contact-details" style="display: none; gap: 28px; flex-wrap: wrap; margin-top: 12px; align-items: flex-start;">
+                <div>
+                    <a href="tel:+17826405557" style="display: flex; align-items: center; gap: 8px; color: var(--text-1); font-size: 15px; transition: color .2s;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        +1 (782) 640-5557
+                    </a>
+                </div>
+                <div>
+                    <a href="mailto:info@metiger.ca" style="display: flex; align-items: center; gap: 8px; color: var(--text-1); font-size: 15px; transition: color .2s;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        info@metiger.ca
+                    </a>
+                    <span style="display: block; font-size: 10px; color: var(--accent); margin-top: 3px; padding-left: 28px; opacity: 0.9;">Email is active — feel free to reach out anytime</span>
+                </div>
+            </div>
+            <div class="contact-grid" style="margin-top: 18px;">
+                <form id="contactForm" action="/send_message" method="POST" novalidate>
+                    <input type="text" name="company" id="company" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px" aria-hidden="true">
+                    <input type="hidden" name="started_at" id="started_at" value="{{ START_TS }}">
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+                        <div class="error" id="nameError"></div>
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+                        <div class="error" id="emailError"></div>
+                </div>
+                    <div>
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your project" required></textarea>
+                        <div class="error" id="messageError"></div>
+            </div>
+                    <div id="turnstile-widget" class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" style="margin: 10px 0; min-height: 65px; border: 1px solid #ccc; padding: 10px;"></div>
+                    <!-- Debug: Site key = {{ TURNSTILE_SITE_KEY }} -->
+                    <div class="cta-row" style="margin-top: 10px;">
+                        <button class="btn btn-primary" type="submit">Send message</button>
+                        <button class="btn btn-ghost" type="reset">Reset</button>
+                </div>
+                    <div class="error" id="formSuccess" style="color:#9ef7c1"></div>
+                </form>
+                <div class="map-container" style="min-height: 300px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--stroke); box-shadow: var(--shadow);">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836.787687678564!2d-63.68818438446554!3d44.70105377909927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4b5a206660636b97%3A0x6676367373076773!2s620%20Nine%20Mile%20Dr%2C%20Bedford%2C%20NS%20B4A%200H4!5e0!3m2!1sen!2sus!4v1677685621453!5m2!1sen!2sus"
+                        width="100%"
+                        height="300"
+                        style="border:0; display: block;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+        </div>
+
+            <!-- Pay with TigerCoin (gated by Turnstile; hidden until verified) -->
+            <div id="crypto-section" style="margin-top: 56px;">
+                <div class="eyebrow">Pay with crypto</div>
+                <h2 class="h1" style="font-size: clamp(24px,4vw,36px); margin-top: 8px;">Accept TigerCoin for consultations</h2>
+                <p class="lead">MeTiger accepts TigerCoin (TGR) as a service credit for short engineering and estimation consultations. 1 TGR = $1 USD.</p>
+
+                <div class="card" style="max-width: 560px; margin-top: 22px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--stroke);">
+                        <div>
+                            <div style="color: var(--text-0); font-weight: 600;">15-minute consultation</div>
+                            <div style="color: var(--muted); font-size: 13px; margin-top: 2px;">Engineering &amp; estimation</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: var(--text-0); font-weight: 600;">15 TGR</div>
+                            <div style="color: var(--muted); font-size: 13px; margin-top: 2px;">$15 USD</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: center; padding: 22px 0 18px;">
+                        <div id="tgr-qr" aria-label="TigerCoin payment address QR code" style="background: #fff; padding: 12px; border-radius: 10px; line-height: 0;"></div>
+                    </div>
+
+                    <div>
+                        <label for="tgr-ens-field">Send payment to</label>
+                        <div style="display: flex; gap: 8px; align-items: stretch;">
+                            <input type="text" readonly value="" id="tgr-ens-field" style="flex: 1; font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;">
+                            <button type="button" id="tgr-copy-ens" class="btn btn-ghost" aria-label="Copy payment address" style="white-space: nowrap;">Copy</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="tgr-contract-field">TigerCoin contract (to add &amp; verify)</label>
+                        <div style="display: flex; gap: 8px; align-items: stretch;">
+                            <input type="text" readonly value="" id="tgr-contract-field" style="flex: 1; font-family: ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 12px;">
+                            <button type="button" id="tgr-copy-contract" class="btn btn-ghost" aria-label="Copy TigerCoin contract address" style="white-space: nowrap;">Copy</button>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--muted); font-size: 13px; margin: 18px 0 0;">Network: <span id="tgr-network">Base</span>. Don't have TigerCoin yet? Get in touch and we'll set you up.</p>
+                </div>
+            </div>
+    </div>
+</section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="container">
+            <div class="eyebrow">FAQ</div>
+            <h2 class="h1" style="font-size: clamp(28px,4.5vw,44px);">Frequently asked questions</h2>
+            <div class="grid-3" style="margin-top: 18px;">
+                <article class="card">
+                    <h3>What does MeTiger Inc. do?</h3>
+                    <p>MeTiger Inc. is a commercial and industrial electrical estimating consultancy. We turn contractors' drawing sets into clean, bid-ready electrical packages — NEC-based takeoffs, NECA labor pricing, and scope clarity — for electrical contractors and general contractors across Florida and Texas. Every package is handled remotely under NDA.</p>
+                </article>
+                <article class="card">
+                    <h3>Where are you located and what areas do you serve?</h3>
+                    <p>MeTiger Inc. is based in Nova Scotia, Canada (620 Nine Mile Drive, Bedford, NS B4A 0H4) and provides electrical estimating remotely for contractors across Florida and Texas.</p>
+                </article>
+                <article class="card">
+                    <h3>What services does MeTiger offer?</h3>
+                    <p>Five services: commercial &amp; industrial electrical estimating, electrical takeoffs &amp; bid review, construction documentation, electrical design support, and project management.</p>
+                </article>
+                <article class="card">
+                    <h3>What types of projects have you worked on?</h3>
+                    <p>Recent electrical estimating work includes a Walmart Supercenter remodel in Pembroke Pines, FL; a CAVA restaurant build-out in Doral, FL; and municipal wastewater lift station electrical packages in Hernando County, FL.</p>
+                </article>
+                <article class="card">
+                    <h3>How can I contact MeTiger Inc.?</h3>
+                    <p>Email us at <a href="mailto:info@metiger.ca" style="color: var(--primary);">info@metiger.ca</a> or call <a href="tel:+17826405557" style="color: var(--primary);">+1 (782) 640-5557</a>. You can also use the contact form above.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer-xxl"></div>
+
+    <!-- Footer -->
+    {% include 'partials/site_footer.html' %}
+
+    <!-- Footer modals + their modal JS now live in partials/site_footer.html -->
+    <script>
+        // Smooth scroll offset for sticky header
+        function offsetAnchor(targetId) {
+            const header = document.querySelector('header');
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            const top = target.getBoundingClientRect().top + window.pageYOffset - (header?.offsetHeight || 0) - 8;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+
+        // Intercept nav clicks for offset scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                const hash = a.getAttribute('href');
+                if (!hash || hash === '#') return;
+                const id = hash.substring(1);
+                const el = document.getElementById(id);
+                if (!el) return;
+                e.preventDefault();
+                history.pushState(null, '', hash);
+                offsetAnchor(id);
+            });
+        });
+
+        // Active nav highlighting using IntersectionObserver
+        const sections = ['home','about','services','projects','faq','contact']
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+        const linkFor = (id) => document.querySelector(`nav a[href="#${id}"]`);
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const link = linkFor(id);
+                if (!link) return;
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.01 });
+        sections.forEach(s => io.observe(s));
+
+        // Form validation
+        const form = document.getElementById('contactForm');
+        const nameEl = document.getElementById('name');
+        const emailEl = document.getElementById('email');
+        const messageEl = document.getElementById('message');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const messageError = document.getElementById('messageError');
+        const formSuccess = document.getElementById('formSuccess');
+
+        function validateEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+
+        function setError(el, errorEl, message) {
+            if (message) {
+                el.setAttribute('aria-invalid', 'true');
+                errorEl.textContent = message;
+            } else {
+                el.removeAttribute('aria-invalid');
+                errorEl.textContent = '';
+            }
+        }
+
+        [nameEl, emailEl, messageEl].forEach((el) => {
+            el.addEventListener('input', () => {
+                if (el === nameEl) setError(nameEl, nameError, nameEl.value.trim() ? '' : 'Please enter your name');
+                if (el === emailEl) setError(emailEl, emailError, validateEmail(emailEl.value) ? '' : 'Enter a valid email');
+                if (el === messageEl) setError(messageEl, messageError, messageEl.value.trim() ? '' : 'Please add a message');
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            formSuccess.textContent = '';
+            
+            const nameOk = nameEl.value.trim().length > 1;
+            const emailOk = validateEmail(emailEl.value);
+            const msgOk = messageEl.value.trim().length > 5;
+            
+            setError(nameEl, nameError, nameOk ? '' : 'Please enter your name');
+            setError(emailEl, emailError, emailOk ? '' : 'Enter a valid email');
+            setError(messageEl, messageError, msgOk ? '' : 'Please add a longer message');
+            
+            if (nameOk && emailOk && msgOk) {
+                try {
+                    const formData = new FormData(form);
+                    const response = await fetch('/send_message', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        formSuccess.textContent = result.message;
+                        form.reset();
+                    } else {
+                        formSuccess.textContent = result.message;
+                        formSuccess.style.color = '#ffb4b4';
+                    }
+                } catch (error) {
+                    formSuccess.textContent = 'Error sending message. Please try again.';
+                    formSuccess.style.color = '#ffb4b4';
+                }
+            }
+        });
+
+        // Dynamic year - Removed as it is hardcoded in new footer
+        // document.getElementById('year').textContent = new Date().getFullYear();
+
+        // If the page loads with a hash, apply offset scroll
+        window.addEventListener('load', () => {
+            if (location.hash) {
+                const id = location.hash.replace('#','');
+                setTimeout(() => offsetAnchor(id), 0);
+            }
+            
+            // Fallback to ensure started_at always gets a timestamp
+            const startedInput = document.getElementById('started_at');
+            if (startedInput && !startedInput.value) {
+                startedInput.value = (Date.now() / 1000).toString();
+            }
+        });
+    </script>
+    <!-- TigerCoin payment widget (populated after Turnstile reveal) -->
+    <script>
+        (function () {
+            let copyBound = false;
+
+            function bindCopyButtons() {
+                if (copyBound) return;
+                copyBound = true;
+
+                function bind(btnId, fieldId) {
+                    const btn = document.getElementById(btnId);
+                    const field = document.getElementById(fieldId);
+                    if (!btn || !field) return;
+                    const original = btn.textContent;
+                    btn.addEventListener('click', async () => {
+                        const value = field.value;
+                        if (!value) return;
+                        try {
+                            await navigator.clipboard.writeText(value);
+                        } catch (e) {
+                            const tmp = document.createElement('textarea');
+                            tmp.value = value;
+                            tmp.style.position = 'fixed';
+                            tmp.style.left = '-9999px';
+                            document.body.appendChild(tmp);
+                            tmp.select();
+                            try { document.execCommand('copy'); } catch (_) {}
+                            document.body.removeChild(tmp);
+                        }
+                        btn.textContent = 'Copied';
+                        setTimeout(() => { btn.textContent = original; }, 1500);
+                    });
+                }
+
+                bind('tgr-copy-ens', 'tgr-ens-field');
+                bind('tgr-copy-contract', 'tgr-contract-field');
+            }
+
+            window.applyPaymentInfo = function (info) {
+                const ens = document.getElementById('tgr-ens-field');
+                const contract = document.getElementById('tgr-contract-field');
+                const network = document.getElementById('tgr-network');
+                const qr = document.getElementById('tgr-qr');
+                if (ens) ens.value = info.ensName || '';
+                if (contract) contract.value = info.contractAddress || '';
+                if (network && info.network) network.textContent = info.network;
+                if (qr && info.qrSvg) qr.innerHTML = info.qrSvg;
+                bindCopyButtons();
+            };
+
+            window.clearPaymentInfo = function () {
+                const ens = document.getElementById('tgr-ens-field');
+                const contract = document.getElementById('tgr-contract-field');
+                const qr = document.getElementById('tgr-qr');
+                if (ens) ens.value = '';
+                if (contract) contract.value = '';
+                if (qr) qr.innerHTML = '';
+            };
+
+            window.showCryptoSection = function () {
+                const section = document.getElementById('crypto-section');
+                if (!section) return;
+                section.style.display = 'block';
+                requestAnimationFrame(() => { section.classList.add('visible'); });
+            };
+
+            window.hideCryptoSection = function () {
+                const section = document.getElementById('crypto-section');
+                if (!section) return;
+                section.classList.remove('visible');
+                setTimeout(() => {
+                    if (!section.classList.contains('visible')) {
+                        section.style.display = 'none';
+                        window.clearPaymentInfo();
+                    }
+                }, 300);
+            };
+
+            window.revealPaymentInfo = async function (token) {
+                if (!token) return;
+                try {
+                    const body = new FormData();
+                    body.append('cf-turnstile-response', token);
+                    const r = await fetch('/api/reveal-payment', { method: 'POST', body: body });
+                    if (!r.ok) return;
+                    const data = await r.json();
+                    if (data && data.success) {
+                        window.applyPaymentInfo(data);
+                        window.showCryptoSection();
+                    }
+                } catch (e) {
+                    console.error('Failed to reveal payment info', e);
+                }
+            };
+        })();
+    </script>
+
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+        // Turnstile callbacks
+        window.onTurnstileSuccess = function(token) {
+            const details = document.getElementById('contact-details');
+            if (details) {
+                details.style.display = 'flex';
+            }
+            if (typeof window.revealPaymentInfo === 'function') {
+                window.revealPaymentInfo(token);
+            }
+        };
+
+        window.onTurnstileExpired = function() {
+            const details = document.getElementById('contact-details');
+            if (details) {
+                details.style.display = 'none';
+            }
+            if (typeof window.hideCryptoSection === 'function') {
+                window.hideCryptoSection();
+            }
+        };
+
+        // Prevent duplicate Turnstile widgets
+        window.addEventListener('load', function() {
+            // Remove any duplicate widgets
+            const widgets = document.querySelectorAll('.cf-turnstile');
+            if (widgets.length > 1) {
+                for (let i = 1; i < widgets.length; i++) {
+                    widgets[i].remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
