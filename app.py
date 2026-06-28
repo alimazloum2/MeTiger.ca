@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, Response
-import io, os, re, time, requests
+import io, os, re, time, requests, hmac, hashlib
 from collections import OrderedDict
 from threading import Lock
 from dotenv import load_dotenv
@@ -20,6 +20,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-producti
 # Anti-spam configuration
 app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "0x4AAAAAAB8Wgm9wM6xbP-yW")
 TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "")
+EL_WEBHOOK_SECRET = os.getenv("EL_WEBHOOK_SECRET", "")
 limiter = Limiter(get_remote_address, app=app, default_limits=["100/hour"])
 URL_RE = re.compile(r'https?://', re.I)
 DISPOSABLE = {"mailinator.com","guerrillamail.com","10minutemail.com","tempmail.dev","yopmail.com","getnada.com","trashmail.com"}
@@ -237,6 +238,75 @@ def contact():
         return redirect(url_for('contact'))
     
     return render_template("contact.html")
+
+
+def _verify_elevenlabs_signature(raw_body, sig_header):
+    """Verify the ElevenLabs HMAC signature (header 'ElevenLabs-Signature:
+    t=<ts>,v0=<hex>'). Requests without a valid signature are rejected (401)."""
+    if not sig_header:
+        return False
+    try:
+        parts = dict(p.split("=", 1) for p in sig_header.split(","))
+        ts, v0 = parts.get("t"), parts.get("v0")
+        if not ts or not v0:
+            return False
+        signed = f"{ts}.{raw_body}"
+        expected = hmac.new(EL_WEBHOOK_SECRET.encode(), signed.encode(), hashlib.sha256).hexdigest()
+        return hmac.compare_digest(expected, v0)
+    except Exception:
+        return False
+
+
+def _send_call_summary_email(subject, body):
+    """Email an ElevenLabs post-call summary to the business inbox via Office365 SMTP."""
+    smtp_user = os.environ.get("SMTP_USER")
+    smtp_password = os.environ.get("SMTP_PASSWORD")
+    if not smtp_user or not smtp_password:
+        raise ValueError("SMTP credentials not configured")
+    msg = MIMEMultipart()
+    msg["From"] = "MeTiger Website <info@metiger.ca>"
+    msg["To"] = os.environ.get("EMAIL_TO") or "info@metiger.ca"
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
+    server = smtplib.SMTP("smtp.office365.com", 587)
+    server.starttls()
+    server.login(smtp_user, smtp_password)
+    server.send_message(msg)
+    server.quit()
+
+
+@app.route("/elevenlabs/post-call", methods=["POST"])
+@limiter.exempt
+def elevenlabs_post_call():
+    """Receiver for ElevenLabs post-call webhooks: verify signature, email a
+    call summary + transcript to info@metiger.ca, and ack with 200."""
+    raw = request.get_data(as_text=True)
+    if not _verify_elevenlabs_signature(raw, request.headers.get("ElevenLabs-Signature", "")):
+        return jsonify({"error": "invalid signature"}), 401
+
+    payload = request.get_json(silent=True) or {}
+    data = payload.get("data", {}) or {}
+    analysis = data.get("analysis", {}) or {}
+    conv_id = data.get("conversation_id", "unknown")
+    summary = analysis.get("transcript_summary") or "(no summary provided)"
+    turns = []
+    for t in (data.get("transcript") or []):
+        text = t.get("message") or t.get("text") or ""
+        if text:
+            turns.append(f"{t.get('role', '?')}: {text}")
+    transcript = "\n".join(turns) or "(no transcript)"
+    body = (
+        f"ElevenLabs AI call\n\nConversation: {conv_id}\n"
+        f"Agent: {data.get('agent_id', '')}\n\n"
+        f"Summary:\n{summary}\n\nTranscript:\n{transcript}\n"
+    )
+    try:
+        _send_call_summary_email(f"AI call summary — {conv_id}", body)
+        print(f"ElevenLabs webhook: emailed summary for {conv_id} to {os.environ.get('EMAIL_TO') or 'info@metiger.ca'}", flush=True)
+    except Exception as e:
+        print(f"ElevenLabs webhook email error: {e}", flush=True)  # ack anyway so EL doesn't retry-storm
+    return jsonify({"status": "ok"}), 200
+
 
 def _build_qr_svg(text):
     qr = segno.make(text, error="m")
