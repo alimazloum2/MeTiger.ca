@@ -1,0 +1,174 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Municipal &amp; Utility Electrical Estimating Canada | MeTiger{% endblock %}
+{% block meta_description %}Municipal and utility electrical estimating in Canada — lift and pump stations, water and wastewater treatment, SCADA rough-in, standby generators, MCCs, and tender front-end packages. Quoted after drawing review.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Municipal & Utility','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you estimate pump and lift station electrical?','a':'Yes. Pump and lift stations are core municipal work for us — we quantify the service and distribution, motor feeders, VFDs and starters in the MCC, control panel and SCADA rough-in, standby generator and transfer switch, wet-well instrumentation conduit, area lighting, grounding, and the underground between structures.'},
+    {'q':'Can you work from public tender documents and addenda?','a':'Yes. Municipal and utility work is tender-driven, so send the full front-end package, drawings, specifications, and every addendum issued. We reconcile each addendum against the base set and keep an addenda log so late scope changes are counted, not missed.'},
+    {'q':'Do you coordinate electrical with the process and mechanical scope?','a':'We cross-check electrical against the process, mechanical, and instrumentation drawings to catch equipment with no clear power or control source — pumps, blowers, mixers, actuated valves, and packaged systems — and log the connections and gaps rather than assume them silently.'},
+    {'q':'Is your estimate based on the Canadian Electrical Code?','a':'Our takeoff and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments, the project specifications, and local utility requirements. Final compliance remains subject to the project engineer, the local authority having jurisdiction, and applicable provincial or territorial requirements.'},
+    {'q':'Do you provide stamped or sealed engineering?','a':'No. MeTiger provides estimating, takeoff, and coordination support only. We do not issue stamped drawings, sealed professional engineering, or code-compliance certification, and we work alongside the engineer of record where required.'},
+    {'q':'How is a municipal or utility estimate priced?','a':'Each estimate is quoted after drawing review, based on structure count, scope complexity, controls and SCADA involvement, the tender deadline, and the deliverables you need. Send the tender set and closing date and we confirm scope, fee, and delivery window before work begins.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Municipal & Utility Electrical Estimating Canada', 'Electrical estimating and takeoff support for Canadian municipal and utility infrastructure — pump and lift stations, water and wastewater treatment, SCADA rough-in, standby generators, MCCs, site electrical, and tender front-end packages.', '/municipal-utility-electrical-estimating-canada/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Municipal &amp; Utility Electrical Estimating</div>
+    <h1 class="h1">Municipal &amp; Utility Electrical Estimating in Canada</h1>
+    <p class="lead">MeTiger prepares electrical takeoffs and scope reviews for Canadian municipal and infrastructure projects — lift and pump stations, water and wastewater treatment plants, standby power, motor control, and site electrical. We read tender front-end packages and addenda-heavy documents the way a bidding contractor has to, and hand back a package you can actually price and defend.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request Municipal/Utility Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Pump & lift stations','Water & wastewater','SCADA & controls rough-in','Standby power & ATS','Tender front-end aware','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Municipal &amp; utility projects we estimate</h2>
+    <p class="lead">Public infrastructure electrical carries its own rhythm — process-driven layouts, controls tie-ins, and tender rules. These are the projects we quantify most.</p>
+    <div class="grid grid-4" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Pump &amp; lift stations</h3><p>Sanitary and stormwater lift stations, booster and pumping stations with wet-well instrumentation, controls, and standby power.</p></div>
+      <div class="card"><h3 class="h3">Water &amp; wastewater treatment</h3><p>Water treatment and wastewater treatment plants (WTP / WWTP) with process electrical, MCC rooms, and area classification input from the design team.</p></div>
+      <div class="card"><h3 class="h3">Roads &amp; site lighting</h3><p>Roadway, parking, and area lighting, plus site electrical and underground duct-bank distribution across a plant site.</p></div>
+      <div class="card"><h3 class="h3">Municipal facilities</h3><p>Public works buildings, reservoirs, chambers, and utility facilities with distribution, lighting, and standby generation.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your estimate includes</h2>
+    <p class="lead">A reviewable package built for a tender close — every quantity, assumption, and exclusion in the open.</p>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook by structure and system</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list organized by system</li>
+      <li>Labour-hour summary with the labour-unit basis</li>
+      <li>Project-specific labour assumptions</li>
+      <li>MCC, gear, and long-lead item notes</li>
+      <li>Inclusions and exclusions list</li>
+      <li>Addenda review and reconciliation log</li>
+      <li>Process / mechanical coordination notes</li>
+      <li>RFI and scope-gap log for the design team</li>
+      <li>Tender front-end and Division notes where applicable</li>
+      <li>Bid summary ready for your closing sheet</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. SCOPE WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Scope we quantify</h2>
+    <p class="lead">From the incoming service to the last field device, organized the way a municipal electrical package is built and bid.</p>
+    {{ systems([
+      {'title':'Service & distribution','items':['Utility service entrance and coordination','Switchgear, switchboards, panels','Distribution transformers','Metering and power monitoring']},
+      {'title':'Standby power','items':['Standby diesel or gas generators','Automatic transfer switches (ATS)','Generator feeders and connection','Load-bank and docking provisions where shown']},
+      {'title':'Motors, VFD & MCC','items':['Pump and blower motor feeders','Variable frequency drives (VFDs)','Motor control centres (MCCs)','Starters, disconnects, and controls']},
+      {'title':'Controls & SCADA rough-in','items':['PLC and control panel rough-in','SCADA / telemetry conduit and tie-ins','Instrumentation and field-device conduit','Signal and network pathway rough-in']},
+      {'title':'Site & underground','items':['Underground duct banks and manholes','Site electrical and area lighting','Roadway and parking lighting','Cable, conductor, and raceway']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Lightning and surge provisions where shown','Fire alarm coordination','Life-safety coordination']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 4. PUBLIC TENDER & ADDENDA NOTE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Tenders &amp; addenda</div>
+    <h2 class="h2">Built for public tenders and addenda-heavy bids</h2>
+    <p class="lead">Municipal and utility work closes on public tender documents, and those documents move — addenda revise pump schedules, MCC layouts, controls narratives, and site work right up to closing. We read the front-end package, not just the drawings, and reconcile every addendum against the base set so a late change does not walk out of your number.</p>
+    <ul class="checks" style="margin-top:18px;">
+      <li>Front-end and specification review alongside the drawings</li>
+      <li>Addenda logged and reconciled against the base tender set</li>
+      <li>Electrical cross-checked against process, mechanical, and instrumentation scope</li>
+      <li>Documented assumptions and exclusions — not silent guesses</li>
+    </ul>
+    <div class="note warn" style="margin-top:18px;">Send every addendum as it is issued. Municipal closings often carry several rounds, and reconciling them against the base set is where missed scope and margin leaks usually hide.</div>
+  </div>
+</section>
+
+<!-- 5. CEC / AHJ CAVEAT -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; approach</div>
+    <h2 class="h2">CEC-aware estimating support</h2>
+    <p class="lead">Our takeoff and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments and practices, the project specifications, and local utility requirements. We estimate what the tender documents call for, in the classified and process areas the engineer defines, and flag where the documents do not agree.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial or territorial requirements. MeTiger provides estimating and coordination support — not stamped drawings, sealed professional engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send the tender set','body':'Share the drawings, front-end specifications, and any addenda — as a PDF or DWG set, or a Dropbox / Drive / plan-room link.'},
+      {'title':'Confirm scope and closing date','body':'We confirm the project type, the electrical scope, the controls and SCADA involvement, and the tender close.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before work begins.'},
+      {'title':'Takeoff and coordination','body':'We quantify the electrical scope by structure and system and cross-check it against the process and mechanical documents.'},
+      {'title':'Log assumptions, gaps, and addenda','body':'Assumptions, exclusions, RFIs, and addenda reconciliation are documented clearly.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package on the agreed window, ready for your closing sheet.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">Pricing and quote process</h2>
+    <p class="lead">Every municipal or utility estimate is quoted after drawing review, based on structure count, scope complexity, controls and SCADA involvement, the tender deadline, and the deliverables you need. Send the tender set and closing date; MeTiger confirms scope, fee, and delivery window before any work begins — a clear fee for a package you can bid with.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Request Municipal/Utility Estimate</a></div>
+    <p class="note" style="margin-top:18px;">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 8. RELATED SERVICES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Related services</div>
+    <h2 class="h2">Related estimating services</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Industrial electrical estimating</h3><p>Plant and process electrical, motor control, and heavy distribution across Canadian industrial projects. <a href="/industrial-electrical-estimating-canada/" style="color:var(--primary)">Industrial estimating &rarr;</a></p></div>
+      <div class="card"><h3 class="h3">All electrical estimating</h3><p>Commercial, industrial, municipal, and more — takeoffs, labour summaries, and bid review across Canada. <a href="/canada-electrical-estimating-services/" style="color:var(--primary)">All services &rarr;</a></p></div>
+      <div class="card"><h3 class="h3">Electrical takeoff services</h3><p>Standalone quantity takeoffs and marked-up drawings when you carry your own labour and pricing. <a href="/electrical-takeoff-services-canada/" style="color:var(--primary)">Takeoff services &rarr;</a></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 10. FINAL CTA -->
+{{ cta_band('Send your tender set and get a quote',
+    'Share the drawings, front-end package, and addenda with the closing date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request Municipal/Utility Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

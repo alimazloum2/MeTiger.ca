@@ -1,0 +1,56 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema %}
+
+{% block page_title %}Consultation Payments (TigerCoin) | MeTiger Inc.{% endblock %}
+{% block meta_description %}Pay for short MeTiger engineering and estimating consultations with TigerCoin (TGR). Verify to reveal payment details.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Payments','url':None}] %}
+{% block head_schema %}{{ breadcrumb_schema(crumbs) }}{% endblock %}
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container narrow">
+    <div class="eyebrow">Payments</div>
+    <h1 class="h1">Consultation payments</h1>
+    <p class="lead">MeTiger accepts TigerCoin (TGR) as a service credit for short engineering and estimating consultations. 1 TGR = $1 USD. Complete the quick verification below to reveal payment details. This page is separate from electrical estimating quotes — for a project estimate, <a href="/contact/" style="color:var(--primary);">request a quote</a>.</p>
+
+    <div id="crypto-section" style="margin-top: 8px;">
+      <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" data-callback="onPayVerify" style="margin: 18px 0;"></div>
+      <div id="pay-card" class="card" style="max-width: 560px; display:none;">
+        <div style="display:flex; justify-content:space-between; padding-bottom:14px; border-bottom:1px solid var(--stroke);">
+          <div><div style="font-weight:600;">15-minute consultation</div><div class="muted" style="font-size:13px;">Engineering & estimating</div></div>
+          <div style="text-align:right;"><div style="font-weight:600;">15 TGR</div><div class="muted" style="font-size:13px;">$15 USD</div></div>
+        </div>
+        <div style="display:flex; justify-content:center; padding:22px 0 18px;"><div id="tgr-qr" style="background:#fff; padding:12px; border-radius:10px; line-height:0;"></div></div>
+        <label for="tgr-ens">Send payment to</label>
+        <div style="display:flex; gap:8px;"><input type="text" readonly id="tgr-ens" style="flex:1; font-family:ui-monospace,monospace;"><button type="button" class="btn btn-ghost" id="tgr-copy">Copy</button></div>
+        <p class="muted" style="font-size:13px; margin-top:14px;">Network: <span id="tgr-net">Base</span>. Don’t have TigerCoin yet? <a href="/contact/" style="color:var(--primary);">Get in touch</a> and we’ll set you up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+window.onPayVerify = async function (token) {
+  if (!token) return;
+  try {
+    var body = new FormData(); body.append('cf-turnstile-response', token);
+    var r = await fetch('/api/reveal-payment', { method: 'POST', body: body });
+    if (!r.ok) return;
+    var d = await r.json();
+    if (!d || !d.success) return;
+    document.getElementById('tgr-ens').value = d.ensName || d.qrAddress || '';
+    if (d.network) document.getElementById('tgr-net').textContent = d.network;
+    if (d.qrSvg) document.getElementById('tgr-qr').innerHTML = d.qrSvg;
+    document.getElementById('pay-card').style.display = 'block';
+  } catch (e) {}
+};
+document.getElementById('tgr-copy').addEventListener('click', function () {
+  var f = document.getElementById('tgr-ens'); if (!f.value) return;
+  navigator.clipboard && navigator.clipboard.writeText(f.value);
+  this.textContent = 'Copied'; var b = this; setTimeout(function(){ b.textContent = 'Copy'; }, 1500);
+});
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{% endblock %}

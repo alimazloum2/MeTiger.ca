@@ -1,0 +1,182 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Electrical Takeoff Services Canada | MeTiger Inc.{% endblock %}
+{% block meta_description %}Standalone electrical material takeoffs in Canada for estimators and GCs who price their own labour. Colour-coded marked-up drawings and counts by system.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Takeoff Services Canada','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you work from PDF or DWG drawings?','a':'Both. Send a PDF tender set or DWG / CAD files, along with any specifications and addenda. A plan link to Dropbox, Drive, or Procore also works. We quantify from whatever set you can share and note the file version the takeoff was measured against.'},
+    {'q':'Do you price the takeoff, or just count it?','a':'By default a takeoff is quantities and counts only — no labour hours and no dollar pricing — so you apply your own labour rates and material pricing. If you would rather receive a fully priced estimate with a labour-hour summary and bid summary, we can quote that instead. You choose the deliverable before work begins.'},
+    {'q':'Are the marked-up drawings included?','a':'Yes. Every takeoff ships with colour-coded marked-up drawings so you can trace each count back to the sheet it came from and verify our numbers line by line rather than taking them on trust.'},
+    {'q':'Will you sign an NDA before I share drawings?','a':'Yes. A mutual NDA is available on request before you upload any tender documents or plan links. Your drawings and quantities are treated as confidential.'},
+    {'q':'Do you provide takeoffs across Canada?','a':'Yes. We prepare electrical quantity takeoffs remotely for contractors, estimators, and general contractors in every province and territory, using Canadian market pricing assumptions and CEC-aware scope notes where relevant.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Electrical Takeoff Services', 'Standalone electrical material and quantity takeoffs in Canada — colour-coded marked-up drawings and counts by device, fixture, conduit, conductor, and gear for estimators and GCs who carry their own labour rates and pricing.', '/electrical-takeoff-services-canada/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Electrical Takeoff Services</div>
+    <h1 class="h1">Electrical Takeoff Services in Canada</h1>
+    <p class="lead">MeTiger prepares standalone electrical material takeoffs for Canadian estimators and general contractors who carry their own labour rates and pricing. You get clean, reviewable quantities — devices, fixtures, conduit, conductor, and gear counted straight from the drawings — so you can drop them into your own pricing model or check a subcontractor's numbers before you carry them.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Send Plans for Takeoff</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample takeoff</a>
+    </div>
+    {{ trust_bar(['Quantities only, you price it','Colour-coded marked-up plans','Counts by system','Canadian market assumptions','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. WHO A TAKEOFF IS FOR -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Who it's for</div>
+    <h2 class="h2">A takeoff for teams that own their own pricing</h2>
+    <p class="lead">A standalone quantity takeoff is the right fit when you already have a labour and material pricing model you trust — you just need accurate counts to feed it, or a second set of eyes on numbers you've been handed.</p>
+    <div class="pills">
+      <span class="pill">Estimators carrying their own rates</span>
+      <span class="pill">General contractors verifying a sub</span>
+      <span class="pill">Electrical contractors at capacity</span>
+      <span class="pill">Distributors quoting material</span>
+      <span class="pill">Design-build teams</span>
+      <span class="pill">Project managers checking scope</span>
+    </div>
+    <ul class="checks" style="margin-top:22px;">
+      <li>You price labour and material in-house and only need reliable quantities</li>
+      <li>You want to verify a subcontractor's counts before you carry their number</li>
+      <li>Your estimating desk is slammed and a bid deadline is closing in</li>
+      <li>You need a clean baseline count to negotiate or level competing bids</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2. WHAT A TAKEOFF PACKAGE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your takeoff package includes</h2>
+    <p class="lead">Everything you need to plug our quantities into your own pricing — and to trace every number back to the sheet it came from.</p>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook, organized by system</li>
+      <li>Colour-coded marked-up drawings for verification</li>
+      <li>Material list by system</li>
+      <li>Device and receptacle counts</li>
+      <li>Fixture counts by type and mounting</li>
+      <li>Conduit runs by size and type</li>
+      <li>Conductor and cable quantities</li>
+      <li>Gear, panel, and distribution counts</li>
+      <li>Documented assumptions and exclusions</li>
+      <li>Drawing set and revision the takeoff was measured against</li>
+    </ul>
+    <div class="note" style="margin-top:20px;">A takeoff is delivered as quantities and counts — <strong>not priced</strong> unless you ask for pricing. That keeps your labour rates and material margins entirely yours. Need dollars attached? We can quote a full estimate instead.</div>
+  </div>
+</section>
+
+<!-- 3. TAKEOFF VS FULL ESTIMATE -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Takeoff vs full estimate</div>
+    <h2 class="h2">Where a takeoff stops and an estimate begins</h2>
+    <p class="lead">Both start from the same careful count. The difference is how far we take it — and how much of the pricing stays in your hands.</p>
+    <div class="grid grid-2" style="margin-top:22px;">
+      <div class="card">
+        <h3 class="h3">Quantity takeoff</h3>
+        <p>Quantities and counts by device, fixture, conduit, conductor, and gear, with colour-coded marked-up drawings and documented assumptions. <strong>You</strong> apply labour units and material pricing. Best when you own your own rates.</p>
+      </div>
+      <div class="card">
+        <h3 class="h3">Full electrical estimate</h3>
+        <p>Everything in the takeoff, plus a labour-hour summary built on project-specific labour assumptions, material pricing, and a bid summary you can hand to a client. Best when you want a ready-to-carry number.</p>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:18px;">Not sure which you need? Send the set and we'll recommend the right one when we quote. Prefer a priced number end to end? See our <a href="/canada-electrical-estimating-services/">Canadian electrical estimating services</a>.</p>
+  </div>
+</section>
+
+<!-- 4. SYSTEMS WE COUNT -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we count</h2>
+    <p class="lead">We quantify the full electrical scope on the drawings, grouped so your pricing model can map straight to it.</p>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers and metering','Feeders by size and run']},
+      {'title':'Branch power & raceway','items':['Receptacles and device rough-in','Conduit by size and type','Conductors and cable','Cable tray, boxes, and supports']},
+      {'title':'Lighting','items':['Fixtures by type and mounting','Lighting controls and sensors','Emergency and exit lighting','Site and exterior lighting']},
+      {'title':'Motors & controls','items':['Motors, VFDs, and starters','MCCs and disconnects','Generators, ATS, UPS','Equipment power connections']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm device counts','Life-safety rough-in']},
+      {'title':'Low voltage & special systems','items':['Data / communications rough-in','Security and access rough-in where shown','EV charger rough-in where shown','Underground electrical']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 5. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send plans for takeoff','body':'Upload your PDF or DWG set, specifications, and any addenda — or share a Dropbox / Drive / Procore link.'},
+      {'title':'Confirm scope','body':'We confirm the project type, which systems to count, and whether you want quantities only or a fully priced estimate.'},
+      {'title':'Receive a fixed quote','body':'A flat fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'We complete the takeoff','body':'We count each system from the drawings and mark up the sheets in colour so every quantity is traceable.'},
+      {'title':'Deliver the package','body':'You receive the takeoff workbook, material list, and marked-up drawings on the agreed window — ready for your pricing.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 6. CEC-AWARE NOTE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Approach</div>
+    <h2 class="h2">Counted carefully, documented honestly</h2>
+    <p class="lead">Our counts and scope notes are informed by CSA C22.1 / the Canadian Electrical Code, provincial practices, project specifications, and the bid documents. We quantify what the drawings call for and flag where they don't agree — but a takeoff is a measurement of the documents, not a compliance sign-off.</p>
+    <div class="note warn" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements. MeTiger provides estimating and coordination support — not stamped drawings, sealed engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+    <p class="muted" style="margin-top:18px;">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 7. PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">Pricing and quote process</h2>
+    <p class="lead">Every takeoff is quoted after drawing review, based on sheet count, scope complexity, project type, deadline, and whether you want quantities only or full pricing. Send the set and the deadline; MeTiger confirms scope, fee, and delivery window before starting — no surprises, no cheap-race pricing.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Send Plans for Takeoff</a></div>
+  </div>
+</section>
+
+<!-- 8. RELATED SERVICES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Related services</div>
+    <h2 class="h2">Need more than counts?</h2>
+    <div class="grid grid-2" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Full estimating</h3><p>Add labour-hour summaries, material pricing, and a bid summary. See our <a href="/canada-electrical-estimating-services/">Canadian electrical estimating services</a>.</p></div>
+      <div class="card"><h3 class="h3">Commercial projects</h3><p>Fit-outs, offices, retail, and mixed-use. Explore <a href="/commercial-electrical-estimating-canada/">commercial electrical estimating in Canada</a>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 10. FINAL CTA -->
+{{ cta_band('Send your plans and get a fixed takeoff quote',
+    'Upload your drawings or share a plan link with the bid deadline. MeTiger confirms scope, fee, and delivery window before any counting begins — and your labour rates stay entirely your own.',
+    [{'label':'Send Plans for Takeoff','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

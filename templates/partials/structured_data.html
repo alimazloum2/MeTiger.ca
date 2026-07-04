@@ -1,5 +1,6 @@
 <!-- Organization / WebSite / ProfessionalService structured data (JSON-LD).
-     Shared by index.html and base.html. Edit business facts here only. -->
+     Shared across all pages. Edit business facts here only.
+     Canada-market positioning (metiger.ca). USA content lives on metiger.us. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -15,8 +16,8 @@
       "email": "info@metiger.ca",
       "telephone": "+1-782-640-5557",
       "foundingDate": "2022",
-      "slogan": "Electrical estimating, delivered without drama.",
-      "description": "MeTiger Inc. is a commercial and industrial electrical estimating consultancy registered in Nova Scotia, Canada, serving electrical contractors and general contractors across Florida and Texas. Services include NEC-based electrical estimating and takeoffs, bid review, construction documentation, electrical design support, and project management. Packages are delivered remotely under NDA.",
+      "slogan": "Canadian electrical estimating, delivered without drama.",
+      "description": "MeTiger Inc. is a commercial and industrial electrical estimating consultancy based in Bedford, Nova Scotia, Canada. We provide Canadian electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review for commercial, industrial, municipal, retail, restaurant, and multi-family projects. Estimating support is informed by CSA C22.1 / the Canadian Electrical Code, provincial practices, project specifications, and bid documents; final compliance remains subject to the project engineer and the authority having jurisdiction. Packages are delivered remotely across Canada, with NDA available on request.",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "620 Nine Mile Drive",
@@ -25,10 +26,7 @@
         "postalCode": "B4A 0H4",
         "addressCountry": "CA"
       },
-      "areaServed": [
-        { "@type": "State", "name": "Florida" },
-        { "@type": "State", "name": "Texas" }
-      ],
+      "areaServed": { "@type": "Country", "name": "Canada" },
       "sameAs": [
         "https://www.linkedin.com/company/metiger",
         "https://www.youtube.com/@MeTigerCa",
@@ -39,14 +37,14 @@
       "@type": "WebSite",
       "@id": "https://metiger.ca/#website",
       "url": "https://metiger.ca/",
-      "name": "MeTiger Inc.",
-      "inLanguage": "en",
+      "name": "MeTiger Inc. — Canadian Electrical Estimating",
+      "inLanguage": "en-CA",
       "publisher": { "@id": "https://metiger.ca/#organization" }
     },
     {
       "@type": "ProfessionalService",
       "@id": "https://metiger.ca/#service",
-      "name": "MeTiger Inc.",
+      "name": "MeTiger Inc. — Canadian Electrical Estimating",
       "url": "https://metiger.ca/",
       "image": "https://metiger.ca/static/images/metiger_logo.png",
       "email": "info@metiger.ca",
@@ -61,25 +59,18 @@
         "postalCode": "B4A 0H4",
         "addressCountry": "CA"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 44.70105,
-        "longitude": -63.68818
-      },
-      "areaServed": [
-        { "@type": "State", "name": "Florida" },
-        { "@type": "State", "name": "Texas" }
-      ],
+      "geo": { "@type": "GeoCoordinates", "latitude": 44.70105, "longitude": -63.68818 },
+      "areaServed": { "@type": "Country", "name": "Canada" },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Electrical Estimating Services",
+        "name": "Canadian Electrical Estimating Services",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
               "name": "Commercial & Industrial Electrical Estimating",
-              "description": "NEC-based takeoffs and labor pricing built straight from your PDF or DWG drawing set. Material, devices, conduit, conductors, and gear, counted by system and priced with NECA labor units, delivered bid-ready on an agreed delivery window."
+              "description": "Electrical takeoffs and labour summaries built from your PDF or DWG tender set. Material, devices, conduit, conductors, and gear counted by system, with labour-unit assumptions, marked-up drawings, and scope notes delivered on an agreed window. Estimating support informed by CSA C22.1 / the Canadian Electrical Code and project specifications."
             }
           },
           {
@@ -87,31 +78,31 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Electrical Takeoffs & Bid Review",
-              "description": "Standalone quantity takeoffs and an independent second set of eyes on your drawings and quantities before you submit, focused on the scope gaps that erode margin after award."
+              "description": "Standalone quantity takeoffs and an independent second set of eyes on your drawings, quantities, and exclusions before you submit — focused on the scope gaps that erode margin after award."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Construction Documentation",
-              "description": "Tender and construction-phase documentation: RFQs, front-end packages, and addenda before award; CDs, CCNs, and CCOs after award, keeping scope, cost, and drawings aligned."
+              "name": "Construction Documentation Support",
+              "description": "Tender and construction-phase documentation support: RFQs, front-end packages, and addenda review before award; documentation, change notices, and change orders after award, keeping scope, cost, and drawings aligned."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Electrical Design Support",
-              "description": "Code-compliant electrical coordination support that bridges design intent and field execution, working alongside the engineer of record. MeTiger provides estimating and design support, not sealed or stamped engineering."
+              "name": "Electrical Design Coordination Support",
+              "description": "Electrical coordination support that bridges design intent and construction execution, working alongside the engineer of record where required. MeTiger provides estimating and coordination support, not sealed or stamped engineering."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Project Management",
-              "description": "Scope, RFI, submittal, and change-order tracking that keeps electrical work flowing with fewer surprises and fewer change orders."
+              "name": "Project Management Support",
+              "description": "Scope, RFI, submittal, and change-order tracking that keeps electrical work flowing with fewer surprises."
             }
           }
         ]

@@ -1,0 +1,143 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Ontario Electrical Estimating Services | MeTiger Inc.{% endblock %}
+{% block meta_description %}Ontario electrical estimating and takeoff support for contractors and GCs across the GTA, Ottawa, Hamilton and London. Remote delivery from your PDF or DWG set.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Ontario Electrical Estimating','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you provide electrical estimating across Ontario?','a':'Yes. We support electrical contractors and general contractors across Ontario remotely — the Greater Toronto Area, Ottawa, Mississauga, Brampton, Hamilton, London, Kitchener-Waterloo, Windsor, and smaller centres in between. Everything is delivered from your PDF or DWG tender set, so location on a job never limits who we can help.'},
+    {'q':'Which electrical code do you estimate to in Ontario?','a':'Our takeoffs and scope review are informed by the Ontario Electrical Safety Code (OESC) — the Canadian Electrical Code, CSA C22.1, with Ontario amendments — together with the project specifications, drawings, addenda, and local utility requirements. Final compliance remains subject to the project engineer, the Ontario authority having jurisdiction, and applicable provincial requirements.'},
+    {'q':'Can you work from PDF or DWG drawings?','a':'Both. Send a PDF tender set or DWG / CAD files, the specifications, and any addenda — or share a Dropbox, Drive, or Procore link. We work from whatever the design team issued.'},
+    {'q':'How does remote delivery work for an Ontario contractor?','a':'You upload the bid set and confirm the due date; we confirm scope, fee, and a delivery window before starting, then return a reviewable estimate package on the agreed date. No site visit is required for a takeoff, so distance across the province is not a factor.'},
+    {'q':'Do you sign an NDA before we share drawings?','a':'Yes. A non-disclosure agreement is available on request before you share any tender documents or plan links.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Ontario Electrical Estimating Services', 'Electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review for Ontario commercial, industrial, institutional, and multi-family projects, delivered remotely.', '/ontario-electrical-estimating-services/', 'Ontario') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Ontario Electrical Estimating</div>
+    <h1 class="h1">Ontario Electrical Estimating Services</h1>
+    <p class="lead">MeTiger provides electrical estimating and takeoff support for contractors and general contractors working across Ontario — from the Greater Toronto Area to Ottawa, Hamilton, London, Kitchener-Waterloo, and Windsor. We turn your tender drawings, specifications, and addenda into clean quantities, labour summaries, marked-up plans, and documented scope, all delivered remotely so a job&rsquo;s location in the province never slows the bid.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request an Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Ontario-focused estimating','OESC / CEC-aware scope review','Marked-up plans','Labour & material summaries','Remote across the province','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. BUILT FOR ONTARIO -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Local context</div>
+    <h2 class="h2">Electrical estimating built for Ontario projects</h2>
+    <p class="lead">Ontario electrical work is inspected by the Electrical Safety Authority (ESA), and installations follow the Ontario Electrical Safety Code (OESC) — the Canadian Electrical Code, CSA C22.1, adopted with Ontario amendments. We estimate to what the tender documents call for and keep that provincial context in view while we count.</p>
+    <p style="margin-top:14px;">Projects across the province also touch different local distribution utilities, and service, metering, and utility-coordination notes can differ between them. We account for the servicing details shown on your drawings whether the work sits in Hydro One, Toronto Hydro, Alectra Utilities, Hydro Ottawa, or Elexicon Energy territory, and we flag where the documents leave the utility interface unclear so it can be resolved before bid day.</p>
+  </div>
+</section>
+
+<!-- 2. ONTARIO PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Ontario project types we estimate</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Commercial tenant improvements</h3><p>Office fit-outs, retail build-outs, and commercial tenant improvements across the GTA and Ontario&rsquo;s urban centres.</p></div>
+      <div class="card"><h3 class="h3">ICI construction</h3><p>Industrial, commercial, and institutional projects with mixed power, lighting, and low-voltage scope.</p></div>
+      <div class="card"><h3 class="h3">Warehouses &amp; distribution</h3><p>Warehouses and distribution centres along Ontario&rsquo;s logistics corridors — high-bay lighting, feeders, and equipment power.</p></div>
+      <div class="card"><h3 class="h3">Institutional</h3><p>Schools, healthcare, and public facilities with life-safety, emergency lighting, and systems coordination.</p></div>
+      <div class="card"><h3 class="h3">Multi-family &amp; high-rise</h3><p>Multi-family developments and high-rise residential — suite power, common areas, and distribution risers.</p></div>
+      <div class="card"><h3 class="h3">Service &amp; upgrades</h3><p>Service upgrades, distribution changes, and retrofit work on existing Ontario buildings.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your Ontario estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and assumptions</li>
+      <li>Regional labour adjustment for the Ontario market</li>
+      <li>Inclusions and exclusions</li>
+      <li>Drawing and specification assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Utility-coordination notes where shown</li>
+      <li>Bid summary</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering and utility interface']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
+      {'title':'Lighting','items':['Interior lighting and controls','Emergency lighting and life safety','Site and parking lighting','Underground electrical']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Access control / security rough-in where included','EV charger rough-in where included']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 5. ONTARIO CODE & COMPLIANCE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; compliance</div>
+    <h2 class="h2">Ontario code &amp; compliance</h2>
+    <p class="lead">Our estimating and scope review are informed by the Ontario Electrical Safety Code (OESC) — the Canadian Electrical Code, CSA C22.1, adopted with Ontario amendments — alongside the project specifications, drawings, addenda, and local utility requirements. We estimate what the documents describe and note where they conflict or leave a gap, so nothing is priced on a silent assumption.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the Ontario authority having jurisdiction — including the Electrical Safety Authority (ESA) — and applicable provincial requirements. MeTiger provides estimating and coordination support only. We do not produce stamped drawings, sealed or professional engineering, or code-compliance certification, and we work alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Upload drawings or send a plan link','body':'Send your PDF or DWG set, specifications, and addenda — or a Dropbox, Drive, or Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm the Ontario location, project type, scope, and bid due date.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Takeoff and scope review','body':'We perform the takeoff and organize the electrical scope by system.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package, with an optional walkthrough call before submission.'}
+    ]) }}
+    <p class="muted" style="margin-top:20px; font-size:14px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 7. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Ontario estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+    <p class="lead" style="margin-top:26px;">Explore our full <a href="/canada-electrical-estimating-services/" style="color:var(--primary);">Canadian electrical estimating services</a>, or see sibling coverage for <a href="/alberta-electrical-estimating-services/" style="color:var(--primary);">Alberta</a> and <a href="/british-columbia-electrical-estimating-services/" style="color:var(--primary);">British Columbia</a>.</p>
+  </div>
+</section>
+
+<!-- 8. FINAL CTA -->
+{{ cta_band('Estimating support for your next Ontario project',
+    'Upload your drawings or share a plan link with the bid due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request an Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

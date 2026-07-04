@@ -23,21 +23,33 @@ venv/bin/pip install -r requirements.txt
 
 There is no test suite, no linter, and no build step.
 
+## Market positioning
+
+`metiger.ca` is the **Canada** market site (this repo). `metiger.us` is a **separate** USA site. Keep USA-only language (Florida/Texas/NEC/NECA/"United States") OFF metiger.ca except the single "Looking for USA estimating? Visit metiger.us" cross-link. Use Canadian positioning: CSA C22.1 / Canadian Electrical Code, "CEC-aware", labour/colour/centre spelling. MeTiger provides **estimating and coordination support, not stamped/sealed engineering** — never claim otherwise.
+
 ## Architecture
 
-Single-file Flask app (`app.py`) serving Jinja2 templates from `templates/` with one shared layout (`base.html`). Pages are `index.html`, `services.html`, `projects.html`, `contact.html` — all static content. There is no database; the only dynamic surface is the contact form.
+Flask app (`app.py`) serving Jinja2 templates from `templates/`. Two shared layouts:
+- **`base_page.html`** — the premium dark layout used by the homepage and all CA marketing/service/province pages. Provides SEO/canonical/OG/hreflang blocks, a per-page `head_schema` block, and pulls in the shared header/footer. Pages extend it and compose sections with macros from **`partials/ui.html`** (`trust_bar`, `checks`, `process_steps`, `systems`, `faq_list`, `faq_schema`, `breadcrumb`, `breadcrumb_schema`, `service_schema`, `cta_band`). NOTE: inside macro args use a raw `&` (macros autoescape); in literal template text use `&amp;`.
+- **`base.html`** — legacy light layout, still used only by `estimate_calculator.html` and `budget_guide.html`.
 
-### Contact form pipeline
-The form posts to `POST /send_message` (not `/contact` — that route exists but only flashes a message and is effectively legacy). The endpoint runs a layered anti-spam check before sending mail; **all four layers must stay in place** because each catches a different attacker class:
+Shared chrome partials: `partials/site_header.html` (Canada nav + mobile menu + USA cross-link + "Request a Quote" CTA), `partials/site_footer.html` (Canada footer + USA link + Privacy/Vision/Mission modals), `partials/structured_data.html` (global Org/WebSite/ProfessionalService JSON-LD, Canada), `partials/quote_form.html` (the shared multi-field quote form).
 
-1. **Honeypot** — a hidden `company` field; any value → 400.
+**Page registry:** `pages.py` maps every CA URL → template (under `templates/pages/`) → endpoint. `app.py` registers a render view for each in a loop and builds `/sitemap.xml` from `pages.sitemap_entries()`. To add a page: create the template extending `base_page.html`, add a line to `pages.py`. Key routes: `/` (home.html), `/contact/` (quote.html), `/canada-electrical-estimating-services/` (main SEO landing), 7 service pages, `/pricing/` `/samples/` `/case-studies/`, 10 province pages, `/payments` (crypto, off-funnel). `/services`→landing and `/projects`→`/case-studies/` are 301s. There is no database; the only dynamic surface is the quote/contact form.
+
+A global `context_processor` injects `TURNSTILE_SITE_KEY` and a fresh `START_TS` into every template so any page can include `quote_form.html`.
+
+### Quote / contact form pipeline
+The homepage and `/contact/` both include `partials/quote_form.html`, which posts via `fetch` to `POST /send_message`. (`/contact/` is GET-only now — it renders the quote page; the old flash-only `/contact` POST is gone.) The endpoint runs a layered anti-spam check before sending mail; **all four layers must stay in place** because each catches a different attacker class:
+
+1. **Honeypot** — a hidden `website` field (renamed from `company`, which is now a REAL quote field); any value → 400.
 2. **Time gate** — form must be open ≥ 3s (client sends `started_at` from `START_TS` injected by the index route).
 3. **Cloudflare Turnstile** — server-side `siteverify` against `TURNSTILE_SECRET`. Skipped only if both keys are empty (dev mode).
 4. **Content checks** — URL count in message, disposable-email domain blocklist (`DISPOSABLE` set), basic email-shape validation, min message length.
 
 Rate limiting via `flask-limiter`: 3/min on `/send_message`, 100/hour global default, keyed by remote IP.
 
-Mail goes out via `send_contact_email()` using Office365 SMTP (`smtp.office365.com:587`, STARTTLS) authenticating as `info@metiger.ca`. The `From` address must match the authenticated `SMTP_USER` or Office365 will reject. `Reply-To` is set to the visitor's email so direct replies work. `requirements.txt` still pins `sendgrid` — it is unused; SMTP is the live path.
+Mail goes out via `send_contact_email(name, email, message, details)` using Office365 SMTP (`smtp.office365.com:587`, STARTTLS) authenticating as `info@metiger.ca`. The `From` address must match the authenticated `SMTP_USER` or Office365 will reject. `Reply-To` is set to the visitor's email so direct replies work. `details` is an optional dict of the extra quote fields (company, phone, province, project type, service, bid date, plan link, NDA, consent, source); non-empty values are appended to the body and the subject is built dynamically as `metiger.ca Quote Request – [Project Type] – [Province]`. Recipient is `TO_EMAIL` (defaults `info@metiger.ca`). The required fields are still just name/email/message, so the simple path keeps working. `requirements.txt` still pins `sendgrid` — it is unused; SMTP is the live path.
 
 ### Configuration
 Loaded from `.env` via `python-dotenv` at import time. Required env vars:

@@ -1,0 +1,166 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Restaurant Electrical Estimating Canada | MeTiger Inc.{% endblock %}
+{% block meta_description %}Restaurant, QSR, cafe, and bar electrical estimating across Canada: kitchen power, hood interlocks, refrigeration, lighting, and low-voltage rough-in takeoffs.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Restaurant & Hospitality','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you estimate restaurant and hospitality electrical projects across Canada?','a':'Yes. We provide restaurant electrical estimating and takeoff support remotely for contractors, general contractors, and franchise rollout builders across every Canadian province and territory, working from your PDF or DWG tender set, kitchen equipment schedule, and the landlord base-building drawings.'},
+    {'q':'Do you handle kitchen equipment power and hood interlocks?','a':'Yes. We quantify dedicated circuits and connections from the kitchen equipment schedule, and we account for hood and exhaust interlocks, shunt-trip breakers, make-up air ties, and the control and low-voltage rough-in those systems need. Where the equipment schedule and the electrical drawings disagree, we log it as a scope gap rather than guess.'},
+    {'q':'Can you separate tenant scope from the landlord base building?','a':'Yes. We review the lease work letter or base-building set alongside the tenant drawings so the estimate reflects what the tenant is actually responsible for — service size, panel location, and metering provided by the landlord versus feeders, distribution, and fit-out power carried by the tenant.'},
+    {'q':'Do you follow the Canadian Electrical Code?','a':'Our estimating and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments, the health-authority and food-service requirements referenced in the documents, and local utility rules. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements.'},
+    {'q':'Do you provide stamped drawings or engineering?','a':'No. MeTiger provides electrical estimating, takeoff, and coordination support — not stamped drawings, sealed engineering, or code-compliance certification. We work alongside the engineer of record where required.'},
+    {'q':'Can you support multi-site franchise rollouts?','a':'Yes. For repeatable restaurant and QSR prototypes we keep the takeoff structure and assumptions consistent from site to site, then adjust for each location — regional labour adjustment, base-building differences, and local utility and AHJ conditions — so every store is priced on the same basis.'},
+    {'q':'How is a restaurant estimate priced?','a':'Each project is quoted after drawing review, based on sheet count, kitchen and equipment complexity, scope, deadline, and the deliverables you need. We confirm scope, fee, and delivery window before any work begins.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Restaurant & Hospitality Electrical Estimating', 'Electrical takeoffs, kitchen equipment power, hood interlocks, refrigeration, lighting and controls, and low-voltage rough-in estimating for Canadian restaurants, QSR, cafes, bars, and hospitality build-outs.', '/restaurant-electrical-estimating-canada/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Restaurant &amp; Hospitality Estimating</div>
+    <h1 class="h1">Restaurant &amp; Hospitality Electrical Estimating in Canada</h1>
+    <p class="lead">Restaurants live or die on the opening date, and the electrical scope is where a build-out quietly gets expensive. MeTiger turns your tenant drawings, kitchen equipment schedule, and landlord base-building set into a clean, reviewable electrical takeoff — kitchen power, hood interlocks, refrigeration, dining lighting, and low-voltage rough-in, with the assumptions and exclusions written down before you price it.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request Restaurant Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['QSR, cafes, bars & full-service','Kitchen equipment power','Hood & shunt-trip interlocks','CEC-aware scope review','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. WHO IT'S FOR -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Who it's for</div>
+    <h2 class="h2">Built for the teams delivering hospitality build-outs</h2>
+    <p class="lead">Whether it's a single restaurant fit-out or a national brand rolling out dozens of locations, we work behind the scenes for the people responsible for pricing the electrical scope.</p>
+    <div class="pills">
+      <span class="pill">Restaurant general contractors</span>
+      <span class="pill">Electrical contractors</span>
+      <span class="pill">Franchise &amp; rollout builders</span>
+      <span class="pill">QSR &amp; fast-casual programs</span>
+      <span class="pill">Cafe &amp; bar operators</span>
+      <span class="pill">Hospitality developers</span>
+      <span class="pill">Tenant-improvement PMs</span>
+      <span class="pill">Design-build teams</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your restaurant estimate includes</h2>
+    <p class="lead">A package built for review — every quantity traceable, every assumption visible, ready to hand to a client, a landlord, or your own project team.</p>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Kitchen equipment circuit and connection list</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and assumptions</li>
+      <li>Tenant vs base-building scope split</li>
+      <li>Inclusions and exclusions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Phasing and long-lead item notes</li>
+      <li>Bid summary</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. RESTAURANT SCOPE WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Restaurant electrical scope we quantify</h2>
+    <p class="lead">Hospitality electrical is equipment-driven. We reconcile the kitchen equipment schedule against the electrical drawings and count what the space actually needs.</p>
+    {{ systems([
+      {'title':'Kitchen equipment power','items':['Dedicated circuits from the equipment schedule','Ranges, ovens, fryers, dishwashers, water heaters','Cord-and-plug vs hard-wired connections','Disconnects and junction boxes at equipment']},
+      {'title':'Hood & exhaust interlocks','items':['Exhaust and make-up air fan power','Hood control panel and interlock wiring','Shunt-trip breakers for fire suppression','Ansul / suppression tie-in coordination']},
+      {'title':'Refrigeration','items':['Walk-in cooler and freezer power','Reach-in and prep-line refrigeration circuits','Condensing unit and compressor feeds','Anti-condensate and heater loads']},
+      {'title':'Lighting & controls','items':['Dining-area and bar lighting','Dimming and scene control','Emergency and exit lighting','Kitchen, back-of-house, and patio lighting']},
+      {'title':'Low voltage & special systems','items':['POS and data / communications rough-in','Sound, AV, and menu-board provisions','Security and access-control rough-in where included','Signage and patio power']},
+      {'title':'Service & distribution','items':['Service entrance and metering coordination','Panels, feeders, and branch distribution','Grounding and bonding','Transformers and distribution equipment']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 4. TENANT vs BASE-BUILDING COORDINATION -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Coordination</div>
+    <h2 class="h2">Tenant scope vs landlord base building</h2>
+    <p class="lead">On most restaurant fit-outs the biggest pricing risk isn't the count — it's the line between what the landlord provides and what the tenant carries. We read the lease work letter and base-building set alongside the tenant drawings so nothing is double-counted or quietly missed.</p>
+    <ul class="checks" style="margin-top:18px;">
+      <li>Service size, panel location, and metering provided under the base building</li>
+      <li>Feeders, distribution, and fit-out power carried by the tenant</li>
+      <li>Demising-wall, roof, and shared-corridor responsibilities reconciled</li>
+      <li>Landlord allowances and back-charges flagged against the tenant scope</li>
+    </ul>
+    <p class="note" style="margin-top:18px;">Different tenant and base-building responsibilities show up as documented assumptions in the estimate, so your team sees the split instead of inheriting it after award.</p>
+  </div>
+</section>
+
+<!-- 5. CEC-AWARE + AHJ CAVEAT -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Approach</div>
+    <h2 class="h2">CEC-aware restaurant estimating</h2>
+    <p class="lead">Estimating support informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments, the health-authority and food-service requirements referenced in the documents, project specifications, and local utility rules. We estimate what the documents call for and flag where the equipment schedule and the electrical drawings don't agree.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements. MeTiger provides electrical estimating and coordination support — not stamped drawings, sealed engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send drawings and the equipment schedule','body':'Share your PDF or DWG tenant set, kitchen equipment schedule, base-building drawings, and any addenda — or a Dropbox / Drive / Procore link.'},
+      {'title':'Confirm scope, phasing, and opening date','body':'We confirm location, restaurant type, tenant vs base-building split, and the target opening so phasing is priced realistically.'},
+      {'title':'Receive a fixed quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Takeoff and equipment reconciliation','body':'We perform the takeoff and reconcile the kitchen equipment schedule against the electrical scope.'},
+      {'title':'Document assumptions and scope gaps','body':'Interlocks, refrigeration loads, and tenant/base-building splits are logged clearly.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package on the agreed window, ready to bid.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">Pricing and quote process</h2>
+    <p class="lead">Every restaurant project is quoted after drawing review — based on sheet count, kitchen and equipment complexity, scope, deadline, and the deliverables you need. For franchise rollouts we hold the takeoff structure consistent site to site and apply regional labour adjustment per location. Send the set and the opening date; MeTiger confirms scope, fee, and delivery window before work begins.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Request Restaurant Estimate</a></div>
+    <p class="muted" style="margin-top:18px; font-size:13px;">Also serving related sectors: <a href="/retail-electrical-estimating-canada/">retail electrical estimating</a> and <a href="/commercial-electrical-estimating-canada/">commercial electrical estimating</a>. Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 9. FINAL CTA -->
+{{ cta_band('Get your restaurant electrical estimate',
+    'Send your tenant drawings, kitchen equipment schedule, and opening date. MeTiger confirms scope, fee, and delivery window before any work begins — so the electrical is priced right and the opening stays on track.',
+    [{'label':'Request Restaurant Estimate','href':'/contact/','primary':True},{'label':'Explore all estimating services','href':'/canada-electrical-estimating-services/','primary':False}]) }}
+{% endblock %}

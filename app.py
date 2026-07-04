@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
-import os, re, time, requests
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, Response
+import io, os, re, time, requests, hmac, hashlib
+from collections import OrderedDict
+from threading import Lock
 from dotenv import load_dotenv
+import segno
+import pages as page_registry
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,16 +20,185 @@ app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-producti
 
 # Anti-spam configuration
 app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "0x4AAAAAAB8Wgm9wM6xbP-yW")
-TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "0x4AAAAAAB8Wglc6eIYv7TdX5w4Ud0gddV8")
+TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "")
+EL_WEBHOOK_SECRET = os.getenv("EL_WEBHOOK_SECRET", "")
 limiter = Limiter(get_remote_address, app=app, default_limits=["100/hour"])
+
+
+@app.context_processor
+def inject_globals():
+    """Make Turnstile key + a fresh form-open timestamp available to every
+    template, so any page can include the shared quote form."""
+    return {
+        "TURNSTILE_SITE_KEY": app.config["TURNSTILE_SITE_KEY"],
+        "START_TS": int(time.time()),
+    }
+
+
 URL_RE = re.compile(r'https?://', re.I)
 DISPOSABLE = {"mailinator.com","guerrillamail.com","10minutemail.com","tempmail.dev","yopmail.com","getnada.com","trashmail.com"}
 
+# Crypto payment info — only served after Turnstile passes.
+PAYMENT_INFO = {
+    "qrAddress": "0x011796f4f6DF20cee9Da15d5127E5d77ED0e4743",
+    "ensName": "metiger.eth",
+    "contractAddress": "0xa79d3083a7e303Db38e013C54135F178834Ccb1B",
+    "network": "Base",
+}
+
+# Cache verified Turnstile tokens so /send_message can reuse the same token
+# that /api/reveal-payment already redeemed (siteverify only accepts each
+# token once).
+_VERIFIED_TOKENS = OrderedDict()
+_VERIFIED_TOKENS_LOCK = Lock()
+_VERIFIED_TOKEN_TTL = 300  # seconds
+
+
+def verify_turnstile(token, remote_ip):
+    if not TURNSTILE_SECRET or not app.config["TURNSTILE_SITE_KEY"]:
+        return True
+    if not token:
+        return False
+    now = time.time()
+    with _VERIFIED_TOKENS_LOCK:
+        while _VERIFIED_TOKENS:
+            first = next(iter(_VERIFIED_TOKENS))
+            if _VERIFIED_TOKENS[first] > now:
+                break
+            _VERIFIED_TOKENS.popitem(last=False)
+        if token in _VERIFIED_TOKENS:
+            return True
+    try:
+        r = requests.post(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            data={"secret": TURNSTILE_SECRET, "response": token, "remoteip": remote_ip},
+            timeout=5,
+        )
+        if r.json().get("success", False):
+            with _VERIFIED_TOKENS_LOCK:
+                _VERIFIED_TOKENS[token] = now + _VERIFIED_TOKEN_TTL
+            return True
+    except Exception:
+        pass
+    return False
+
 @app.route("/")
 def index():
-    return render_template("index.html", 
-                         TURNSTILE_SITE_KEY=app.config["TURNSTILE_SITE_KEY"],
-                         START_TS=int(time.time()))
+    return render_template("home.html")
+
+BASE_URL = "https://metiger.ca"
+
+# Crawlers / answer engines explicitly welcomed. Standard search bots are
+# already covered by the wildcard rule; these are named so AI crawlers see an
+# explicit Allow.
+_AI_USER_AGENTS = [
+    "GPTBot", "OAI-SearchBot", "ChatGPT-User",
+    "ClaudeBot", "Claude-Web", "anthropic-ai",
+    "PerplexityBot", "Perplexity-User",
+    "Google-Extended", "Applebot-Extended",
+    "CCBot", "Amazonbot", "Bytespider", "meta-externalagent",
+]
+
+
+@app.route("/robots.txt")
+@limiter.exempt
+def robots_txt():
+    lines = [
+        "# robots.txt for metiger.ca",
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /debug",
+        "",
+    ]
+    for ua in _AI_USER_AGENTS:
+        lines += [f"User-agent: {ua}", "Allow: /", ""]
+    lines.append(f"Sitemap: {BASE_URL}/sitemap.xml")
+    return Response("\n".join(lines) + "\n", mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+@limiter.exempt
+def sitemap_xml():
+    urls = "".join(
+        f"<url><loc>{BASE_URL}{path}</loc>"
+        f"<changefreq>monthly</changefreq>"
+        f"<priority>{prio}</priority></url>"
+        for path, prio in page_registry.sitemap_entries()
+    )
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        f"{urls}</urlset>"
+    )
+    return Response(xml, mimetype="application/xml")
+
+
+# Plain-language summary for LLMs / answer engines (https://llmstxt.org/).
+_LLMS_TXT = """# MeTiger Inc. — Canadian Electrical Estimating
+
+> MeTiger Inc. is a commercial and industrial electrical estimating consultancy
+> based in Bedford, Nova Scotia, Canada, serving electrical contractors and
+> general contractors across Canada. Tagline: "Canadian electrical estimating,
+> delivered without drama." (For USA estimating, see https://metiger.us.)
+
+## About
+
+MeTiger turns Canadian tender drawings, specifications, and addenda into clean
+electrical takeoffs, material lists, labour summaries, colour-coded marked-up
+drawings, and scope notes built for review. Estimating support is informed by
+CSA C22.1 / the Canadian Electrical Code, provincial practices, project
+specifications, local utility requirements, and bid documents. Final compliance
+remains subject to the project engineer, the authority having jurisdiction, and
+applicable provincial/territorial requirements. MeTiger provides estimating and
+coordination support, not sealed or stamped engineering.
+
+- Founded: 2022
+- Office: 620 Nine Mile Drive, Bedford, NS B4A 0H4, Canada
+- Email: info@metiger.ca
+- Phone: +1 (782) 640-5557
+- Area served: Canada (remote delivery across all provinces and territories)
+- NDA available on request
+
+## Services
+
+- Canadian Electrical Estimating: Takeoffs and labour summaries built from your
+  PDF or DWG tender set, delivered as a reviewable estimate package.
+- Electrical Takeoffs: Standalone quantity takeoffs by system and marked-up plans.
+- Commercial & Industrial Estimating: Tenant improvements, retail, warehouses,
+  and heavier industrial/utility electrical scopes.
+- Electrical Bid Review: An independent second set of eyes on drawings,
+  quantities, exclusions, and scope gaps before you submit.
+- Construction Documentation Support and Electrical Design Coordination Support,
+  working alongside the engineer of record where required.
+
+## Project types
+
+Commercial tenant improvements, retail fit-outs, restaurants and hospitality,
+warehouses and light industrial, multi-family residential, municipal facilities,
+pump stations and utility infrastructure, schools and institutional, office and
+mixed-use, and service upgrades / distribution work.
+
+## Links
+
+- Website: https://metiger.ca/
+- Electrical Estimating Services: https://metiger.ca/canada-electrical-estimating-services/
+- Electrical Takeoffs: https://metiger.ca/electrical-takeoff-services-canada/
+- Bid Review: https://metiger.ca/electrical-bid-review-canada/
+- Pricing: https://metiger.ca/pricing/
+- Samples: https://metiger.ca/samples/
+- Case Studies: https://metiger.ca/case-studies/
+- Contact / Quote: https://metiger.ca/contact/
+- USA estimating: https://metiger.us
+- LinkedIn: https://www.linkedin.com/company/metiger
+- YouTube: https://www.youtube.com/@MeTigerCa
+"""
+
+
+@app.route("/llms.txt")
+@limiter.exempt
+def llms_txt():
+    return Response(_LLMS_TXT, mimetype="text/plain")
+
 
 @app.route("/debug")
 def debug():
@@ -51,30 +224,131 @@ def debug():
 
 @app.route("/services")
 def services():
-    return render_template("services.html")
+    # Legacy USA-era route → Canada estimating hub (preserve inbound links).
+    return redirect("/canada-electrical-estimating-services/", code=301)
 
 @app.route("/projects")
 def projects():
-    return render_template("projects.html")
+    # Legacy USA-era route → Canada case studies.
+    return redirect("/case-studies/", code=301)
+
+@app.route("/estimate-calculator")
+def estimate_calculator():
+    return render_template("estimate_calculator.html")
+
+@app.route("/electrical-budget-guide")
+def electrical_budget_guide():
+    return render_template("budget_guide.html")
 
 @app.route("/test_turnstile")
 def test_turnstile():
     return render_template("test_turnstile.html")
 
-@app.route("/contact", methods=['GET', 'POST'])
+@app.route("/contact/")
 def contact():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        company = request.form.get('company')
-        message = request.form.get('message')
-        
-        # Here you would typically send an email or save to database
-        # For now, we'll just flash a success message
-        flash(f'Thank you {name}! We will get back to you soon.', 'success')
-        return redirect(url_for('contact'))
-    
-    return render_template("contact.html")
+    # Quote-request page. The form posts to /send_message (the live SMTP path);
+    # this route only renders. Flask 308-redirects /contact -> /contact/.
+    return render_template("quote.html")
+
+
+def _verify_elevenlabs_signature(raw_body, sig_header):
+    """Verify the ElevenLabs HMAC signature (header 'ElevenLabs-Signature:
+    t=<ts>,v0=<hex>'). Requests without a valid signature are rejected (401)."""
+    if not sig_header:
+        return False
+    try:
+        parts = dict(p.split("=", 1) for p in sig_header.split(","))
+        ts, v0 = parts.get("t"), parts.get("v0")
+        if not ts or not v0:
+            return False
+        signed = f"{ts}.{raw_body}"
+        expected = hmac.new(EL_WEBHOOK_SECRET.encode(), signed.encode(), hashlib.sha256).hexdigest()
+        return hmac.compare_digest(expected, v0)
+    except Exception:
+        return False
+
+
+def _send_call_summary_email(subject, body):
+    """Email an ElevenLabs post-call summary to the business inbox via Office365 SMTP."""
+    smtp_user = os.environ.get("SMTP_USER")
+    smtp_password = os.environ.get("SMTP_PASSWORD")
+    if not smtp_user or not smtp_password:
+        raise ValueError("SMTP credentials not configured")
+    msg = MIMEMultipart()
+    msg["From"] = "MeTiger Website <info@metiger.ca>"
+    msg["To"] = os.environ.get("EMAIL_TO") or "info@metiger.ca"
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
+    server = smtplib.SMTP("smtp.office365.com", 587)
+    server.starttls()
+    server.login(smtp_user, smtp_password)
+    server.send_message(msg)
+    server.quit()
+
+
+@app.route("/elevenlabs/post-call", methods=["POST"])
+@limiter.exempt
+def elevenlabs_post_call():
+    """Receiver for ElevenLabs post-call webhooks: verify signature, email a
+    call summary + transcript to info@metiger.ca, and ack with 200."""
+    raw = request.get_data(as_text=True)
+    if not _verify_elevenlabs_signature(raw, request.headers.get("ElevenLabs-Signature", "")):
+        return jsonify({"error": "invalid signature"}), 401
+
+    payload = request.get_json(silent=True) or {}
+    data = payload.get("data", {}) or {}
+    analysis = data.get("analysis", {}) or {}
+    conv_id = data.get("conversation_id", "unknown")
+    summary = analysis.get("transcript_summary") or "(no summary provided)"
+    turns = []
+    for t in (data.get("transcript") or []):
+        text = t.get("message") or t.get("text") or ""
+        if text:
+            turns.append(f"{t.get('role', '?')}: {text}")
+    transcript = "\n".join(turns) or "(no transcript)"
+    body = (
+        f"ElevenLabs AI call\n\nConversation: {conv_id}\n"
+        f"Agent: {data.get('agent_id', '')}\n\n"
+        f"Summary:\n{summary}\n\nTranscript:\n{transcript}\n"
+    )
+    try:
+        _send_call_summary_email(f"AI call summary — {conv_id}", body)
+        print(f"ElevenLabs webhook: emailed summary for {conv_id} to {os.environ.get('EMAIL_TO') or 'info@metiger.ca'}", flush=True)
+    except Exception as e:
+        print(f"ElevenLabs webhook email error: {e}", flush=True)  # ack anyway so EL doesn't retry-storm
+    return jsonify({"status": "ok"}), 200
+
+
+def _build_qr_svg(text):
+    qr = segno.make(text, error="m")
+    buf = io.BytesIO()
+    qr.save(
+        buf,
+        kind="svg",
+        scale=5,
+        border=2,
+        dark="#000000",
+        light="#ffffff",
+        xmldecl=False,
+    )
+    return buf.getvalue().decode("ascii")
+
+
+@app.post("/api/reveal-payment")
+@limiter.limit("10/minute")
+def reveal_payment():
+    token = request.form.get("cf-turnstile-response", "").strip()
+    if not token:
+        payload = request.get_json(silent=True) or {}
+        token = (payload.get("token") or "").strip()
+    if not verify_turnstile(token, request.remote_addr):
+        return jsonify(success=False, message="Verification required."), 403
+    return jsonify(
+        success=True,
+        qrSvg=_build_qr_svg(PAYMENT_INFO["qrAddress"]),
+        **PAYMENT_INFO,
+    )
+
 
 @app.post("/send_message")
 @limiter.limit("3/minute")
@@ -82,12 +356,13 @@ def send_message():
     name = (request.form.get("name") or "").strip()
     email = (request.form.get("email") or "").strip().lower()
     msg = (request.form.get("message") or "").strip()
-    honeypot = request.form.get("company", "")
+    # Honeypot renamed from 'company' -> 'website' so 'company' can be a real
+    # quote field. Do NOT check 'company' here or legit submissions get blocked.
+    honeypot = request.form.get("website", "")
     started_at = request.form.get("started_at", "0")
     token = request.form.get("cf-turnstile-response", "")
-    
-    # Debug logging (remove in production)
-    print(f"Form data: name={name}, email={email}, started_at={started_at}, honeypot={honeypot}, token={'present' if token else 'missing'}")
+
+    print(f"Form data: name={name}, email={email}, started_at={started_at}, honeypot={'yes' if honeypot else 'no'}, token={'present' if token else 'missing'}", flush=True)
 
     if honeypot:
         return jsonify(success=False, message="Bad request"), 400
@@ -99,20 +374,8 @@ def send_message():
     if time.time() - started < 3:
         return jsonify(success=False, message="Please take a moment and try again."), 400
 
-    # Skip Turnstile validation if keys are not configured (for development)
-    if TURNSTILE_SECRET and app.config["TURNSTILE_SITE_KEY"]:
-        if not token:
-            return jsonify(success=False, message="Verification failed."), 400
-        try:
-            r = requests.post(
-                "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-                data={"secret": TURNSTILE_SECRET, "response": token, "remoteip": request.remote_addr},
-                timeout=5
-            )
-            if not r.json().get("success", False):
-                return jsonify(success=False, message="Verification failed."), 400
-        except Exception:
-            return jsonify(success=False, message="Verification failed."), 400
+    if not verify_turnstile(token, request.remote_addr):
+        return jsonify(success=False, message="Verification failed."), 400
 
     url_count = len(URL_RE.findall(msg))
     if url_count > 2:
@@ -129,49 +392,72 @@ def send_message():
     if not name or len(msg) < 6:
         return jsonify(success=False, message="Please complete all fields."), 400
 
+    # Collect optional quote-form fields. All optional — the required name /
+    # email / message above keep the simple contact path working unchanged.
+    details = {
+        "Company": request.form.get("company", "").strip(),
+        "Phone": request.form.get("phone", "").strip(),
+        "Province": request.form.get("province", "").strip(),
+        "Project type": request.form.get("project_type", "").strip(),
+        "Service needed": request.form.get("service", "").strip(),
+        "Bid due date": request.form.get("bid_date", "").strip(),
+        "Plan link": request.form.get("plan_link", "").strip(),
+        "NDA": request.form.get("nda", "").strip(),
+        "Consent to contact": "Yes" if request.form.get("consent") else "No",
+        "Submitted from": request.form.get("source", "").strip(),
+    }
+
     # Send email
     try:
-        # Temporarily hardcode SendGrid for testing
-        send_contact_email(name, email, msg)
-        return jsonify(success=True, message="Thanks — we'll get back to you"), 200
+        send_contact_email(name, email, msg, details)
+        return jsonify(success=True, message="Thanks — we'll review your request and get back to you."), 200
     except Exception as e:
-        print(f"Email error: {e}")
+        print(f"Email error: {e}", flush=True)
         return jsonify(success=False, message="Error sending message. Please try again."), 500
 
-def send_contact_email(name, email, message):
-    """Send contact form email using Microsoft SMTP"""
-    
+def send_contact_email(name, email, message, details=None):
+    """Send a contact/quote email via Microsoft 365 SMTP.
+
+    `details` is an optional dict of extra quote fields; only non-empty values
+    are included in the body. The From address must match the authenticated
+    SMTP user or Office365 rejects the message; Reply-To is the visitor so
+    replies reach them directly.
+    """
     smtp_server = "smtp.office365.com"
     smtp_port = 587
     sender_email = "info@metiger.ca"  # Must match the authenticated account
+    recipient = os.environ.get("TO_EMAIL") or "info@metiger.ca"
     smtp_user = os.environ.get("SMTP_USER")
     smtp_password = os.environ.get("SMTP_PASSWORD")
 
     if not smtp_user or not smtp_password:
         raise ValueError("SMTP credentials not configured")
 
-    # Email content
+    details = details or {}
+    project_type = details.get("Project type") or "General"
+    province = details.get("Province") or "Canada"
+
     msg = MIMEMultipart()
     msg['From'] = f"MeTiger Website <{sender_email}>"
-    msg['To'] = "info@metiger.ca"
-    msg['Subject'] = f"New Contact Form Submission from {name}"
+    msg['To'] = recipient
+    msg['Subject'] = f"metiger.ca Quote Request – {project_type} – {province}"
     msg['Reply-To'] = email  # Allow direct reply to the visitor
 
-    body = f"""
-    New contact form submission:
-    
-    Name: {name}
-    Email: {email}
-    
-    Message:
-    {message}
-    
-    ---
-    This message was sent from the MeTiger Inc. website contact form.
-    """
-    
+    lines = [
+        "New quote / contact request from metiger.ca",
+        "",
+        f"Name:  {name}",
+        f"Email: {email}",
+    ]
+    for label, value in details.items():
+        if value:
+            lines.append(f"{label}: {value}")
+    lines += ["", "Message / scope notes:", message, "",
+              "---", "Sent from the MeTiger Inc. (metiger.ca) website."]
+    body = "\n".join(lines)
+
     msg.attach(MIMEText(body, 'plain'))
-    
+
     # Send email
     try:
         server = smtplib.SMTP(smtp_server, smtp_port)
@@ -183,6 +469,28 @@ def send_contact_email(name, email, message):
     except Exception as e:
         print(f"SMTP Error: {e}")
         raise e
+
+# ---------------------------------------------------------------------------
+# Register CA marketing / service / province pages from the registry. Each
+# renders a self-contained template (templates/pages/*) that carries its own
+# SEO metadata + JSON-LD via template blocks.
+# ---------------------------------------------------------------------------
+def _make_page_view(template_name):
+    def _view():
+        return render_template(template_name)
+    return _view
+
+
+for _path, _template, _endpoint, _prio in page_registry.ALL_REGISTRY_PAGES:
+    app.add_url_rule(_path, _endpoint, _make_page_view(_template))
+
+
+@app.route("/payments")
+def payments():
+    # Crypto / TigerCoin consultation payments, kept off the main estimating
+    # funnel. Still served by the Turnstile-gated /api/reveal-payment endpoint.
+    return render_template("payments.html")
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

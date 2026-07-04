@@ -1,0 +1,169 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Nova Scotia Electrical Estimating | MeTiger Inc.{% endblock %}
+{% block meta_description %}Nova Scotia electrical estimating and takeoff support from MeTiger's Bedford, NS office. Commercial, institutional, healthcare, retail, and municipal projects across the province.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Nova Scotia','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you work across all of Nova Scotia?','a':'Yes. We are based in Bedford and support electrical contractors and general contractors throughout Nova Scotia — Halifax, Dartmouth, Bedford, Sydney, Truro, New Glasgow, and the surrounding communities. Because delivery is remote from your PDF or DWG tender set, distance from our office does not change the work or the fee basis.'},
+    {'q':'Which electrical code do you estimate to in Nova Scotia?','a':'Our takeoffs and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in Nova Scotia, together with project specifications, local utility requirements from Nova Scotia Power, and the tender documents. Final compliance remains subject to the project engineer, the Nova Scotia authority having jurisdiction, and applicable provincial requirements.'},
+    {'q':'Do you accept PDF and DWG drawings?','a':'Yes. Send a PDF or DWG tender set, the specifications, and any addenda — or a Dropbox, Drive, or Procore link. We work from the same documents you bid from, so nothing is lost in translation.'},
+    {'q':'Are you a local Nova Scotia company?','a':'Yes. MeTiger is headquartered at 620 Nine Mile Drive in Bedford, Nova Scotia. You get an estimating partner in your own time zone who understands Atlantic Canada bid schedules, with the reach to deliver anywhere in the province.'},
+    {'q':'Will you sign an NDA before I share drawings?','a':'Yes. A non-disclosure agreement is available on request before you send tender documents or plan links. Your bid information stays confidential.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Nova Scotia Electrical Estimating Services', 'Electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review for Nova Scotia commercial, institutional, healthcare, retail, and municipal projects, delivered from MeTiger\'s Bedford office.', '/nova-scotia-electrical-estimating-services/', 'Nova Scotia') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Nova Scotia Electrical Estimating</div>
+    <h1 class="h1">Nova Scotia Electrical Estimating Services</h1>
+    <p class="lead">MeTiger is a Nova Scotia electrical estimating partner based in Bedford, working alongside electrical contractors and general contractors across the province. We turn your tender drawings, specifications, and addenda into clean takeoffs, material lists, labour summaries, and marked-up plans you can bid with — delivered remotely, on your schedule, in your own time zone.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request an Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Bedford, NS home office','Atlantic time-zone aligned','CEC-aware scope review','Marked-up plans','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. LOCAL PRESENCE / WHO WE SERVE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Local presence</div>
+    <h2 class="h2">A Nova Scotia estimating team, not a distant vendor</h2>
+    <p class="lead">Our office at 620 Nine Mile Drive in Bedford puts us in the middle of the Halifax Regional Municipality and within easy reach of the whole province. We work with electrical contractors, general contractors, construction managers, and design-build teams pricing work in Halifax, Dartmouth, Bedford, Sydney, Truro, New Glasgow, and beyond.</p>
+    <p>Being local matters at bid time. You reach us during Atlantic business hours, we understand the rhythm of Nova Scotia tender schedules, and there is no overnight lag when an addendum lands the afternoon before close. Everything is delivered remotely from your PDF or DWG set, so a project in Cape Breton is handled with the same care and the same fee basis as one two blocks from our door.</p>
+  </div>
+</section>
+
+<!-- 2. BUILT FOR NOVA SCOTIA -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Provincial context</div>
+    <h2 class="h2">Electrical estimating built for Nova Scotia projects</h2>
+    <p class="lead">Nova Scotia electrical work is governed by the Canadian Electrical Code (CSA C22.1) as adopted in the province, with electrical inspection and permitting administered provincially through the Nova Scotia authority having jurisdiction. We estimate what the tender documents call for and reconcile them against those requirements.</p>
+    <p>On the utility side, most projects connect to the Nova Scotia Power distribution network, and service coordination, metering, and utility interface notes are part of how we frame the electrical scope. We flag where the drawings, specifications, and utility requirements need to line up so your service and distribution numbers hold together before you commit to a price.</p>
+    <div class="note" style="margin-top:18px;">Estimating and coordination support only. Final compliance remains subject to the project engineer, the Nova Scotia authority having jurisdiction, and applicable provincial requirements — MeTiger works alongside the engineer of record where required and does not provide stamped or sealed engineering.</div>
+  </div>
+</section>
+
+<!-- 3. NOVA SCOTIA PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Nova Scotia project types we estimate</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Commercial &amp; retail</h3><p>Retail fit-outs, offices, tenant improvements, and mixed-use projects across the Halifax region and provincial centres.</p></div>
+      <div class="card"><h3 class="h3">Institutional</h3><p>Schools, campuses, and public-sector facilities where distribution, life-safety, and lighting scope must be carefully counted.</p></div>
+      <div class="card"><h3 class="h3">Healthcare</h3><p>Clinics, care facilities, and healthcare build-outs with essential power, emergency systems, and coordination-heavy scope.</p></div>
+      <div class="card"><h3 class="h3">Municipal</h3><p>Municipal buildings, pump stations, and community infrastructure with controls and site electrical.</p></div>
+      <div class="card"><h3 class="h3">Service upgrades</h3><p>Distribution upgrades and service work coordinated with Nova Scotia Power interface requirements.</p></div>
+      <div class="card"><h3 class="h3">Renovations &amp; fit-outs</h3><p>Interior renovations and re-fits where existing conditions and phased work need documented assumptions.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your Nova Scotia estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and project-specific assumptions</li>
+      <li>Inclusions and exclusions</li>
+      <li>Drawing and specification assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Utility and service coordination notes</li>
+      <li>Bid summary</li>
+      <li>Optional final review call</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering and utility interface']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
+      {'title':'Lighting','items':['Interior lighting and controls','Emergency lighting and life safety','Site and exterior lighting','Underground electrical']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Access control / security rough-in where included','EV charger rough-in where included']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 6. CODE & COMPLIANCE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; compliance</div>
+    <h2 class="h2">Nova Scotia code &amp; compliance</h2>
+    <p class="lead">Our estimating and scope review are informed by CSA C22.1 / the Canadian Electrical Code as adopted in Nova Scotia, together with project specifications, Nova Scotia Power utility requirements, and the bid documents. We estimate what the documents call for and flag where they don&rsquo;t agree — so pricing rests on a defensible reading of scope, not guesswork.</p>
+    <div class="note warn" style="margin-top:18px;">MeTiger provides CEC-aware estimating and coordination support — not stamped drawings, sealed or professional engineering, permit-ready engineering, or code-compliance certification. Final compliance remains subject to the project engineer, the Nova Scotia authority having jurisdiction, and applicable provincial requirements. We work alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 7. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send your drawings or a plan link','body':'Share your PDF or DWG set, specifications, and addenda — or a Dropbox, Drive, or Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm project location in Nova Scotia, project type, scope, and bid due date.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before work begins.'},
+      {'title':'Takeoff and scope review','body':'We complete the takeoff and organize the electrical scope by system.'},
+      {'title':'Document assumptions and gaps','body':'Assumptions, exclusions, and scope gaps are logged clearly for your team.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package on the agreed window, with an optional walkthrough call.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 8. CROSS-LINKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Related</div>
+    <h2 class="h2">Explore more of our estimating support</h2>
+    <p class="lead">Nova Scotia work sits inside our broader Canadian estimating practice. Start with the pages below, or reach out and we&rsquo;ll point you to the right one.</p>
+    <ul class="checks" style="margin-top:18px;">
+      <li><a href="/canada-electrical-estimating-services/">Canadian electrical estimating services</a> — our full national estimating and takeoff offering.</li>
+      <li><a href="/electrical-takeoff-services-canada/">Electrical takeoff services</a> — quantity takeoffs and marked-up drawings in detail.</li>
+      <li><a href="/new-brunswick-electrical-estimating-services/">New Brunswick electrical estimating</a> — neighbouring Maritime coverage.</li>
+      <li><a href="/prince-edward-island-electrical-estimating-services/">Prince Edward Island electrical estimating</a> — Island projects across the Northumberland Strait.</li>
+    </ul>
+    <p class="note" style="margin-top:18px;">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Nova Scotia estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 10. FINAL CTA -->
+{{ cta_band('Estimating support from your Nova Scotia team',
+    'Send your Nova Scotia bid set or share a plan link with the due date. MeTiger confirms scope, fee, and delivery window before any work begins — from our office right here in Bedford.',
+    [{'label':'Request an Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

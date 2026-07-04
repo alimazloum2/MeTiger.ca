@@ -1,0 +1,143 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, faq_list, cta_band %}
+
+{% block page_title %}Pricing &amp; Quote Process | MeTiger Inc.{% endblock %}
+{% block meta_description %}See how MeTiger quotes electrical estimating cost in Canada: send your bid set and deadline, then confirm scope, fee, and delivery window before work begins.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Pricing & Quote Process','url':None}] %}
+{% set page_faqs = [
+    {'q':'How do you quote a project?','a':'Every project is quoted after drawing review. Send the bid set, addenda, and due date; we confirm scope, deliverables, fee, and delivery window in writing before work begins. The fee reflects sheet count, project size, system complexity, and the deadline — not a rate card.'},
+    {'q':'Do you have a minimum?','a':'Smaller projects are welcome and quoted the same way as larger ones — after we see the drawings. Because the fee is scoped to the actual set, a small, well-defined bid is priced accordingly.'},
+    {'q':'Do you offer rush turnarounds?','a':'When our schedule allows, yes. Rush availability depends on current workload and set size. If we can meet the deadline, the window and any adjustment are confirmed with your quote.'},
+    {'q':'Can you provide ongoing monthly support?','a':'Yes. For contractors bidding steadily, we can arrange recurring estimating capacity scoped around your typical volume — tell us roughly how many bids you carry in a month and we will structure something predictable.'},
+    {'q':'What if the scope changes after you quote?','a':'If addenda or a revised set materially change the work, we flag the impact and reconfirm scope, fee, and window before continuing — quoted the same transparent way as the original.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Electrical Estimating — Pricing & Quote Process', 'How MeTiger quotes Canadian electrical estimating: send the bid set and deadline, and we confirm scope, fee, and delivery window before work begins. Every project is quoted after drawing review.', '/pricing/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Pricing &amp; Quote Process</div>
+    <h1 class="h1">Pricing &amp; Quote Process</h1>
+    <p class="lead">MeTiger prices electrical estimating one project at a time. There is no rate card and no cheap-race bidding — every project is quoted after drawing review, so the fee matches the real scope in front of us. Send your bid set and deadline, and we confirm scope, fee, and delivery window before any work begins.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Upload Drawings for a Fixed Quote</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Quoted after drawing review','Fixed fee, agreed up front','Scope confirmed in writing','No cheap-race pricing','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. HOW OUR QUOTES WORK -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">How it works</div>
+    <h2 class="h2">How our quotes work</h2>
+    <p class="lead">There is no public rate sheet, and that is deliberate. Electrical estimating cost depends on what the drawings actually contain, so we price each bid on its merits — a fair fee for real scope, put in writing before we start, with nothing added quietly later.</p>
+    <p class="muted" style="margin-top:14px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 2. ENGAGEMENT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Engagement types</div>
+    <h2 class="h2">Ways to work with us</h2>
+    <p class="lead">Pick the level of support that fits the bid. Each engagement is scoped and priced the same way — after we review your drawings.</p>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Takeoff-only support</h3><p>A clean quantity takeoff by system when your team carries the pricing. You get counts and marked-up drawings and apply your own labour units and market pricing assumptions.</p></div>
+      <div class="card"><h3 class="h3">Full bid-ready estimate</h3><p>The complete package: takeoff, material list, labour-hour summary, colour-coded marked-up drawings, assumptions, exclusions, and a bid summary you can submit with confidence.</p></div>
+      <div class="card"><h3 class="h3">Bid review &amp; second set of eyes</h3><p>Already have a number? We review your takeoff and scope for gaps, missed systems, and soft assumptions before you commit it to a tender.</p></div>
+      <div class="card"><h3 class="h3">Monthly / ongoing support</h3><p>Recurring estimating capacity for busy shops — a predictable arrangement for contractors bidding steadily, scoped around your typical volume.</p></div>
+      <div class="card"><h3 class="h3">Rush support when available</h3><p>Tight deadline? When our schedule allows, we take on rush bid sets. Rush availability and any adjustment are confirmed with your quote, never assumed.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHAT AFFECTS YOUR PRICE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing factors</div>
+    <h2 class="h2">What affects your price</h2>
+    <p class="lead">With no rate card, the fee is built from the work the drawings actually call for. The main factors we weigh:</p>
+    {{ checks([
+      'Number of sheets and overall drawing-set size',
+      'Overall project size and floor area',
+      'System complexity and how many electrical systems are in scope',
+      'Bid deadline and how much runway remains',
+      'Number of addenda issued during the bid',
+      'Whether material pricing is required or takeoff only',
+      'Whether colour-coded marked-up drawings are required',
+      'Whether a final review call is required'
+    ]) }}
+  </div>
+</section>
+
+<!-- 4. INCLUDED VS NOT INCLUDED -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Scope of a quote</div>
+    <h2 class="h2">What a quote includes — and what it does not</h2>
+    <div class="grid grid-2" style="margin-top:22px;">
+      <div class="card">
+        <h3 class="h3">What a quote includes</h3>
+        {{ checks([
+          'A fixed fee, quoted after drawing review',
+          'A confirmed scope of deliverables, in writing',
+          'A committed delivery window before work begins',
+          'Documented assumptions and exclusions with the estimate',
+          'Reasonable clarification on the package once delivered'
+        ]) }}
+      </div>
+      <div class="card">
+        <h3 class="h3">What a quote does not include</h3>
+        {{ checks([
+          'Stamped or sealed professional engineering',
+          'Permit drawings or permit applications',
+          'Authority having jurisdiction (AHJ) approval or code certification',
+          'Material procurement, purchasing, or supplier negotiation',
+          'On-site supervision or installation labour'
+        ]) }}
+      </div>
+    </div>
+    <div class="note" style="margin-top:22px;">MeTiger provides electrical estimating and coordination support — not stamped drawings, sealed engineering, or code-compliance certification. Our takeoffs are informed by CSA C22.1 / the Canadian Electrical Code and the bid documents; final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements. We work alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 5. PROCESS RECAP -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">The quote process</div>
+    <h2 class="h2">From bid set to fixed fee</h2>
+    {{ process_steps([
+      {'title':'Send your bid set and deadline','body':'Upload drawings or share a plan link with the due date, specifications, and addenda.'},
+      {'title':'We review and confirm scope','body':'We read the set, confirm project type and deliverables, and flag anything unclear.'},
+      {'title':'You receive a fixed quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Work proceeds on the agreed window','body':'You approve, and we deliver the reviewable package on the agreed window.'}
+    ]) }}
+    <p class="lead" style="margin-top:22px;">Want to see the deliverables first? Review a <a href="/samples/" style="color:var(--primary);">sample package</a> or read about our <a href="/canada-electrical-estimating-services/" style="color:var(--primary);">Canadian electrical estimating services</a>.</p>
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Pricing questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 7. FINAL CTA -->
+{{ cta_band('Send your bid set and get a fixed quote',
+    'Upload your drawings or share a plan link with the bid due date. Every project is quoted after drawing review — scope, fee, and delivery window confirmed before any work begins.',
+    [{'label':'Upload Drawings for a Fixed Quote','href':'/contact/','primary':True},{'label':'See a sample package','href':'/samples/','primary':False}]) }}
+{% endblock %}

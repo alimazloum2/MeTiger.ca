@@ -1,0 +1,158 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Industrial Electrical Estimating Canada | MeTiger Inc.{% endblock %}
+{% block meta_description %}Industrial electrical estimating and takeoff services across Canada for plants, warehouses, and heavy industrial: MCCs, VFDs, switchgear, feeders, and gear.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Industrial Electrical Estimating','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you estimate heavy industrial and process electrical scope?','a':'Yes. We take off industrial power distribution and process electrical from your tender set — motor control centres, VFDs, switchgear, feeders and bus duct, transformers, standby power, controls rough-in, and site and underground electrical for warehouses, manufacturing plants, and utility-adjacent facilities.'},
+    {'q':'How do you handle long-lead gear on an industrial bid?','a':'We flag major distribution equipment — switchgear, MCCs, transformers, generators, and large VFDs — with a gear and long-lead note so your team can request budget pricing and lead times early. We quantify and organise the gear; we do not set your final vendor pricing.'},
+    {'q':'Do you quantify PLC and controls rough-in?','a':'We take off the electrical rough-in that supports controls: control panel and PLC enclosure feeds, conduit and control wiring, field device rough-in, and interlock and E-stop pathways where the documents show them. Instrumentation supply and programming stay with the controls contractor unless the scope says otherwise.'},
+    {'q':'Is your estimating based on the Canadian Electrical Code?','a':'Our takeoff and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments, project specifications, utility requirements, and the bid documents. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial or territorial requirements.'},
+    {'q':'Do you provide stamped or sealed engineering?','a':'No. MeTiger provides estimating, takeoff, and coordination support — not stamped drawings, sealed professional engineering, or code-compliance certification. We work alongside the engineer of record where required.'},
+    {'q':'Can you coordinate with the utility scope?','a':'We include utility coordination notes: service entrance, metering, and the demarcation between utility-supplied and contractor-supplied work as shown on the drawings, so the primary and secondary scope is clearly split before you price it.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Industrial Electrical Estimating Canada', 'Industrial electrical takeoffs, MCC and switchgear schedules, feeder and bus quantities, controls rough-in allowances, long-lead gear notes, and site electrical for Canadian warehouses, plants, and process facilities.', '/industrial-electrical-estimating-canada/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Industrial Electrical Estimating</div>
+    <h1 class="h1">Industrial Electrical Estimating in Canada</h1>
+    <p class="lead">MeTiger provides industrial electrical estimating and takeoff services for Canadian contractors bidding heavier scope — warehouses and distribution centres, manufacturing and process facilities, plants, and utility-adjacent work. We turn your tender set into a reviewable package: distribution and motor takeoffs, feeder and bus quantities, controls rough-in allowances, long-lead gear notes, and clearly documented assumptions and exclusions.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request Industrial Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Heavy industrial scope','MCC, VFD & switchgear takeoffs','Long-lead gear notes','CEC-aware scope review','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. INDUSTRIAL PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Industrial projects we estimate</h2>
+    <p class="lead">Industrial electrical carries more distribution, more motors, and more coordination than a typical commercial fit-out. We estimate the full range of Canadian industrial work.</p>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Warehouses &amp; distribution</h3><p>High-bay lighting, power distribution, dock and material-handling feeds, and expanding logistics facilities.</p></div>
+      <div class="card"><h3 class="h3">Manufacturing &amp; process</h3><p>Production lines, process equipment power, motor control centres, and machine connections on the plant floor.</p></div>
+      <div class="card"><h3 class="h3">Plants &amp; heavy industrial</h3><p>Medium-voltage distribution, unit substations, and heavy feeder and bus duct scope in industrial plants.</p></div>
+      <div class="card"><h3 class="h3">Cold storage &amp; food</h3><p>Refrigeration power, sanitation-rated equipment feeds, and process load for cold storage and food processing.</p></div>
+      <div class="card"><h3 class="h3">Utility-adjacent facilities</h3><p>Pump and lift stations, treatment and pumping facilities, and work at the utility interface.</p></div>
+      <div class="card"><h3 class="h3">Upgrades &amp; expansions</h3><p>Service and distribution upgrades, added production capacity, and brownfield tie-ins to live systems.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your industrial estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary with the labour-unit basis</li>
+      <li>MCC and switchgear schedules reconciled to the drawings</li>
+      <li>Feeder, bus duct, and cable tray quantities</li>
+      <li>Gear and long-lead item notes</li>
+      <li>Site and underground electrical takeoff</li>
+      <li>Controls and PLC rough-in allowances</li>
+      <li>Utility coordination notes</li>
+      <li>Inclusions, exclusions, and documented assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review and bid summary</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Industrial systems we quantify</h2>
+    <p class="lead">The weight of an industrial estimate sits in distribution, motors, and controls. We organise every system so the count can be checked line by line.</p>
+    {{ systems([
+      {'title':'Service & distribution','items':['Utility service entrance & metering','Medium-voltage & unit substations','Switchgear & switchboards','Transformers (dry-type & liquid-filled)','Distribution & panelboards']},
+      {'title':'Motors & drives','items':['Motor control centres (MCCs)','Motors, disconnects & connections','Variable frequency drives (VFDs)','Soft starters & across-the-line starters','Motor feeders & terminations']},
+      {'title':'Feeders, bus & raceway','items':['Feeders & branch power','Bus duct / busway','Cable tray & ladder','Raceways & conductors','Wireway, strut & supports']},
+      {'title':'Standby & power quality','items':['Generators, ATS & UPS','Battery systems','Power factor correction','Emergency & life-safety power']},
+      {'title':'Controls & instrumentation','items':['PLC & control panel rough-in','Instrumentation & field device rough-in','Control wiring & conduit','Interlocks & E-stop coordination']},
+      {'title':'Site, underground & grounding','items':['Site & underground electrical','Ductbanks & manholes','Grounding & bonding','Lightning protection coordination','Utility coordination notes']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 4. LONG-LEAD & GEAR NOTE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Gear &amp; long-lead</div>
+    <h2 class="h2">Long-lead equipment, flagged early</h2>
+    <p class="lead">On industrial work, the schedule risk lives in the gear. Major distribution equipment can carry long procurement windows, and a missed lead time hurts more than a missed device count.</p>
+    <div class="note warn" style="margin-top:18px;">Your package includes a gear and long-lead note that isolates switchgear, MCCs, transformers, generators, large VFDs, and bus duct so your team can request budget pricing and lead times before bid day. MeTiger quantifies and organises the gear from the documents; final vendor pricing, submittals, and delivery commitments remain yours to confirm with your suppliers and the engineer of record.</div>
+  </div>
+</section>
+
+<!-- 5. CEC-AWARE APPROACH -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Approach</div>
+    <h2 class="h2">CEC-aware industrial estimating</h2>
+    <p class="lead">Our takeoff and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments and practices, project specifications, utility requirements, and the bid documents. We estimate what the documents call for, apply project-specific labour assumptions and Canadian market pricing assumptions, and flag where the drawings, schedules, and specs do not agree.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial or territorial requirements. MeTiger provides estimating and coordination support — not stamped drawings, sealed professional engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send drawings or a plan link','body':'Share your PDF or DWG set, specifications, equipment schedules, and addenda — or a Dropbox / Drive / Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm facility type, distribution scope, controls involvement, project location, and the bid due date.'},
+      {'title':'Receive a fixed quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Takeoff and gear review','body':'We take off the distribution, motors, feeders, controls rough-in, and site electrical, and isolate long-lead gear.'},
+      {'title':'Document assumptions and gaps','body':'Project-specific labour assumptions, exclusions, and scope gaps are logged clearly, not left silent.'},
+      {'title':'Deliver the package','body':'You receive the reviewable industrial estimate package on the agreed window, ready to price.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">Pricing and quote process</h2>
+    <p class="lead">Every industrial project is quoted after drawing review, based on sheet count, distribution and controls complexity, deadline, and the deliverables you need. Send the bid set and due date, and MeTiger will confirm scope, fee, and delivery window before work begins — no cheap-race pricing, just a clear fee for a package you can bid with.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Request Industrial Estimate</a></div>
+    <p class="muted" style="margin-top:22px;">Related estimating: <a href="/commercial-electrical-estimating-canada/" style="color:var(--primary);">commercial electrical estimating</a>, <a href="/municipal-utility-electrical-estimating-canada/" style="color:var(--primary);">municipal &amp; utility estimating</a>, <a href="/electrical-takeoff-services-canada/" style="color:var(--primary);">electrical takeoff services</a>, and <a href="/electrical-bid-review-canada/" style="color:var(--primary);">bid review</a>.</p>
+    <p class="muted" style="margin-top:8px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 9. FINAL CTA -->
+{{ cta_band('Send your industrial bid set and get a fixed quote',
+    'Upload your drawings or share a plan link with the bid due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request Industrial Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

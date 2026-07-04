@@ -1,0 +1,165 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, faq_list, cta_band %}
+
+{% block page_title %}Electrical Bid Review Canada | MeTiger Inc.{% endblock %}
+{% block meta_description %}Independent electrical bid review across Canada — a second set of eyes on your estimate and quantities before you submit. Catch scope gaps before bid day.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Electrical Bid Review','url':None}] %}
+{% set page_faqs = [
+    {'q':'What is an electrical bid review?','a':'It is an independent check of your own estimate and quantities before you submit. Rather than pricing the job from scratch, we stress-test the takeoff and scope you already built — flagging gaps, missing systems, unbalanced counts, and weak exclusions so you can fix them before bid day.'},
+    {'q':'Do you re-estimate the whole project?','a':'No — not by default. A bid review returns a marked-up review, a scope-gap and RFI log, and a short written summary of risks and recommendations. We check your number, not replace it. A full re-estimate or independent takeoff is available separately if you ask.'},
+    {'q':'Is the review informed by the Canadian Electrical Code?','a':'Yes. Our scope review is informed by CSA C22.1 / the Canadian Electrical Code, provincial practices, project specifications, and the bid documents. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements. MeTiger provides estimating and coordination support, working alongside the engineer of record where required — not stamped engineering.'},
+    {'q':'What do you need from me to start?','a':'Send your estimate or takeoff workbook alongside the drawing set (PDF or DWG), the specifications, and every addendum issued. The more we can compare your quantities against, the sharper the review. A plan link works too.'},
+    {'q':'How fast can you turn a review around?','a':'Turnaround depends on sheet count, the depth of review you want, and your bid deadline. We confirm a specific delivery window with your quote, before any work begins, so it lands before you submit.'},
+    {'q':'Is my bid kept confidential?','a':'Yes. An NDA is available on request before you share your estimate, drawings, or plan links. Your pricing and quantities stay between us.'},
+    {'q':'What does a bid review cost?','a':'Every review is quoted after drawing review, based on sheet count and scope complexity. Send the set and your deadline and we confirm the fee and delivery window before work begins.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Electrical Bid Review Canada', 'Independent review of your electrical estimate and quantities before submission — scope-gap and RFI log, marked-up review, and a written summary of risks and recommendations for Canadian projects.', '/electrical-bid-review-canada/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Electrical Bid Review — Canada</div>
+    <h1 class="h1">Electrical Bid Review — A Second Set of Eyes</h1>
+    <p class="lead">You have the drawings, the takeoff, and a deadline. What you don't always have is a fresh, independent set of eyes on the number before it goes out the door. MeTiger reviews your electrical estimate and quantities — catching scope gaps, missing systems, unbalanced quantities, missing addenda, and other-trade equipment power that never got counted — so you submit with confidence instead of crossed fingers.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request Bid Review</a>
+      <a class="btn btn-ghost" href="/canada-electrical-estimating-services/">Full estimating services</a>
+    </div>
+    {{ trust_bar(['Independent review','CEC-aware scope check','Scope-gap & RFI log','Written risk summary','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. WHO IT'S FOR -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Who it's for</div>
+    <h2 class="h2">Who an electrical bid review is for</h2>
+    <p class="lead">A bid review is not a sign you got it wrong — it's how experienced teams protect margin on the bids that matter most.</p>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Contractors racing a deadline</h3><p>The tender closes in hours and the count was rushed. We catch what the pressure hid before you commit to a number you'll live with.</p></div>
+      <div class="card"><h3 class="h3">GCs levelling sub bids</h3><p>Three quotes, three different scopes. We help you see which bid is actually missing scope rather than simply cheaper.</p></div>
+      <div class="card"><h3 class="h3">Estimators wanting a check</h3><p>A clean estimate deserves a senior, independent second opinion on your quantities and assumptions before it reaches the client.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHAT WE REVIEW -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">The review</div>
+    <h2 class="h2">What we review in your estimate</h2>
+    <p class="lead">We compare your takeoff and scope against the drawings, specifications, schedules, and addenda — line by line where it counts.</p>
+    {{ checks([
+      'Scope gaps between drawings, specifications, schedules, and addenda',
+      'Missing systems — lighting controls, fire alarm, grounding, low-voltage rough-in',
+      'Unbalanced or unreasonable quantities against the drawing count',
+      'Other-trade equipment power (mechanical, kitchen, process) left uncounted',
+      'Addenda that changed scope and never made it into the count',
+      'Weak or missing exclusions that leave your bid exposed after award',
+      'Labour-unit and crew productivity assumptions that look optimistic'
+    ]) }}
+  </div>
+</section>
+
+<!-- 3. WHAT YOU GET BACK -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What you get back</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">A marked-up review</h3><p>Your drawings and takeoff annotated where we see risk — colour-coded so you can jump straight to what needs a decision.</p></div>
+      <div class="card"><h3 class="h3">A scope-gap &amp; RFI log</h3><p>Every gap, conflict, and open question in one list — ready to send to the design team or fold into your exclusions.</p></div>
+      <div class="card"><h3 class="h3">A written risk summary</h3><p>A short, plain-language rundown of the risks we found and what we'd recommend — the whole picture on one page.</p></div>
+    </div>
+    <div class="note warn" style="margin-top:20px;">A bid review checks the estimate you already built — it is not a re-estimate. We do not rebuild your number from scratch unless you ask us to. If you'd rather have an independent takeoff or a full estimate, that's a separate service we're glad to quote.</div>
+  </div>
+</section>
+
+<!-- 4. WHY BIDS GET MISSED -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">The problem</div>
+    <h2 class="h2">Why bids get missed</h2>
+    <p class="lead">The most expensive misses are rarely a wrong price — they're scope that was never counted at all, hidden in the seams between documents.</p>
+    <ul class="checks" style="margin-top:18px;">
+      <li>Equipment power buried in the mechanical, kitchen, and process drawings</li>
+      <li>Late addenda that shifted scope after the takeoff was done</li>
+      <li>A tight deadline that forced a fast count with no time to check it</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5. CEC-AWARE NOTE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Approach</div>
+    <h2 class="h2">CEC-aware, honest about scope</h2>
+    <p class="lead">Our review is informed by CSA C22.1 / the Canadian Electrical Code, provincial practices, project specifications, and local utility requirements. We flag where the documents disagree — we don't rule on code.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements. MeTiger provides estimating and coordination support — not stamped drawings, sealed engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How a bid review works</h2>
+    {{ process_steps([
+      {'title':'Send your estimate and drawings','body':'Your takeoff or estimate workbook alongside the PDF or DWG set, specifications, and every addendum — or a plan link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm project type, how deep you want the review to go, and your bid due date.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Independent review','body':'We check your quantities and scope against the documents and log every gap, conflict, and assumption.'},
+      {'title':'Return findings','body':'You receive the marked-up review, the scope-gap / RFI log, and a short written summary of risks and recommendations.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">What a review costs</h2>
+    <p class="lead">Every bid review is quoted after drawing review, based on sheet count, scope complexity, and how deep you want us to go. Send the set and your deadline; we confirm the fee and delivery window before work begins.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Request Bid Review</a></div>
+  </div>
+</section>
+
+<!-- 8. RELATED / USA CROSS-LINK -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Related services</div>
+    <h2 class="h2">Need more than a review?</h2>
+    <p class="lead">Short on time to build the estimate in the first place? We can do the count for you.</p>
+    <div class="pills">
+      <a class="pill" href="/canada-electrical-estimating-services/">Electrical estimating services</a>
+      <a class="pill" href="/electrical-takeoff-services-canada/">Electrical takeoff services</a>
+      <a class="pill" href="/commercial-electrical-estimating-canada/">Commercial estimating</a>
+      <a class="pill" href="/samples/">See a sample package</a>
+    </div>
+    <p class="muted" style="margin-top:20px; font-size:14px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 10. FINAL CTA -->
+{{ cta_band('Get a second set of eyes before you submit',
+    'Send your estimate, drawings, and bid deadline. MeTiger confirms scope, fee, and delivery window, then returns a marked-up review, a scope-gap log, and a written summary of the risks worth fixing before bid day.',
+    [{'label':'Request Bid Review','href':'/contact/','primary':True},{'label':'Full estimating services','href':'/canada-electrical-estimating-services/','primary':False}]) }}
+{% endblock %}

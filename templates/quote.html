@@ -1,0 +1,51 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, trust_bar %}
+
+{% block page_title %}Request an Electrical Estimate — Contact MeTiger Inc. | Canada{% endblock %}
+{% block meta_description %}Request a Canadian electrical estimate or takeoff. Send your PDF/DWG bid set or a plan link and your bid due date; MeTiger confirms scope, fee, and delivery window before work begins. NDA on request.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Contact / Quote','url':None}] %}
+{% block head_schema %}{{ breadcrumb_schema(crumbs) }}{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Contact / Quote Request</div>
+    <h1 class="h1">Request a Canadian electrical estimate</h1>
+    <p class="lead">Send your bid set — a PDF/DWG upload link or a plan link — along with the project province, project type, and bid due date. MeTiger will confirm scope, fee, and delivery window before any work begins.</p>
+    {{ trust_bar(['Quoted after drawing review','CEC-aware scope review','Marked-up plans','NDA on request','Remote delivery across Canada']) }}
+  </div>
+</section>
+
+<section style="padding-top: 8px;">
+  <div class="container">
+    <div class="grid grid-2" style="align-items: start;">
+      <div class="panel" style="border:1px solid var(--stroke); border-radius: var(--radius-md); padding: 24px; background: linear-gradient(180deg,#0f1629,#0b0f17);">
+        <h2 class="h3" style="font-size:20px; margin-bottom: 6px;">Quote request</h2>
+        <p class="muted" style="font-size:13.5px; margin-top:0;">Fields marked * are required. The more detail you share, the faster we can scope it.</p>
+        {% include 'partials/quote_form.html' %}
+      </div>
+      <div>
+        <div class="card">
+          <h3 class="h3">Prefer email or phone?</h3>
+          <p><a href="mailto:info@metiger.ca" style="color:var(--primary);">info@metiger.ca</a><br><a href="tel:+17826405557" style="color:var(--primary);">+1 (782) 640-5557</a></p>
+          <p class="muted" style="font-size:13.5px;">MeTiger Inc.<br>620 Nine Mile Drive, Bedford, NS B4A 0H4<br>Remote electrical estimating across Canada.</p>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <h3 class="h3">What to send</h3>
+          <ul class="checks" style="margin-top:8px;">
+            <li>Electrical drawings (PDF or DWG) or a plan link</li>
+            <li>Specifications and any addenda</li>
+            <li>Project province and project type</li>
+            <li>Bid due date and deliverables needed</li>
+          </ul>
+        </div>
+        <div class="note warn" style="margin-top:16px;">Do not upload confidential tender documents unless you are authorized to share them. NDA available on request before you send files.</div>
+        <p class="muted" style="margin-top:16px; font-size:13px;">Estimating in the USA? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a> ↗</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
