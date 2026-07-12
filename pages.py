@@ -36,20 +36,26 @@ PROVINCE_PAGES = [
     ("/newfoundland-labrador-electrical-estimating-services/","pages/province_newfoundland_labrador.html","prov_nl", "0.5"),
 ]
 
-# Static/bespoke routes to include in sitemap (rendered by dedicated views in app.py)
+# Static/bespoke routes to include in sitemap (rendered by dedicated views in app.py).
+# (url_path, template, sitemap_priority) — template is relative to templates/ and is
+# used to source the sitemap <lastmod> from the file's mtime.
 CORE_PAGES = [
-    ("/", "1.0"),
-    ("/contact/", "0.8"),
-    ("/estimate-calculator", "0.6"),
-    ("/electrical-budget-guide", "0.6"),
+    ("/", "home.html", "1.0"),
+    ("/contact/", "quote.html", "0.8"),
+    ("/estimate-calculator", "estimate_calculator.html", "0.6"),
+    ("/electrical-budget-guide", "budget_guide.html", "0.6"),
 ]
 
 ALL_REGISTRY_PAGES = SERVICE_PAGES + PROVINCE_PAGES
 
 
 def sitemap_entries():
-    """Return list of (path, priority) for every indexable page."""
-    entries = list(CORE_PAGES)
-    for path, _tmpl, _ep, prio in ALL_REGISTRY_PAGES:
-        entries.append((path, prio))
+    """Return list of (path, template) for every indexable page.
+
+    template is relative to the templates/ directory; app.py derives each URL's
+    <lastmod> from that file's modification time.
+    """
+    entries = [(path, tmpl) for path, tmpl, _prio in CORE_PAGES]
+    for path, tmpl, _ep, _prio in ALL_REGISTRY_PAGES:
+        entries.append((path, tmpl))
     return entries

@@ -23,16 +23,34 @@
 
 {% block head_schema %}
     {{ faq_schema(home_faqs) }}
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"VideoObject","name":"Welcome to the official MeTiger channel.","description":"An introduction to MeTiger Inc. — Canadian electrical estimating and coordination support for contractors and general contractors, delivering clean takeoffs, labour summaries, marked-up drawings, and scope notes remotely across Canada.","thumbnailUrl":"https://i.ytimg.com/vi/jl1pmXzOGwM/maxresdefault.jpg","uploadDate":"2026-07-12","embedUrl":"https://www.youtube-nocookie.com/embed/jl1pmXzOGwM","contentUrl":"https://www.youtube.com/watch?v=jl1pmXzOGwM"}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"VideoObject","name":"MeTiger Inc. — Engineering Complex Projects with Precision","description":"Welcome to MeTiger Inc. We specialize in engineering and delivering complex construction projects with absolute precision. From initial site preparation and electrical rough-ins to comprehensive project management and construction documentation, our team ensures every phase of your project is executed flawlessly, on time, and on budget.","thumbnailUrl":"https://i.ytimg.com/vi/OjQg7LQzWTM/maxresdefault.jpg","uploadDate":"2026-04-11","embedUrl":"https://www.youtube-nocookie.com/embed/OjQg7LQzWTM","contentUrl":"https://www.youtube.com/watch?v=OjQg7LQzWTM"}
+    </script>
 {% endblock %}
 
 {% block head_extra %}
 <style>
   .home-hero { padding-top: 44px; }
   .home-hero .grid-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: center; }
-  .home-hero-art { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--stroke); box-shadow: var(--shadow); position: relative; }
-  .home-hero-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .home-hero-art .tag { position: absolute; left: 16px; bottom: 16px; background: rgba(8,12,20,0.8); border: 1px solid var(--stroke); color: var(--text-1); font-size: 12.5px; padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 8px; }
+  .home-hero-art { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--stroke); box-shadow: var(--shadow); position: relative; background: var(--bg-0); }
+  .home-hero-art .tag { position: absolute; left: 16px; bottom: 16px; z-index: 3; pointer-events: none; background: rgba(8,12,20,0.8); border: 1px solid var(--stroke); color: var(--text-1); font-size: 12.5px; padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 8px; }
   .home-hero-art .tag .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px 2px rgba(52,211,153,.5); }
+  /* Lazy YouTube facade — no iframe / no Google requests until click */
+  .yt-lite { position: relative; width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; overflow: hidden; }
+  .yt-lite .yt-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .yt-lite .yt-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .yt-lite.yt-active .yt-thumb, .yt-lite.yt-active .yt-play { display: none; }
+  .yt-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
+    min-width: 72px; min-height: 72px; width: 72px; height: 72px; padding: 0; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--primary); color: var(--on-primary); border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45); transition: transform .15s ease, background .2s ease; }
+  .yt-play:hover { background: var(--primary-2); transform: translate(-50%, -50%) scale(1.06); }
+  .yt-play:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .yt-play svg { width: 30px; height: 30px; margin-left: 4px; fill: currentColor; }
   .usa-hint { margin-top: 16px; font-size: 13px; color: var(--muted); }
   .usa-hint a { color: var(--primary); }
   @media (max-width: 900px) { .home-hero .grid-hero { grid-template-columns: 1fr; } .home-hero-art { order: -1; } }
@@ -56,7 +74,16 @@
         {{ trust_bar(['Canada-focused estimating','CEC-aware scope review','Marked-up plans','Labour & material summaries','NDA on request','Remote delivery across Canada']) }}
       </div>
       <div class="home-hero-art">
-        <img src="{{ url_for('static', filename='images/metiger-ns-ca.png') }}" alt="MeTiger electrical estimating — engineered in Nova Scotia, serving contractors across Canada" />
+        <div class="yt-lite" id="yt-lite" data-yt-id="jl1pmXzOGwM" data-yt-title="Welcome to the official MeTiger channel">
+          <img class="yt-thumb"
+               src="https://i.ytimg.com/vi/jl1pmXzOGwM/maxresdefault.jpg"
+               onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/jl1pmXzOGwM/hqdefault.jpg';"
+               width="1280" height="720" loading="lazy"
+               alt="Welcome to the official MeTiger channel — intro to MeTiger Canadian electrical estimating" />
+          <button type="button" class="yt-play" id="yt-play" aria-label="Play video: Welcome to the official MeTiger channel">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"></path></svg>
+          </button>
+        </div>
         <div class="tag"><span class="pulse"></span> Engineered in Nova Scotia · estimating for Canada</div>
       </div>
     </div>
@@ -197,8 +224,45 @@
           <p class="muted" style="font-size:13.5px;">Based in Bedford, Nova Scotia. Remote electrical estimating delivery across Canada.</p>
         </div>
         <div class="note warn" style="margin-top: 16px;">Please don’t share confidential tender documents unless you’re authorized to. NDA available on request.</div>
+        <div class="card" style="margin-top:16px; padding:0; overflow:hidden;">
+          <div class="yt-lite" data-yt-id="OjQg7LQzWTM" data-yt-title="MeTiger Inc. — Engineering Complex Projects with Precision">
+            <img class="yt-thumb"
+                 src="https://i.ytimg.com/vi/OjQg7LQzWTM/maxresdefault.jpg"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/OjQg7LQzWTM/hqdefault.jpg';"
+                 width="1280" height="720" loading="lazy"
+                 alt="MeTiger Inc. — Engineering Complex Projects with Precision" />
+            <button type="button" class="yt-play" aria-label="Play video: MeTiger Inc. — Engineering Complex Projects with Precision">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"></path></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  function init(lite) {
+    var btn = lite.querySelector('.yt-play');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      if (lite.classList.contains('yt-active')) return;
+      var id = lite.getAttribute('data-yt-id');
+      var iframe = document.createElement('iframe');
+      iframe.className = 'yt-iframe';
+      iframe.width = '1280';
+      iframe.height = '720';
+      iframe.title = lite.getAttribute('data-yt-title') || '';
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      lite.classList.add('yt-active');
+      lite.appendChild(iframe);
+      iframe.focus();
+    });
+  }
+  document.querySelectorAll('.yt-lite').forEach(init);
+})();
+</script>
 {% endblock %}

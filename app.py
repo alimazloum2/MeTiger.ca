@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, Response
 import io, os, re, time, requests, hmac, hashlib
+from datetime import datetime
 from collections import OrderedDict
 from threading import Lock
 from dotenv import load_dotenv
@@ -116,19 +117,31 @@ def robots_txt():
     return Response("\n".join(lines) + "\n", mimetype="text/plain")
 
 
+_TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
+
+
+def _template_lastmod(template_rel):
+    """ISO date (YYYY-MM-DD) of a template's last modification, for <lastmod>."""
+    try:
+        mtime = os.path.getmtime(os.path.join(_TEMPLATE_DIR, template_rel))
+        return datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
+    except OSError:
+        return None
+
+
 @app.route("/sitemap.xml")
 @limiter.exempt
 def sitemap_xml():
-    urls = "".join(
+    urls = "\n".join(
         f"<url><loc>{BASE_URL}{path}</loc>"
-        f"<changefreq>monthly</changefreq>"
-        f"<priority>{prio}</priority></url>"
-        for path, prio in page_registry.sitemap_entries()
+        + (f"<lastmod>{lastmod}</lastmod>" if (lastmod := _template_lastmod(tmpl)) else "")
+        + "</url>"
+        for path, tmpl in page_registry.sitemap_entries()
     )
     xml = (
-        '<?xml version="1.0" encoding="UTF-8"?>'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        f"{urls}</urlset>"
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}\n</urlset>\n"
     )
     return Response(xml, mimetype="application/xml")
 
