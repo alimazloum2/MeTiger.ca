@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Pre-commit secret guard for metiger-site.
+#
+# Blocks commits that (a) add the tracked .env file back, or (b) introduce
+# common credential patterns. This is the guard that would have caught the
+# hardcoded SendGrid key that had to be scrubbed from history.
+#
+# Enable in any clone with:   git config core.hooksPath hooks
+# Bypass a false positive with: git commit --no-verify
+set -euo pipefail
+
+fail=0
+red() { printf '\033[31m%s\033[0m\n' "$1" >&2; }
+
+# 1) Never allow committing the environment file (it holds live secrets).
+if git diff --cached --name-only --diff-filter=A | grep -qx '.env'; then
+  red "BLOCKED: .env must not be committed — it holds secrets and is gitignored. Keep it untracked."
+  fail=1
+fi
+
+# 2) If gitleaks is installed, let it scan the staged changes too (best-effort).
+if command -v gitleaks >/dev/null 2>&1; then
+  if ! gitleaks protect --staged --redact --no-banner >/dev/null 2>&1; then
+    red "BLOCKED: gitleaks flagged staged changes. Run 'gitleaks protect --staged --redact' to inspect."
+    fail=1
+  fi
+fi
+
+# 3) Dependency-free scan of staged files for high-signal secret patterns.
+#    (This hook file is excluded so its own regexes don't self-trigger.)
+patterns='SG\.[A-Za-z0-9_.-]{22,}|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|gh[ous]_[A-Za-z0-9]{36}|xox[baprs]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}|sk_live_[0-9A-Za-z]{24,}|-----BEGIN [A-Z ]*PRIVATE KEY-----'
+staged_files=$(git diff --cached --name-only --diff-filter=ACM | grep -v '^hooks/pre-commit$' || true)
+
+for f in $staged_files; do
+  match=$(git show ":$f" 2>/dev/null | grep -nEo "$patterns" | head -5 || true)
+  if [ -n "$match" ]; then
+    red "BLOCKED: possible secret in $f:"
+    printf '%s\n' "$match" | sed 's/^/    /' >&2
+    fail=1
+  fi
+done
+
+if [ "$fail" -ne 0 ]; then
+  red "Commit aborted by hooks/pre-commit. Move secrets to .env / env vars, or use --no-verify if this is a false positive."
+  exit 1
+fi
+exit 0
