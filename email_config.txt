@@ -1,0 +1,17 @@
+# Email Configuration for Contact Form
+# Update these settings in your app.py or set as environment variables
+
+# SMTP Server Settings (for Gmail)
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+
+# Business Email (where contact form messages will be sent)
+BUSINESS_EMAIL=metiger@company.com
+
+# To use Gmail:
+# 1. Enable 2-factor authentication on your Gmail account
+# 2. Generate an "App Password" (not your regular password)
+# 3. Use the app password in SMTP_PASSWORD
+# 4. Update BUSINESS_EMAIL to your actual business email

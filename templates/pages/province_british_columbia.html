@@ -1,0 +1,160 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}British Columbia Electrical Estimating | MeTiger Inc.{% endblock %}
+{% block meta_description %}Electrical estimating and takeoffs for British Columbia commercial, multi-family high-rise, hospitality, and institutional projects. Remote and CEC-aware.{% endblock %}
+
+{% set crumbs = [
+    {'name':'Home','url':'/'},
+    {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'},
+    {'name':'British Columbia','url':None}
+] %}
+
+{% set page_faqs = [
+    {'q':'Do you provide electrical estimating across all of British Columbia?','a':'Yes. We support contractors and general contractors from Metro Vancouver — Vancouver, Surrey, Burnaby, and Richmond — to Victoria and Vancouver Island, and through the Interior including Kelowna, Kamloops, and Nanaimo. Because we work remotely from your drawings, your location in the province does not limit who we can help.'},
+    {'q':'Which code do you estimate to in British Columbia?','a':'Our takeoffs and scope review are informed by the Canadian Electrical Code as adopted in British Columbia with provincial amendments, the project specifications, utility requirements, and the bid documents. Final compliance remains subject to the project engineer, the British Columbia authority having jurisdiction — typically Technical Safety BC or a municipality that inspects its own work — and applicable provincial requirements.'},
+    {'q':'Do you work from PDF or DWG drawings?','a':'Both. Send a PDF or DWG tender set with the specifications and any addenda, or share a Dropbox, Drive, or Procore link. We build the takeoff from whatever format your consultant issued.'},
+    {'q':'How does remote delivery work for a British Columbia project?','a':'Everything is handled remotely. You upload the bid set and due date, we confirm scope and a fixed fee, and we return a reviewable estimate package on the agreed window — no site visit required.'},
+    {'q':'Will you sign an NDA before we share drawings?','a':'Yes. A non-disclosure agreement is available on request before you send tender documents or plan links.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('British Columbia Electrical Estimating Services', 'Electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review for British Columbia commercial, multi-family high-rise, hospitality, and institutional projects.', '/british-columbia-electrical-estimating-services/', 'British Columbia') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">British Columbia Electrical Estimating</div>
+    <h1 class="h1">British Columbia Electrical Estimating Services</h1>
+    <p class="lead">MeTiger delivers electrical estimating, takeoffs, and scope review for contractors and general contractors working across British Columbia — from Metro Vancouver high-rise towers to projects on Vancouver Island and throughout the Interior. We turn your tender drawings, specifications, and addenda into a clean, reviewable estimate that your team can price with confidence.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request an Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['British Columbia projects','CEC-aware scope review','Marked-up drawings','Labour & material summaries','Remote delivery','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. BUILT FOR BC -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Local context</div>
+    <h2 class="h2">Electrical estimating built for British Columbia projects</h2>
+    <p class="lead">British Columbia electrical work runs on the Canadian Electrical Code as adopted in the province with British Columbia amendments. Permitting and inspection are handled by Technical Safety BC across most of the province, while some municipalities inspect their own electrical work — so the authority having jurisdiction depends on where the project sits.</p>
+    <p>We read the same drawings your team does, and we account for the utility context that shapes British Columbia scope. Service coordination often runs through BC Hydro across most of the province and FortisBC in parts of the south and the Kootenays, and we flag service, metering, and utility-interface items so nothing is assumed. From Vancouver, Surrey, Burnaby, and Richmond through Victoria, Kelowna, Kamloops, and Nanaimo, our takeoffs stay grounded in how projects are actually built and inspected here.</p>
+    <p class="muted" style="margin-top:14px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 2. PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">British Columbia project types we estimate</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Multi-family high-rise</h3><p>Concrete and wood-frame towers and mid-rise developments — suite power, common areas, risers, and house services for the province's busy residential pipeline.</p></div>
+      <div class="card"><h3 class="h3">Commercial &amp; retail</h3><p>Office fit-outs, tenant improvements, retail, and mixed-use podium projects across Metro Vancouver and the Interior.</p></div>
+      <div class="card"><h3 class="h3">Hospitality</h3><p>Hotels, restaurants, and hospitality build-outs with kitchen power, guest-room distribution, and interlock coordination.</p></div>
+      <div class="card"><h3 class="h3">Institutional</h3><p>Schools, healthcare, and public facilities with life-safety, standby power, and phased distribution work.</p></div>
+      <div class="card"><h3 class="h3">Seismic supports &amp; anchorage</h3><p>British Columbia's seismic zones affect how gear, raceway, and cable tray are supported and anchored — we account for it where the documents call for it.</p></div>
+      <div class="card"><h3 class="h3">Service upgrades</h3><p>Distribution upgrades, tenant additions, and reconfiguration work tied to BC Hydro or FortisBC service coordination.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and project-specific assumptions</li>
+      <li>Inclusions and exclusions</li>
+      <li>Drawing and specification assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Utility and service coordination notes</li>
+      <li>Bid summary</li>
+      <li>Optional final review call</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering and utility interface']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and seismic supports','Mechanical equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
+      {'title':'Lighting','items':['Interior lighting and controls','Emergency lighting and life safety','Site and exterior lighting','Underground electrical']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Access control / security rough-in where included','EV charger rough-in where included','Utility coordination notes']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 5. CODE & COMPLIANCE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; compliance</div>
+    <h2 class="h2">British Columbia code &amp; compliance</h2>
+    <p class="lead">Our estimating and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in British Columbia with the province's amendments, together with the project specifications, utility requirements, and the bid documents. We estimate what the documents call for and flag where they don't agree.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the British Columbia authority having jurisdiction — typically Technical Safety BC or a municipality that inspects its own electrical work — and applicable provincial requirements. MeTiger provides estimating and coordination support only — not stamped drawings, sealed engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Upload drawings or send a plan link','body':'Send your PDF or DWG set, specifications, and addenda — or a Dropbox, Drive, or Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm the British Columbia location, project type, scope, and bid due date.'},
+      {'title':'Receive a fixed quote','body':'A fee and delivery window, quoted after drawing review, before work begins.'},
+      {'title':'Takeoff and scope review','body':'We perform the takeoff and organize the electrical scope by system, with assumptions and gaps logged clearly.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package on the agreed window, with an optional walkthrough call before bid submission.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. RELATED -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Related</div>
+    <h2 class="h2">Explore related services</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Canada-wide estimating</h3><p>See the full estimating and takeoff service. <a href="/canada-electrical-estimating-services/" style="color:var(--primary);">Canadian electrical estimating</a>.</p></div>
+      <div class="card"><h3 class="h3">Electrical takeoffs</h3><p>Quantity takeoffs from your tender set. <a href="/electrical-takeoff-services-canada/" style="color:var(--primary);">Takeoff services in Canada</a>.</p></div>
+      <div class="card"><h3 class="h3">Nearby provinces</h3><p>Working elsewhere too? <a href="/alberta-electrical-estimating-services/" style="color:var(--primary);">Alberta</a> and <a href="/ontario-electrical-estimating-services/" style="color:var(--primary);">Ontario</a> estimating.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">British Columbia estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 9. FINAL CTA -->
+{{ cta_band('Estimating support for your next British Columbia project',
+    'Upload your drawings or share a plan link with the bid due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request an Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

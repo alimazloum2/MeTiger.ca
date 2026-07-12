@@ -1,0 +1,158 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Alberta Electrical Estimating Services | MeTiger Inc.{% endblock %}
+{% block meta_description %}Alberta electrical estimating and takeoff support for contractors and GCs — marked-up drawings, labour summaries, and scope review from your PDF or DWG set.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Alberta','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you provide electrical estimating across Alberta?','a':'Yes. We support electrical contractors and general contractors across Alberta remotely — Calgary, Edmonton, Red Deer, Lethbridge, Fort McMurray, Grande Prairie, and smaller centres — working from your PDF or DWG tender set.'},
+    {'q':'Which electrical code do you estimate to in Alberta?','a':'Our takeoffs and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in Alberta, together with project specifications, local utility requirements, and the tender documents. Final compliance remains subject to the project engineer, the Alberta authority having jurisdiction, and applicable provincial requirements.'},
+    {'q':'Can you work from PDF or DWG drawings?','a':'Both. Send a flattened PDF tender set, DWG/CAD files, or a shared plan link (Dropbox, Drive, or Procore), and we reconcile drawings, specifications, schedules, and addenda together.'},
+    {'q':'How is the estimate delivered?','a':'Everything is delivered remotely on an agreed window: a takeoff workbook, colour-coded marked-up drawings, a material list by system, a labour-hour summary, and a documented list of inclusions, exclusions, and scope gaps.'},
+    {'q':'Do you sign an NDA before we share drawings?','a':'Yes. A mutual NDA is available on request before you send any tender documents or plan links for an Alberta project.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Alberta Electrical Estimating Services', 'Electrical takeoffs, labour summaries, colour-coded marked-up drawings, and scope review for Alberta commercial, industrial, and institutional projects, delivered remotely from your PDF or DWG tender set.', '/alberta-electrical-estimating-services/', 'Alberta') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Alberta Electrical Estimating</div>
+    <h1 class="h1">Alberta Electrical Estimating Services</h1>
+    <p class="lead">MeTiger provides electrical estimating and takeoff support for contractors and general contractors bidding work across Alberta — from Calgary and Edmonton tenant improvements to industrial and energy-adjacent facilities in Red Deer, Fort McMurray, and Grande Prairie. Send your drawings; we turn them into a clean, reviewable estimate you can bid with.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request an Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Alberta-wide remote delivery','CEC-aware scope review','Colour-coded marked-up plans','Labour & material summaries','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. BUILT FOR ALBERTA -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Local context</div>
+    <h2 class="h2">Electrical estimating built for Alberta projects</h2>
+    <p class="lead">Alberta electrical work is administered under the province's Safety Codes Act, largely through accredited municipalities and agencies overseen by the Safety Codes Council, with permitting handled by the provincial or municipal authority having jurisdiction for your project. We keep that framework in mind while we price the scope.</p>
+    <p>Utility coordination matters on Alberta bids, and service arrangements differ by territory — ENMAX in Calgary, EPCOR in Edmonton, and FortisAlberta or ATCO Electric across much of the rest of the province. We note the service entrance, metering, and utility-coordination assumptions in the estimate so the connection scope is visible before bid day rather than after award.</p>
+    <p class="muted" style="margin-top:14px;">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 2. ALBERTA PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Alberta project types we estimate</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Industrial &amp; energy-adjacent</h3><p>Plant, process, and energy-adjacent facilities with heavier distribution, motors, controls, and site electrical.</p></div>
+      <div class="card"><h3 class="h3">Warehouses &amp; logistics</h3><p>Distribution centres and light-industrial buildings with high-bay lighting, feeders, and equipment power.</p></div>
+      <div class="card"><h3 class="h3">Commercial &amp; retail</h3><p>Offices, retail fit-outs, and mixed-use tenant improvements where clean lighting, branch power, and low-voltage counts drive the number.</p></div>
+      <div class="card"><h3 class="h3">Institutional</h3><p>Schools, healthcare, and public facilities where life-safety coordination and documented assumptions carry weight at bid.</p></div>
+      <div class="card"><h3 class="h3">Service &amp; distribution upgrades</h3><p>Service upgrades, panel and switchgear replacements, and distribution reworks on occupied sites.</p></div>
+      <div class="card"><h3 class="h3">Municipal &amp; utility-adjacent</h3><p>Pump stations, municipal facilities, and utility-adjacent infrastructure with controls and site electrical.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your Alberta estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and project-specific assumptions</li>
+      <li>Regional labour and Canadian market pricing assumptions</li>
+      <li>Inclusions and exclusions</li>
+      <li>Utility and service-entrance coordination notes</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Gear and long-lead item notes where applicable</li>
+      <li>Bid summary</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering and utility coordination']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
+      {'title':'Lighting','items':['Interior lighting and controls','High-bay and warehouse lighting','Emergency and life-safety lighting','Site and exterior lighting']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Access control / security rough-in where included','EV charger rough-in where included']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 5. ALBERTA CODE & COMPLIANCE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; compliance</div>
+    <h2 class="h2">Alberta code &amp; compliance</h2>
+    <p class="lead">Our estimating and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in Alberta, alongside project specifications, local utility requirements, and the bid documents. We estimate what the documents call for and log where they conflict or fall silent so you can raise it as an RFI.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the Alberta authority having jurisdiction, and applicable provincial requirements. MeTiger provides CEC-aware estimating and coordination support — not stamped drawings, sealed engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send drawings or a plan link','body':'Share your Alberta PDF or DWG set, specifications, and any addenda — or a Dropbox, Drive, or Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm project location, project type, scope, and bid due date, and an NDA is available on request.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Takeoff and scope review','body':'We complete the takeoff, organize the scope by system, and note utility and service assumptions.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate on the agreed window, with an optional walkthrough call before you submit.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. RELATED PAGES -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Related</div>
+    <h2 class="h2">Related estimating services</h2>
+    <div class="pills">
+      <a class="pill" href="/canada-electrical-estimating-services/">Canadian Electrical Estimating</a>
+      <a class="pill" href="/electrical-takeoff-services-canada/">Electrical Takeoffs</a>
+      <a class="pill" href="/industrial-electrical-estimating-canada/">Industrial Estimating</a>
+      <a class="pill" href="/electrical-bid-review-canada/">Bid Review</a>
+      <a class="pill" href="/british-columbia-electrical-estimating-services/">British Columbia</a>
+      <a class="pill" href="/saskatchewan-electrical-estimating-services/">Saskatchewan</a>
+    </div>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Alberta estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 9. FINAL CTA -->
+{{ cta_band('Bidding electrical work in Alberta?',
+    'Send your Alberta drawings and the bid due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request an Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

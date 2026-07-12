@@ -1,0 +1,146 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, faq_list, cta_band %}
+
+{% block page_title %}Electrical Estimating Case Studies | MeTiger Inc.{% endblock %}
+{% block meta_description %}Electrical estimating case studies and takeoff examples in Canada: representative retail, restaurant, and municipal work, plus Canadian studies coming soon.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Case Studies','url':None}] %}
+{% set page_faqs = [
+    {'q':'Are these real, named projects?','a':'The first group describes representative prior estimating experience by project type only — not named clients, stores, or locations. It is shown to illustrate the kind of scope MeTiger can take off and organize, not to imply endorsement by any owner. The Canadian case studies section is a set of clearly marked placeholders that we will fill in with real, permission-based examples as they are completed.'},
+    {'q':'Why are the Canadian case studies marked coming soon?','a':'We only publish a case study once the work is complete and we have permission from the contractor or general contractor to share it. Rather than fabricate details or metrics, we mark upcoming Canadian examples as coming soon and add them as real projects wrap up.'},
+    {'q':'Can my project become a reference?','a':'Yes. If you would like your commercial, restaurant, municipal, or industrial estimate featured — anonymized or credited, your choice — tell us when you send your drawings. We are actively building our Canadian case study library and welcome reference projects.'},
+    {'q':'Do these examples represent stamped engineering?','a':'No. MeTiger provides electrical estimating, takeoff, and coordination support, not stamped drawings or sealed professional engineering. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements, and we work alongside the engineer of record where required.'},
+    {'q':'What can I actually see before hiring you?','a':'Rather than rely only on case studies, ask for a sample package. Our samples page shows the format of a takeoff workbook, marked-up drawings, labour summary, and scope notes so you can judge the quality of the deliverable directly.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Electrical Estimating Case Studies', 'Representative electrical estimating and takeoff experience by project type, plus Canadian case studies in progress, from MeTiger Inc. for contractors and general contractors across Canada.', '/case-studies/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block head_extra %}<style>
+  .badge-soon { display:inline-block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--muted); background:rgba(255,255,255,0.05); border:1px solid var(--stroke); border-radius:999px; padding:4px 12px; margin-bottom:12px; }
+  .repnote { font-style:italic; color:var(--muted); font-size:14px; margin-top:18px; }
+</style>{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Electrical Estimating Case Studies</div>
+    <h1 class="h1">Case Studies</h1>
+    <p class="lead">A look at the kind of electrical estimating and takeoff work MeTiger does — described by project type and scope, not by client name. Below you will find representative prior experience that illustrates our capability, followed by Canadian case studies we are actively building as new projects wrap up.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Discuss a Similar Project</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Anonymized by scope type','Marked-up plans & labour summaries','CEC-aware scope review','Canadian case studies coming soon','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. REPRESENTATIVE PRIOR EXPERIENCE -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Group 1</div>
+    <h2 class="h2">Representative prior estimating experience</h2>
+    <p class="lead">The following are anonymized, generic descriptions of prior estimating work, grouped by project type. They are shown to convey the scope, systems, and coordination involved — no owners, brands, stores, or locations are identified.</p>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card">
+        <h3 class="h3">Large-format retail interior remodel</h3>
+        <p>Takeoff and labour summary for a big-box interior renovation: LED lighting upgrades and controls, refrigeration and case power, back-of-house branch circuits, and receptacle and equipment connections. Scope was organized so the count could be phased and priced around live store operations, with clear inclusions, exclusions, and after-hours assumptions documented for the bid.</p>
+      </div>
+      <div class="card">
+        <h3 class="h3">Restaurant tenant improvement build-out</h3>
+        <p>Estimate for a restaurant fit-out inside a leased shell: kitchen equipment power, exhaust hood interlocks and controls coordination, dining-room lighting and controls, and front-of-house receptacles. The package flagged tenant-versus-landlord scope splits, base-building tie-in points, and equipment with unclear power sources so the contractor could resolve them before pricing.</p>
+      </div>
+      <div class="card">
+        <h3 class="h3">Municipal wastewater lift-station package</h3>
+        <p>Electrical takeoff for municipal wastewater lift-station work: pump control panels, motor feeders and disconnects, SCADA tie-in provisions, and standby generator and automatic transfer switch (ATS) provisions. Utility service coordination points, grounding, and site conduit were quantified and noted, with assumptions logged where the documents were incomplete or in conflict.</p>
+      </div>
+    </div>
+    <p class="repnote">Representative of scope and project type; shown to illustrate capability.</p>
+  </div>
+</section>
+
+<!-- 2. CANADIAN CASE STUDIES — COMING SOON -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Group 2</div>
+    <h2 class="h2">Canadian case studies &mdash; coming soon</h2>
+    <p class="lead">We publish a case study only once the project is complete and the contractor has agreed to share it. Rather than invent details or metrics, these Canadian examples are marked coming soon and will be filled in with real, permission-based work.</p>
+    <div class="grid grid-4" style="margin-top:22px;">
+      <div class="card">
+        <div class="badge-soon">Coming soon</div>
+        <h3 class="h3">Commercial tenant improvement estimate &ndash; Canada</h3>
+        <p>An anonymized Canadian commercial fit-out takeoff and labour summary, added once a completed project is available to share.</p>
+      </div>
+      <div class="card">
+        <div class="badge-soon">Coming soon</div>
+        <h3 class="h3">Restaurant fit-out estimate &ndash; Canada</h3>
+        <p>A Canadian restaurant build-out estimate covering kitchen power, hood interlocks, and dining lighting, to be published with permission.</p>
+      </div>
+      <div class="card">
+        <div class="badge-soon">Coming soon</div>
+        <h3 class="h3">Municipal / utility electrical estimate &ndash; Canada</h3>
+        <p>A Canadian municipal or utility electrical package with controls, standby power, and site coordination, added as work wraps up.</p>
+      </div>
+      <div class="card">
+        <div class="badge-soon">Coming soon</div>
+        <h3 class="h3">Industrial electrical takeoff &ndash; Canada</h3>
+        <p>A Canadian industrial or process electrical takeoff with feeders, motors, and controls, to be featured once completed and approved.</p>
+      </div>
+    </div>
+    <div class="note warn" style="margin-top:22px;">Want your project featured here? We are actively building our Canadian case study library and welcome reference projects &mdash; anonymized or credited, your choice. Mention it when you send your drawings and we will keep you in the loop as your estimate becomes a published example.</div>
+  </div>
+</section>
+
+<!-- 3. HOW TO READ THESE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">How to read these</div>
+    <h2 class="h2">Scope, not spin</h2>
+    <p class="lead">Case studies are useful for understanding project types and coordination challenges &mdash; but the best way to judge our work is the deliverable itself. Here is what every MeTiger estimate is built to show, on any of the projects above:</p>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff you can check line by line</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list organized by system</li>
+      <li>Labour-hour summary with the labour-unit basis</li>
+      <li>Documented inclusions and exclusions</li>
+      <li>RFI and scope-gap log for conflicts and missing items</li>
+      <li>Addenda reconciled against the base set</li>
+      <li>Clear assumptions instead of silent guesses</li>
+    </ul>
+    <div class="note" style="margin-top:18px;">MeTiger provides electrical estimating and coordination support informed by CSA C22.1 / the Canadian Electrical Code, provincial practices, and the bid documents &mdash; not stamped drawings, sealed professional engineering, or code-compliance certification. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements, and we work alongside the engineer of record where required.</div>
+    <p class="muted" style="margin-top:18px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 4. RELATED -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Explore</div>
+    <h2 class="h2">Related pages</h2>
+    <div class="grid grid-2" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Canadian electrical estimating services</h3><p>The full picture of how MeTiger scopes, quantifies, and documents electrical bids for contractors across Canada. <a href="/canada-electrical-estimating-services/" style="color:var(--primary);">See services</a>.</p></div>
+      <div class="card"><h3 class="h3">Sample estimate package</h3><p>See the actual format of a takeoff workbook, marked-up drawings, and labour summary before you hire. <a href="/samples/" style="color:var(--primary);">View samples</a>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 6. FINAL CTA -->
+{{ cta_band('Have a project like these? Let us take it off',
+    'Send your drawings or a plan link with the bid due date and MeTiger will confirm scope, fee, and delivery window before any work begins. Ask about becoming a featured Canadian case study.',
+    [{'label':'Discuss a Similar Project','href':'/contact/','primary':True},{'label':'See a sample package','href':'/samples/','primary':False}]) }}
+{% endblock %}

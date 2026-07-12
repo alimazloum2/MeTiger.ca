@@ -1,0 +1,156 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Saskatchewan Electrical Estimating Services | MeTiger{% endblock %}
+{% block meta_description %}Electrical estimating and takeoff support for Saskatchewan contractors and GCs — commercial, agri-industrial, potash and mining-adjacent, institutional, and municipal projects in Saskatoon, Regina, and beyond.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Saskatchewan','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you provide electrical estimating across Saskatchewan?','a':'Yes. We support electrical contractors and general contractors across Saskatchewan — Saskatoon, Regina, Prince Albert, Moose Jaw, Swift Current, and rural and northern communities — working remotely from your PDF or DWG tender set. No site visit is required to produce the takeoff.'},
+    {'q':'Which electrical code do you estimate to in Saskatchewan?','a':'Our takeoffs and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in Saskatchewan, together with the project specifications, drawings, addenda, and SaskPower service requirements. Final compliance remains subject to the project engineer, the Technical Safety Authority of Saskatchewan (TSASK) and the local authority having jurisdiction, and applicable provincial requirements.'},
+    {'q':'Can you work from PDF or DWG drawings?','a':'Yes. Send a PDF or DWG set with the specifications and any addenda — or a Dropbox, Drive, or Procore link. We work from your bid documents and return a reviewable estimate package your team can check line by line.'},
+    {'q':'How is the estimate delivered?','a':'Everything is delivered remotely on an agreed window: a quantity takeoff workbook, colour-coded marked-up drawings, a material list by system, a labour-hour summary with the labour-unit basis, inclusions and exclusions, and a scope-gap / RFI log you can send to the design team.'},
+    {'q':'Do you sign an NDA before we share drawings?','a':'Yes. A non-disclosure agreement is available on request before you send tender documents or plan links, so your Saskatchewan bid set stays confidential.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Saskatchewan Electrical Estimating Services', 'Electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review for commercial, agri-industrial, potash and mining-adjacent, institutional, and municipal projects across Saskatchewan.', '/saskatchewan-electrical-estimating-services/', 'Saskatchewan') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Saskatchewan Electrical Estimating</div>
+    <h1 class="h1">Saskatchewan Electrical Estimating Services</h1>
+    <p class="lead">MeTiger provides electrical estimating and takeoff support for contractors and general contractors bidding work across Saskatchewan. From Saskatoon and Regina commercial fit-outs to agri-industrial and potash- and mining-adjacent builds near Prince Albert, Moose Jaw, and Swift Current, we turn your tender drawings, specifications, and addenda into clean quantities, labour summaries, marked-up plans, and documented scope notes — delivered remotely, no site visit required.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request an Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Saskatchewan-focused estimating','CEC-aware scope review','Marked-up plans','Labour & material summaries','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. BUILT FOR SASKATCHEWAN -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Local context</div>
+    <h2 class="h2">Electrical estimating built for Saskatchewan projects</h2>
+    <p class="lead">Saskatchewan electrical work is estimated against the Canadian Electrical Code (CSA C22.1) as adopted in the province, with electrical inspection and permitting administered by the Technical Safety Authority of Saskatchewan (TSASK) and the local authority having jurisdiction (AHJ). Service, metering, and connection details are coordinated with the serving utility — SaskPower — across the province.</p>
+    <p style="margin-top:14px;">We estimate what your bid documents call for and reconcile it against those local realities: SaskPower service and metering arrangements, provincial code amendments, and the practices common on prairie commercial, agri-industrial, and institutional work. When the drawings and specifications don&apos;t agree, we flag it in writing rather than burying the assumption in the number. Remote delivery means we support your Saskatoon, Regina, or rural Saskatchewan bid on the same footing — you send the set, we return a package your team can defend line by line.</p>
+    <p class="muted" style="margin-top:14px; font-size:14px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 2. SASKATCHEWAN PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Saskatchewan project types we estimate</h2>
+    <p class="lead">Common electrical scopes we price for contractors and GCs working across the province.</p>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Commercial &amp; retail</h3><p>Tenant improvements, retail fit-outs, offices, and mixed-use projects in Saskatoon, Regina, and regional centres.</p></div>
+      <div class="card"><h3 class="h3">Agri-industrial</h3><p>Grain, processing, and agri-industrial facilities with process power, motor loads, and controls coordination.</p></div>
+      <div class="card"><h3 class="h3">Potash &amp; mining-adjacent</h3><p>Mining-adjacent industrial and processing-support electrical with heavy distribution, motor, and control scope.</p></div>
+      <div class="card"><h3 class="h3">Institutional</h3><p>Schools, care facilities, and institutional buildings with life-safety, emergency, and distribution work.</p></div>
+      <div class="card"><h3 class="h3">Municipal &amp; utility</h3><p>Municipal facilities, pump and lift stations, and utility infrastructure with controls and site electrical.</p></div>
+      <div class="card"><h3 class="h3">Service upgrades</h3><p>Distribution upgrades and SaskPower service revisions where the scope calls for them.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your Saskatchewan estimate includes</h2>
+    {{ checks([
+      'Quantity takeoff workbook',
+      'Colour-coded marked-up drawings',
+      'Material list by system',
+      'Labour-hour summary with the labour-unit basis',
+      'Project-specific labour assumptions',
+      'Inclusions and exclusions',
+      'Drawing and specification assumptions',
+      'RFI and scope-gap log',
+      'Addenda review',
+      'SaskPower service and metering coordination notes',
+      'Bid summary',
+      'Optional final review call'
+    ] | list) }}
+  </div>
+</section>
+
+<!-- 4. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering & utility coordination']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical & process equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Process control coordination']},
+      {'title':'Lighting','items':['Interior lighting and controls','High-bay and process-area lighting','Emergency and life-safety lighting','Site and exterior lighting']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Access control / security rough-in where included','EV charger rough-in where included']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 5. SASKATCHEWAN CODE & COMPLIANCE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; compliance</div>
+    <h2 class="h2">Saskatchewan code &amp; compliance</h2>
+    <p class="lead">Our estimating and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in Saskatchewan, along with provincial amendments, the project specifications, addenda, and SaskPower service requirements. This is CEC-aware estimating support: we quantify and coordinate what the documents require, and we surface where they conflict.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the Technical Safety Authority of Saskatchewan (TSASK) and the local authority having jurisdiction (AHJ), and applicable provincial requirements. MeTiger provides estimating and coordination support — not stamped drawings, sealed or professional engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send your drawings or a plan link','body':'Share your PDF or DWG set, specifications, and addenda — or a Dropbox, Drive, or Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm the Saskatchewan location, project type, scope, and bid due date.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before work begins.'},
+      {'title':'Takeoff and scope review','body':'We perform the takeoff and organize the electrical scope by system, with SaskPower coordination notes where relevant.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package, with documented assumptions and a scope-gap log, on the agreed window.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. RELATED SERVICES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Related services</div>
+    <h2 class="h2">Explore related estimating services</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Canada-wide estimating</h3><p>Our full <a href="/canada-electrical-estimating-services/" style="color:var(--primary);">Canadian electrical estimating services</a> — takeoffs, labour summaries, and bid review across every province.</p></div>
+      <div class="card"><h3 class="h3">Electrical takeoffs</h3><p>Detailed <a href="/electrical-takeoff-services-canada/" style="color:var(--primary);">electrical takeoff services</a> when you need clean quantities to price yourself.</p></div>
+      <div class="card"><h3 class="h3">Neighbouring provinces</h3><p>Estimating for <a href="/manitoba-electrical-estimating-services/" style="color:var(--primary);">Manitoba</a> and <a href="/alberta-electrical-estimating-services/" style="color:var(--primary);">Alberta</a> projects too.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Saskatchewan estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 9. FINAL CTA -->
+{{ cta_band('Bidding electrical work in Saskatchewan?',
+    'Send your Saskatoon, Regina, or regional Saskatchewan bid set and due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request an Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

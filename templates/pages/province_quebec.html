@@ -1,0 +1,158 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Quebec Electrical Estimating Services | MeTiger Inc.{% endblock %}
+{% block meta_description %}Quebec electrical estimating and takeoffs for commercial, multi-residential, institutional, and industrial projects, from French or English drawings.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Quebec','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you provide electrical estimating across Quebec?','a':'Yes. We support electrical contractors and general contractors on projects throughout Quebec — the Montreal region, Quebec City, Laval, Gatineau, Longueuil, Sherbrooke, and communities across the province — working remotely from your PDF or DWG tender set.'},
+    {'q':'Can you work from French tender drawings and specifications?','a':'Yes. Quebec is a French-first market, and we can estimate from tender drawings and specifications issued in French or in English. Where a document is French-only, we work directly from it and flag any wording that needs a clarification from the design team.'},
+    {'q':'Which electrical code do you follow for Quebec?','a':'Our takeoffs and scope review are informed by the Quebec Construction Code, Chapter V – Electricity, which is based on CSA C22.10, the provincial standard derived from the Canadian Electrical Code. Final compliance remains subject to the project engineer, the Quebec authority having jurisdiction, and applicable provincial requirements.'},
+    {'q':'Do you work from PDF or DWG files?','a':'Both. Send a PDF or DWG tender set with the specifications and any addenda, or share a Dropbox, Drive, or Procore plan link. We confirm scope and a delivery window before starting.'},
+    {'q':'Do you sign NDAs before we share documents?','a':'Yes. A non-disclosure agreement is available on request before you send tender documents or plan links, so your bid information stays confidential.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Quebec Electrical Estimating Services', 'Electrical takeoffs, labour summaries, marked-up drawings, and scope review for Quebec commercial, multi-residential, institutional, and industrial projects, from French or English tender documents.', '/quebec-electrical-estimating-services/', 'Quebec') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Quebec Electrical Estimating</div>
+    <h1 class="h1">Quebec Electrical Estimating Services</h1>
+    <p class="lead">MeTiger provides electrical estimating and takeoff support for contractors and general contractors working across Quebec — from the Montreal region and Quebec City to Laval, Gatineau, Longueuil, and Sherbrooke. We turn your tender drawings, specifications, and addenda into clean quantities, material lists, labour summaries, and marked-up plans you can bid with confidence.</p>
+    <p class="lead" style="margin-top:14px;">Everything is delivered remotely. Send a PDF or DWG set in French or English, and we return a reviewable package on an agreed window — no travel, no local office required, just careful estimating built for review.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request an Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Quebec-focused estimating','French or English drawings','CEC-aware scope review','Marked-up plans','NDA on request']) }}
+  </div>
+</section>
+
+<!-- BUILT FOR QUEBEC -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Local context</div>
+    <h2 class="h2">Electrical estimating built for Quebec projects</h2>
+    <p class="lead">Quebec runs its own electrical regime, and our estimating support reflects it. Electrical construction in the province is overseen by the Régie du bâtiment du Québec (RBQ), and the electrical trade is governed by the Corporation des maîtres électriciens du Québec (CMEQ). The governing document is the Quebec Construction Code, Chapter V &ndash; Electricity, based on CSA C22.10 &mdash; the provincial standard derived from the Canadian Electrical Code.</p>
+    <p class="lead" style="margin-top:14px;">Distribution across most of the province is served by Hydro-Qu&eacute;bec, so utility service, metering, and coordination notes are read with local practice in mind. Because Quebec is a French-first market, we estimate directly from tender drawings and specifications issued in French or in English, and flag anything that needs a clarification rather than guessing at intent.</p>
+    <div class="note" style="margin-top:18px;">We provide estimating and coordination support informed by CSA C22.10 and the Quebec Construction Code, Chapter V. We do not act as the RBQ-licensed contractor, the engineer of record, or the authority having jurisdiction.</div>
+  </div>
+</section>
+
+<!-- QUEBEC PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Quebec project types we estimate</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Commercial &amp; retail</h3><p>Offices, retail fit-outs, tenant improvements, and mixed-use commercial projects across the province.</p></div>
+      <div class="card"><h3 class="h3">Multi-residential</h3><p>High-volume multi-residential developments — suite power, common-area lighting, and service distribution.</p></div>
+      <div class="card"><h3 class="h3">Institutional</h3><p>Schools, healthcare, and institutional facilities with life-safety and controls coordination.</p></div>
+      <div class="card"><h3 class="h3">Industrial</h3><p>Warehouses, light industrial, and heavier plant and process electrical with motors and controls.</p></div>
+      <div class="card"><h3 class="h3">Service &amp; distribution upgrades</h3><p>Service upgrades, distribution rework, and gear replacement with utility coordination notes.</p></div>
+      <div class="card"><h3 class="h3">Tenant &amp; renovation work</h3><p>Renovations and build-outs where existing conditions and phasing drive the electrical scope.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your Quebec estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and assumptions</li>
+      <li>Inclusions and exclusions</li>
+      <li>Drawing and specification assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review and reconciliation</li>
+      <li>Utility coordination notes</li>
+      <li>Bid summary</li>
+      <li>Optional final review call</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering and utility coordination']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
+      {'title':'Lighting','items':['Interior lighting and controls','Emergency and life-safety lighting','Site and exterior lighting','Underground electrical']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Security / access control where included','EV charger rough-in where included']}
+    ]) }}
+  </div>
+</section>
+
+<!-- QUEBEC CODE & COMPLIANCE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; compliance</div>
+    <h2 class="h2">Quebec code &amp; compliance</h2>
+    <p class="lead">Our takeoffs and scope review are informed by the Quebec Construction Code, Chapter V &ndash; Electricity, which is based on CSA C22.10 &mdash; the provincial standard derived from the Canadian Electrical Code &mdash; together with the project specifications, Hydro-Qu&eacute;bec service requirements, and the tender documents. We estimate what the drawings call for and flag where they conflict or leave gaps.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the Quebec authority having jurisdiction, and applicable provincial requirements. MeTiger provides estimating and coordination support only &mdash; not stamped drawings, sealed engineering, or code-compliance certification &mdash; and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send your drawings','body':'Share your PDF or DWG set, specifications, and addenda in French or English — or a Dropbox, Drive, or Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm the project location within Quebec, project type, scope, and bid due date.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Takeoff and scope review','body':'We complete the takeoff, organize the electrical scope by system, and log assumptions and gaps.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package on the agreed window, with an optional walkthrough call.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- CROSS-LINKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Related</div>
+    <h2 class="h2">Related estimating services</h2>
+    <p class="lead">Bidding beyond Quebec, or want the full picture of what we cover?</p>
+    <div class="cta-row">
+      <a class="btn btn-ghost" href="/canada-electrical-estimating-services/">Canada electrical estimating</a>
+      <a class="btn btn-ghost" href="/ontario-electrical-estimating-services/">Ontario estimating</a>
+      <a class="btn btn-ghost" href="/electrical-takeoff-services-canada/">Electrical takeoff services</a>
+    </div>
+    <p class="note" style="margin-top:18px;">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Quebec estimating questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+{{ cta_band('Request a Quebec electrical estimate',
+    'Send your bid set and due date in French or English. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request an Estimate','href':'/contact/','primary':True},{'label':'See how pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

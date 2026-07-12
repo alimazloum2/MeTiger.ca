@@ -1,0 +1,268 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import trust_bar, checks, process_steps, systems, faq_list, faq_schema, cta_band %}
+
+{% block page_title %}Canadian Electrical Estimating Services for Contractors &amp; GCs | MeTiger Inc.{% endblock %}
+{% block meta_description %}MeTiger prepares clean electrical takeoffs, labour summaries, marked-up drawings, material lists, and scope notes for Canadian commercial, industrial, municipal, retail, restaurant, and multi-family projects. CEC-aware estimating support, NDA on request.{% endblock %}
+
+{% block hreflang %}
+    <link rel="alternate" hreflang="en-ca" href="https://metiger.ca/" />
+    <link rel="alternate" hreflang="en-us" href="https://metiger.us/" />
+    <link rel="alternate" hreflang="x-default" href="https://metiger.ca/" />
+{% endblock %}
+
+{% set home_faqs = [
+    {'q':'Do you provide electrical estimating across Canada?','a':'Yes. MeTiger provides electrical estimating and takeoff support remotely for contractors and general contractors across all Canadian provinces and territories. We work from your PDF or DWG tender set and deliver a reviewable estimate package on an agreed window.'},
+    {'q':'Do you use the Canadian Electrical Code?','a':'Our estimating and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments and practices, project specifications, local utility requirements, and the bid documents. Final compliance remains subject to the project engineer and the authority having jurisdiction.'},
+    {'q':'Can you estimate from PDF drawings?','a':'Yes. PDF tender sets are the most common input. Send the drawings, specifications, and any addenda, and we confirm scope before starting.'},
+    {'q':'Can you work from DWG files?','a':'Yes. We work from DWG/CAD backgrounds as well as PDFs. Let us know what format you have and we will confirm what we need.'},
+    {'q':'What do I receive with the estimate?','a':'A reviewable package: a quantity takeoff workbook, colour-coded marked-up drawings, a material list by system, a labour-hour summary with the labour-unit basis and assumptions, inclusions and exclusions, an RFI / scope-gap log, addenda review, and a bid summary. Value-engineering and long-lead notes are included where applicable.'},
+    {'q':'Do you provide stamped engineering?','a':'No. MeTiger provides estimating, takeoff, documentation, and coordination support. We do not replace the engineer of record, the authority having jurisdiction, or stamped professional engineering requirements.'},
+    {'q':'Do you sign NDAs?','a':'Yes. An NDA is available on request before you share tender documents or plan links.'},
+    {'q':'How do I request a quote?','a':'Send your bid set (or a plan link) and the bid due date through our quote form. We confirm scope, fee, and delivery window before any work begins.'}
+] %}
+
+{% block head_schema %}
+    {{ faq_schema(home_faqs) }}
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"VideoObject","name":"Welcome to the official MeTiger channel.","description":"An introduction to MeTiger Inc. — Canadian electrical estimating and coordination support for contractors and general contractors, delivering clean takeoffs, labour summaries, marked-up drawings, and scope notes remotely across Canada.","thumbnailUrl":"https://i.ytimg.com/vi/jl1pmXzOGwM/maxresdefault.jpg","uploadDate":"2026-07-12","embedUrl":"https://www.youtube-nocookie.com/embed/jl1pmXzOGwM","contentUrl":"https://www.youtube.com/watch?v=jl1pmXzOGwM"}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"VideoObject","name":"MeTiger Inc. — Engineering Complex Projects with Precision","description":"Welcome to MeTiger Inc. We specialize in engineering and delivering complex construction projects with absolute precision. From initial site preparation and electrical rough-ins to comprehensive project management and construction documentation, our team ensures every phase of your project is executed flawlessly, on time, and on budget.","thumbnailUrl":"https://i.ytimg.com/vi/OjQg7LQzWTM/maxresdefault.jpg","uploadDate":"2026-04-11","embedUrl":"https://www.youtube-nocookie.com/embed/OjQg7LQzWTM","contentUrl":"https://www.youtube.com/watch?v=OjQg7LQzWTM"}
+    </script>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+  .home-hero { padding-top: 44px; }
+  .home-hero .grid-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: center; }
+  .home-hero-art { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--stroke); box-shadow: var(--shadow); position: relative; background: var(--bg-0); }
+  .home-hero-art .tag { position: absolute; left: 16px; bottom: 16px; z-index: 3; pointer-events: none; background: rgba(8,12,20,0.8); border: 1px solid var(--stroke); color: var(--text-1); font-size: 12.5px; padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 8px; }
+  .home-hero-art .tag .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px 2px rgba(52,211,153,.5); }
+  /* Lazy YouTube facade — no iframe / no Google requests until click */
+  .yt-lite { position: relative; width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; overflow: hidden; }
+  .yt-lite .yt-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .yt-lite .yt-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .yt-lite.yt-active .yt-thumb, .yt-lite.yt-active .yt-play { display: none; }
+  .yt-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
+    min-width: 72px; min-height: 72px; width: 72px; height: 72px; padding: 0; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--primary); color: var(--on-primary); border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45); transition: transform .15s ease, background .2s ease; }
+  .yt-play:hover { background: var(--primary-2); transform: translate(-50%, -50%) scale(1.06); }
+  .yt-play:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .yt-play svg { width: 30px; height: 30px; margin-left: 4px; fill: currentColor; }
+  .usa-hint { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .usa-hint a { color: var(--primary); }
+  @media (max-width: 900px) { .home-hero .grid-hero { grid-template-columns: 1fr; } .home-hero-art { order: -1; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="home-hero" id="top">
+  <div class="container">
+    <div class="grid-hero">
+      <div>
+        <div class="eyebrow">MeTiger Inc. · Canadian Electrical Estimating</div>
+        <h1 class="h1">Canadian Electrical Estimating Services for Contractors and GCs</h1>
+        <p class="lead">MeTiger prepares clean electrical takeoffs, labour summaries, marked-up drawings, material lists, and scope notes for Canadian commercial, industrial, municipal, retail, restaurant, and multi-family projects.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/contact/">Upload Drawings / Request a Quote</a>
+          <a class="btn btn-ghost" href="/canada-electrical-estimating-services/">Explore Services</a>
+        </div>
+        <p class="usa-hint">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a> ↗</p>
+        {{ trust_bar(['Canada-focused estimating','CEC-aware scope review','Marked-up plans','Labour & material summaries','NDA on request','Remote delivery across Canada']) }}
+      </div>
+      <div class="home-hero-art">
+        <div class="yt-lite" id="yt-lite" data-yt-id="jl1pmXzOGwM" data-yt-title="Welcome to the official MeTiger channel">
+          <img class="yt-thumb"
+               src="https://i.ytimg.com/vi/jl1pmXzOGwM/maxresdefault.jpg"
+               onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/jl1pmXzOGwM/hqdefault.jpg';"
+               width="1280" height="720" loading="lazy"
+               alt="Welcome to the official MeTiger channel — intro to MeTiger Canadian electrical estimating" />
+          <button type="button" class="yt-play" id="yt-play" aria-label="Play video: Welcome to the official MeTiger channel">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"></path></svg>
+          </button>
+        </div>
+        <div class="tag"><span class="pulse"></span> Engineered in Nova Scotia · estimating for Canada</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">The problem</div>
+    <h2 class="h2">Stop bidding from incomplete electrical scope.</h2>
+    <p class="lead">Electrical costs are often missed between drawings, specifications, addenda, schedules, and other trades’ equipment requirements. MeTiger reviews the bid set, organizes the electrical scope, flags missing information, and delivers a reviewable estimate package your team can price, check, and submit with more confidence.</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Services</div>
+    <h2 class="h2">Electrical estimating support, end to end</h2>
+    <div class="grid grid-3" style="margin-top: 22px;">
+      <a class="card" href="/commercial-electrical-estimating-canada/"><h3 class="h3">Canadian Commercial Electrical Estimating</h3><p>Tenant improvements, retail, offices, and multi-family — takeoffs and labour summaries built for review.</p></a>
+      <a class="card" href="/industrial-electrical-estimating-canada/"><h3 class="h3">Industrial &amp; Utility Electrical Estimating</h3><p>Warehouses, plants, pump stations, and site electrical, with gear and long-lead notes where applicable.</p></a>
+      <a class="card" href="/electrical-takeoff-services-canada/"><h3 class="h3">Electrical Takeoffs</h3><p>Standalone quantity takeoffs by system with colour-coded marked-up drawings you can check line by line.</p></a>
+      <a class="card" href="/electrical-bid-review-canada/"><h3 class="h3">Electrical Bid Review</h3><p>An independent second set of eyes on your drawings, quantities, and exclusions before you submit.</p></a>
+      <a class="card" href="/canada-electrical-estimating-services/"><h3 class="h3">Construction Documentation Support</h3><p>RFQ, front-end, and addenda review before award; change documentation after award to keep scope aligned.</p></a>
+      <a class="card" href="/canada-electrical-estimating-services/"><h3 class="h3">Electrical Design Coordination Support</h3><p>Coordination that bridges design intent and field execution, working alongside the engineer of record where required.</p></a>
+    </div>
+    <div class="note" style="margin-top: 18px;">MeTiger provides estimating and coordination support — not sealed engineering, stamped drawings, or authority-having-jurisdiction approval.</div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your estimate includes</h2>
+    <ul class="checks cols" style="margin-top: 18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and assumptions</li>
+      <li>Inclusions and exclusions</li>
+      <li>Drawing and specification assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Bid summary</li>
+      <li>Alternates and value-engineering notes where applicable</li>
+      <li>Gear and long-lead item notes where applicable</li>
+      <li>Optional final review call before bid submission</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SYSTEMS QUANTIFIED -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering and CT cabinets']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
+      {'title':'Lighting','items':['Interior lighting and controls','Emergency lighting and life safety','Site lighting','Underground electrical']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data, communications rough-in','Access control / security rough-in where included','EV charger rough-in where included','Utility coordination notes']}
+    ]) }}
+    <p class="muted" style="margin-top: 16px; font-size: 13.5px;">Scope quantified is confirmed per project against the drawings, specifications, and addenda you provide.</p>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">From bid set to reviewable estimate package</h2>
+    {{ process_steps([
+      {'title':'Upload drawings or send a plan link','body':'Send your PDF or DWG set, specifications, and addenda — or a Dropbox / Drive / Procore link.'},
+      {'title':'Confirm the details','body':'We confirm project location, project type, scope, and bid deadline before quoting.'},
+      {'title':'Receive a fixed quote','body':'You get a fee and delivery window up front — quoted after drawing review, before work begins.'},
+      {'title':'Takeoff and scope review','body':'MeTiger performs the takeoff and organizes the electrical scope by system.'},
+      {'title':'Assumptions and gaps documented','body':'Assumptions, exclusions, and scope gaps are logged clearly so nothing is buried.'},
+      {'title':'Package delivered','body':'You receive the reviewable estimate package on the agreed window.'},
+      {'title':'Optional review call','body':'A short call to walk the package before bid submission, if you want one.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- PROJECT PROOF -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Experience</div>
+    <h2 class="h2">Representative prior estimating experience</h2>
+    <p class="lead">A sample of electrical estimating and coordination work. These are representative of the scope and project types MeTiger supports; Canadian project references will be added here as they become available.</p>
+    <div class="grid grid-3" style="margin-top: 22px;">
+      <div class="card"><div class="num">Retail</div><h3 class="h3" style="margin-top:8px;">Big-box retail remodel</h3><p>Electrical estimating for an interior remodel — lighting upgrades, refrigeration power, and back-of-house modifications coordinated around live store operations.</p></div>
+      <div class="card"><div class="num">Restaurant</div><h3 class="h3" style="margin-top:8px;">Restaurant tenant improvement</h3><p>Estimating and coordination for a new restaurant build-out — kitchen power, hood interlocks, dining lighting, and tenant connection coordination.</p></div>
+      <div class="card"><div class="num">Utility</div><h3 class="h3" style="margin-top:8px;">Municipal lift-station electrical</h3><p>Estimating for municipal wastewater lift-station packages — pump control panels, SCADA tie-ins, and generator/ATS provisions.</p></div>
+    </div>
+    <div class="cta-row"><a class="btn btn-ghost" href="/case-studies/">See case studies</a></div>
+  </div>
+</section>
+
+<!-- PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">Quoted after drawing review</h2>
+    <p class="lead">Every project is quoted based on drawing size, scope complexity, project type, deadline, and requested deliverables. Send the bid set and due date; MeTiger will confirm scope, fee, and delivery window before work begins.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">How pricing works</a><a class="btn btn-primary" href="/contact/">Upload drawings for a fixed quote</a></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(home_faqs) }}
+  </div>
+</section>
+
+<!-- CONTACT / QUOTE -->
+<section id="contact">
+  <div class="container">
+    <div class="eyebrow section-head">Request a quote</div>
+    <h2 class="h2">Upload drawings / request a quote</h2>
+    <p class="lead">Send your bid set and due date. We confirm scope, fee, and delivery window before any work begins.</p>
+    <div class="grid grid-2" style="margin-top: 24px; align-items: start;">
+      <div class="panel" style="border:1px solid var(--stroke); border-radius: var(--radius-md); padding: 22px; background: linear-gradient(180deg,#0f1629,#0b0f17);">
+        {% include 'partials/quote_form.html' %}
+      </div>
+      <div>
+        <div class="card">
+          <h3 class="h3">Talk to us directly</h3>
+          <p><a href="mailto:info@metiger.ca" style="color:var(--primary);">info@metiger.ca</a><br><a href="tel:+17826405557" style="color:var(--primary);">+1 (782) 640-5557</a></p>
+          <p class="muted" style="font-size:13.5px;">Based in Bedford, Nova Scotia. Remote electrical estimating delivery across Canada.</p>
+        </div>
+        <div class="note warn" style="margin-top: 16px;">Please don’t share confidential tender documents unless you’re authorized to. NDA available on request.</div>
+        <div class="card" style="margin-top:16px; padding:0; overflow:hidden;">
+          <div class="yt-lite" data-yt-id="OjQg7LQzWTM" data-yt-title="MeTiger Inc. — Engineering Complex Projects with Precision">
+            <img class="yt-thumb"
+                 src="https://i.ytimg.com/vi/OjQg7LQzWTM/maxresdefault.jpg"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/OjQg7LQzWTM/hqdefault.jpg';"
+                 width="1280" height="720" loading="lazy"
+                 alt="MeTiger Inc. — Engineering Complex Projects with Precision" />
+            <button type="button" class="yt-play" aria-label="Play video: MeTiger Inc. — Engineering Complex Projects with Precision">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  function init(lite) {
+    var btn = lite.querySelector('.yt-play');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      if (lite.classList.contains('yt-active')) return;
+      var id = lite.getAttribute('data-yt-id');
+      var iframe = document.createElement('iframe');
+      iframe.className = 'yt-iframe';
+      iframe.width = '1280';
+      iframe.height = '720';
+      iframe.title = lite.getAttribute('data-yt-title') || '';
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      lite.classList.add('yt-active');
+      lite.appendChild(iframe);
+      iframe.focus();
+    });
+  }
+  document.querySelectorAll('.yt-lite').forEach(init);
+})();
+</script>
+{% endblock %}

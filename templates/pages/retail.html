@@ -1,0 +1,161 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Retail Electrical Estimating Canada | MeTiger Inc.{% endblock %}
+{% block meta_description %}Retail electrical estimating in Canada for fit-outs, store remodels, and multi-site rollouts. Takeoffs, labour summaries, and marked-up drawings for lighting, signage, and branch power.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Retail Electrical Estimating','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you estimate retail fit-outs and store remodels across Canada?','a':'Yes. We prepare retail electrical takeoffs and estimates remotely for contractors and general contractors across every Canadian province and territory, working from your PDF or DWG tender set, tenant criteria, and landlord requirements.'},
+    {'q':'Can you handle multi-site retail rollout programs?','a':'Yes. For multi-store programs we build a consistent takeoff basis so pricing stays comparable from location to location, then adjust each site for its base-building conditions, regional labour, and local landlord and utility requirements.'},
+    {'q':'Do you quantify grocery refrigeration power?','a':'Yes. We quantify branch power, feeders, disconnects, and rough-in for refrigeration racks, cases, and walk-ins based on the equipment schedules and other-trade documents, and we flag connections that are unclear so nothing is priced blind.'},
+    {'q':'Does the estimate account for working in a live store?','a':'We can reflect night phasing, after-hours work, and temporary power assumptions where the tender documents call for them, and we log those assumptions clearly so your team can price the labour impact rather than absorb it.'},
+    {'q':'Is your work informed by the Canadian Electrical Code?','a':'Our estimating and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments, project specifications, landlord criteria, and local utility requirements. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial or territorial requirements.'},
+    {'q':'Do you provide stamped drawings or engineering?','a':'No. MeTiger provides estimating, takeoff, and coordination support and works alongside the engineer of record where required. We do not provide stamped drawings, sealed engineering, or code-compliance certification.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Retail Electrical Estimating Canada', 'Retail electrical takeoffs, labour summaries, marked-up drawings, and scope review for Canadian fit-outs, store remodels, and multi-site rollout programs.', '/retail-electrical-estimating-canada/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Retail Electrical Estimating</div>
+    <h1 class="h1">Retail Electrical Estimating in Canada</h1>
+    <p class="lead">MeTiger turns retail tender drawings, tenant criteria, and landlord requirements into clean electrical takeoffs, material lists, labour summaries, and marked-up drawings. Whether it is a single storefront fit-out, a store remodel, or a multi-site rollout, we build a package your team can bid with confidence — clear quantities, clear assumptions, and clear exclusions before the deadline.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request Retail Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Fit-outs & remodels','Multi-site rollouts','LED retrofit takeoffs','Live-store phasing notes','CEC-aware scope review']) }}
+  </div>
+</section>
+
+<!-- 1. RETAIL PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Retail projects we estimate</h2>
+    <p class="lead">Retail electrical scope changes a lot between a new store, a refresh, and a national program. We estimate all of it, and price each job for what its drawings and site conditions actually demand.</p>
+    <div class="grid grid-4" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Store fit-outs</h3><p>New tenant fit-outs in malls, plazas, and mixed-use developments — branch power, lighting, signage, and life-safety rough-in from base building to turnover.</p></div>
+      <div class="card"><h3 class="h3">Store remodels</h3><p>Remodels and refreshes where demolition, existing conditions, and reused infrastructure all affect the count and the labour.</p></div>
+      <div class="card"><h3 class="h3">Multi-site rollouts</h3><p>Chain and franchise rollout programs that need a consistent, repeatable takeoff basis across many locations.</p></div>
+      <div class="card"><h3 class="h3">Big-box &amp; grocery</h3><p>Big-box and grocery projects with refrigeration power, heavy lighting counts, and coordination with mechanical and other trades.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your retail estimate includes</h2>
+    <p class="lead">Every retail package is built to be reviewed line by line, not taken on trust.</p>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and project-specific assumptions</li>
+      <li>Inclusions and exclusions</li>
+      <li>Landlord and tenant-criteria assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Phasing and temporary-power notes where applicable</li>
+      <li>Multi-site consistency notes for rollout programs</li>
+      <li>Bid summary</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. RETAIL SCOPE WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Retail electrical scope we quantify</h2>
+    {{ systems([
+      {'title':'Lighting & controls','items':['Sales-floor and back-of-house lighting','LED retrofit and re-lamp scope','Feature, display, and accent lighting','Track and case lighting','Lighting controls and occupancy sensors','Emergency and exit lighting']},
+      {'title':'Signage & exterior','items':['Interior and exterior signage power','Storefront and canopy lighting','Pylon and monument sign feeds','Site and parking-area lighting','Exterior receptacles and connections']},
+      {'title':'Branch power & devices','items':['Receptacles and dedicated circuits','Point-of-sale and checkout power','Millwork and display-fixture power','Data and communications rough-in','Panels, feeders, and distribution']},
+      {'title':'Refrigeration & equipment power','items':['Refrigeration rack and case power','Walk-in cooler and freezer connections','Grocery equipment disconnects','Mechanical and other-trade equipment power']},
+      {'title':'Life safety & low voltage','items':['Fire alarm rough-in and coordination','Emergency lighting and egress','Security and access-control rough-in where included','EV charger rough-in where included']},
+      {'title':'Service & infrastructure','items':['Service and metering coordination','Distribution and subpanels','Grounding and bonding','Utility and landlord coordination notes']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 4. LIVE-STORE PHASING & MULTI-SITE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Phasing &amp; programs</div>
+    <h2 class="h2">Live-store phasing and multi-site consistency</h2>
+    <p class="lead">Retail rarely happens on an empty site. Remodels and refreshes often run around live store operations, and program work has to stay consistent across dozens of locations. We build both realities into the estimate so the labour impact is visible before award, not discovered on site.</p>
+    <ul class="checks" style="margin-top:18px;">
+      <li>Night, after-hours, and off-hours work reflected where the documents require it</li>
+      <li>Temporary power and phased-cutover assumptions logged clearly</li>
+      <li>Demolition and existing-condition allowances called out for remodels</li>
+      <li>A repeatable takeoff basis so rollout pricing stays comparable location to location</li>
+      <li>Per-site adjustments for base-building conditions, regional labour, and local requirements</li>
+    </ul>
+    <div class="note warn" style="margin-top:18px;">Working around a live store changes labour productivity and sequencing. We document our phasing and temporary-power assumptions so your team can price the impact rather than absorb it after the fact.</div>
+  </div>
+</section>
+
+<!-- 5. CEC-AWARE APPROACH + AHJ CAVEAT -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Approach</div>
+    <h2 class="h2">CEC-aware retail estimating</h2>
+    <p class="lead">Our retail estimating support is informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments and practices, tenant design criteria, landlord standards, project specifications, and local utility requirements. We quantify what the documents call for and flag where they do not agree.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial or territorial requirements. MeTiger provides estimating and coordination support — not stamped drawings, sealed engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send drawings or a plan link','body':'Share your PDF or DWG set, tenant criteria, landlord standards, and any addenda — or a Dropbox / Drive / Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm store type, location, phasing needs, rollout count if any, and the bid due date.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before work begins.'},
+      {'title':'Takeoff and scope review','body':'We perform the retail takeoff and organize the electrical scope by system.'},
+      {'title':'Document assumptions and gaps','body':'Phasing, exclusions, and scope gaps are logged clearly in an RFI-ready format.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package on the agreed window, with an optional walkthrough call.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">Pricing and quote process</h2>
+    <p class="lead">Every retail project is quoted after drawing review, based on store size, scope complexity, phasing, rollout count, deadline, and requested deliverables. Send the bid set and due date; MeTiger confirms scope, fee, and delivery window before any work begins — a clear fee for a package you can actually bid with, quoted after drawing review rather than guessed up front.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Request Retail Estimate</a></div>
+    <p class="muted" style="margin-top:22px; font-size:14px;">Related: <a href="/restaurant-electrical-estimating-canada/" style="color:var(--primary);">Restaurant electrical estimating</a> &middot; <a href="/commercial-electrical-estimating-canada/" style="color:var(--primary);">Commercial electrical estimating</a> &middot; <a href="/electrical-takeoff-services-canada/" style="color:var(--primary);">Electrical takeoff services</a>. Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Retail estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 9. FINAL CTA -->
+{{ cta_band('Get a retail electrical estimate',
+    'Upload your fit-out, remodel, or rollout drawings and share the bid due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request Retail Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

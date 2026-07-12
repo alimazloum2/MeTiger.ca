@@ -1,0 +1,116 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Sample Electrical Estimate Package | MeTiger Inc.{% endblock %}
+{% block meta_description %}See what a MeTiger electrical estimate package looks like: takeoff workbook, colour-coded marked-up drawings, material list, labour-hour summary, and a scope-gap log. Request an anonymized sample by email.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Sample Estimate Package','url':None}] %}
+{% set page_faqs = [
+    {'q':'Can I download a sample electrical estimate package?','a':'A full public download is coming soon. In the meantime, we send an anonymized electrical takeoff sample by email on request — email info@metiger.ca or use the contact form and we will share an example estimate package that reflects our current format.'},
+    {'q':'What is in the sample estimate package?','a':'The sample shows the same deliverables a real project receives: a quantity takeoff workbook, colour-coded marked-up drawings, a material list by system, a labour-hour summary with the labour-unit basis, documented assumptions and exclusions, an RFI and scope-gap log, and a bid summary.'},
+    {'q':'Is any real project or client information shown?','a':'No. Every sample is anonymized. The project identity, client name, site addresses, drawing title blocks, and any proprietary or client-specific pricing are removed or blurred before we share it.'},
+    {'q':'Does the sample include stamped or sealed engineering?','a':'No. MeTiger provides estimating, takeoff, and coordination support — not stamped drawings or sealed professional engineering. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements.'},
+    {'q':'How do I get a quote for my own project?','a':'Send your PDF or DWG tender set, specifications, and addenda, or a plan link, with the bid due date. We confirm scope, fee, and delivery window before any work begins. Pricing is quoted after drawing review.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Sample Electrical Estimate Package', 'An anonymized example electrical estimate package showing a MeTiger takeoff workbook, marked-up drawings, material list, labour-hour summary, scope-gap log, and bid summary for Canadian projects.', '/samples/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Sample Estimate Package</div>
+    <h1 class="h1">Sample Electrical Estimate Package</h1>
+    <p class="lead">Wondering what you actually receive when MeTiger prices your project? This page walks through a sample electrical estimate package — the takeoff workbook, colour-coded marked-up drawings, material list, labour-hour summary, and scope-gap log that make our numbers reviewable line by line. Built for Canadian commercial and industrial contractors who need a bid they can defend, not a black-box total.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request a Sample by Email</a>
+      <a class="btn btn-ghost" href="/canada-electrical-estimating-services/">See our estimating services</a>
+    </div>
+    {{ trust_bar(['Anonymized sample','Takeoff workbook','Colour-coded drawings','Labour-hour summary','Scope-gap log']) }}
+  </div>
+</section>
+
+<!-- 1. WHAT THE SAMPLE SHOWS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">What you get</div>
+    <h2 class="h2">What the sample shows</h2>
+    <p class="lead">The sample mirrors a real deliverable, so you can see exactly how our electrical takeoff and estimate hang together before you send us a project.</p>
+    {{ checks([
+      'Quantity takeoff workbook with counts organized by system',
+      'Colour-coded marked-up drawings tied back to the count',
+      'Material list broken out by system',
+      'Labour-hour summary with the labour-unit basis',
+      'Documented assumptions and exclusions',
+      'RFI and scope-gap log for missing or conflicting items',
+      'Bid summary bringing material and labour together'
+    ]) }}
+  </div>
+</section>
+
+<!-- 2. WHAT IS ANONYMIZED -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Privacy</div>
+    <h2 class="h2">What is anonymized</h2>
+    <p class="lead">A sample should show our format and discipline, never a real client&#39;s data. Before we share an example, we strip anything that could identify the project or expose pricing that isn&#39;t ours to give out.</p>
+    <ul class="checks" style="margin-top:18px;">
+      <li>Project identity and job name removed</li>
+      <li>Client and contractor names removed</li>
+      <li>Site addresses and drawing title blocks blurred</li>
+      <li>Proprietary and client-specific pricing removed or blurred</li>
+      <li>Confidential specification details generalized</li>
+    </ul>
+    <div class="note" style="margin-top:18px;">The sample is illustrative of format and structure only. It is not a priced quote for your project, and it does not represent any specific client engagement.</div>
+  </div>
+</section>
+
+<!-- 3. SAMPLE ESTIMATE COMPONENTS -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Components</div>
+    <h2 class="h2">Sample estimate components</h2>
+    <p class="lead">Each component in the package does a job. Together they let your team check the number instead of trusting it.</p>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Takeoff workbook</h3><p>A structured quantity takeoff with device, feeder, gear, and fixture counts grouped by system, so every line traces back to a drawing.</p></div>
+      <div class="card"><h3 class="h3">Marked-up drawings</h3><p>Colour-coded plans where each counted item is highlighted, letting you audit coverage sheet by sheet against the takeoff.</p></div>
+      <div class="card"><h3 class="h3">Material list by system</h3><p>Materials organized by service, distribution, power, lighting, and low-voltage, using Canadian market pricing assumptions.</p></div>
+      <div class="card"><h3 class="h3">Labour-hour summary</h3><p>Labour-unit based estimating with project-specific labour assumptions and regional labour adjustment, shown so the basis is visible.</p></div>
+      <div class="card"><h3 class="h3">Assumptions &amp; exclusions</h3><p>A plain list of what is included, what is carried as an assumption, and what is explicitly out of scope — no silent guesses.</p></div>
+      <div class="card"><h3 class="h3">RFI &amp; scope-gap log</h3><p>Items that appear in one document but not another, equipment with no clear power source, and conflicts you can send to the design team.</p></div>
+      <div class="card"><h3 class="h3">Bid summary</h3><p>A single reviewable summary rolling material and labour together, with alternates and value-engineering notes where they apply.</p></div>
+      <div class="card"><h3 class="h3">CEC-aware scope review</h3><p>Scope review informed by CSA C22.1 / the Canadian Electrical Code, provincial practices, and the bid documents.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. COMING SOON CALLOUT -->
+<section>
+  <div class="container narrow">
+    <div class="note warn">
+      <strong>Sample package coming soon.</strong> A full anonymized electrical estimate package will be available here as a public download. It is not posted yet — in the meantime, email <a href="mailto:info@metiger.ca">info@metiger.ca</a> or use the <a href="/contact/">contact form</a> and we will send an anonymized sample that reflects our current format. Final compliance on any real project remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements; MeTiger works alongside the engineer of record where required.
+    </div>
+    <p class="muted" style="margin-top:18px;">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 5. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Frequently asked questions</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 6. FINAL CTA -->
+{{ cta_band('Request a real project quote',
+    'Send your bid set or share a plan link with the due date, and we will confirm scope, fee, and delivery window before any work begins. Prefer to see the format first? Ask for an anonymized sample by email.',
+    [{'label':'Request a Sample by Email','href':'/contact/','primary':True},{'label':'See how pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

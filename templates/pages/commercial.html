@@ -1,0 +1,176 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Commercial Electrical Estimating in Canada | MeTiger Inc.{% endblock %}
+{% block meta_description %}Commercial electrical estimating and takeoff across Canada — tenant improvements, retail fit-outs, offices, mixed-use, with a base-building vs tenant split.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Commercial Electrical Estimating','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you split base-building and tenant scope?','a':'Yes. On commercial fit-outs we keep a clear base-building versus tenant-improvement line so you price only your contract, and any assumed landlord-provided items are listed as exclusions.'},
+    {'q':'Can you estimate work in occupied or phased buildings?','a':'Yes. For occupied-space and phased work we note the sequencing, temporary power, and after-hours assumptions so your crew productivity assumptions and labour hours reflect real conditions, not an empty-shell count.'},
+    {'q':'Do you pick up equipment power from other trades?','a':'Yes. Mechanical, plumbing, kitchen, and specialty equipment often carries electrical connections that are not on the power plans. We reconcile equipment schedules against the electrical scope and flag any load with no clear source in the RFI and scope-gap log.'},
+    {'q':'Do you use the Canadian Electrical Code?','a':'Our takeoffs and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments, project specifications, local utility requirements, and the bid documents. Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements.'},
+    {'q':'Do you provide stamped drawings or engineering?','a':'No. MeTiger provides estimating, takeoff, and coordination support — not stamped drawings, sealed engineering, or code-compliance certification. We work alongside the engineer of record where required and document what the tender set calls for.'},
+    {'q':'What does a commercial estimate cost?','a':'Every project is quoted after drawing review. Fees depend on floor and sheet count, scope complexity, phasing, deadline, and the deliverables you need. Send the bid set and due date and we confirm scope, fee, and delivery window before work begins.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Commercial Electrical Estimating Canada', 'Commercial electrical estimating and takeoff support across Canada for tenant improvements, retail fit-outs, offices, mixed-use, multi-family residential, and institutional projects, with base-building versus tenant scope splits, labour summaries, and marked-up drawings.', '/commercial-electrical-estimating-canada/', 'Canada') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Commercial Electrical Estimating in Canada</div>
+    <h1 class="h1">Commercial Electrical Estimating in Canada</h1>
+    <p class="lead">MeTiger helps Canadian electrical contractors and general contractors price commercial buildings with confidence — tenant improvements, retail fit-outs, offices, mixed-use, and institutional work. We turn tender drawings, specifications, and addenda into reviewable takeoffs, labour summaries, marked-up drawings, and a clean base-building versus tenant scope split.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request Commercial Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['Commercial estimating','CEC-aware scope review','Base-building vs TI split','Marked-up drawings','Labour & material summaries']) }}
+  </div>
+</section>
+
+<!-- 1. PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Commercial projects we estimate</h2>
+    <p class="lead">From a single-floor fit-out to a full mixed-use development, we organize the electrical scope the way you actually bid it.</p>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Tenant improvements &amp; fit-outs</h3><p>Interior build-outs and TI work — devices, branch power, lighting, and controls added to an existing base building.</p></div>
+      <div class="card"><h3 class="h3">Retail fit-outs</h3><p>Storefronts, shells to finished units, and multi-unit retail with feature lighting and dedicated equipment power.</p></div>
+      <div class="card"><h3 class="h3">Offices &amp; professional space</h3><p>Open-plan and demised office floors, boardrooms, and workstation power with lighting-control zoning.</p></div>
+      <div class="card"><h3 class="h3">Mixed-use &amp; multi-family</h3><p>Ground-floor commercial over multi-family residential suites, with common-area lighting and suite distribution.</p></div>
+      <div class="card"><h3 class="h3">Base-building &amp; core-and-shell</h3><p>Service entrance, house distribution, risers, and landlord scope for developers and base-building contracts.</p></div>
+      <div class="card"><h3 class="h3">Institutional where appropriate</h3><p>Community, clinical, and institutional interiors handled where the scope suits a commercial-style estimate.</p></div>
+    </div>
+    <p class="note" style="margin-top:22px;">Looking for USA estimating? Visit <a href="https://metiger.us">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 2. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your commercial estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook by floor and area</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Base-building versus tenant scope split</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary with the labour-unit basis</li>
+      <li>Lighting and controls count</li>
+      <li>Devices and branch-power schedule</li>
+      <li>Feeder and distribution takeoff</li>
+      <li>Inclusions and exclusions</li>
+      <li>Landlord / base-building coordination notes</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Bid summary you can price from</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Commercial systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and metering','Switchboards, panels, distribution','Transformers and feeders','Risers and house power']},
+      {'title':'Branch power & devices','items':['Receptacles and dedicated circuits','Equipment and appliance connections','Workstation and furniture power','Junction boxes and rough-in']},
+      {'title':'Lighting & controls','items':['Interior and feature lighting','Lighting-control zoning and sensors','Emergency and exit lighting','Exterior and signage power']},
+      {'title':'Life-safety coordination','items':['Fire-alarm device coordination','Emergency and egress lighting','Life-safety power coordination']},
+      {'title':'Low voltage & special systems','items':['Data and communications rough-in','Access control / security rough-in where included','Audio-visual rough-in where included','EV charger rough-in where included']},
+      {'title':'Demolition & phasing','items':['Existing wiring removal where shown','Temporary and construction power','Phased and occupied-space allowances']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 4. COORDINATION REALITIES -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Coordination</div>
+    <h2 class="h2">The coordination realities that move a commercial number</h2>
+    <p class="lead">Commercial electrical margin usually leaks at the boundaries — between the base building and the tenant, and between the electrical drawings and every other trade. We estimate those boundaries on purpose instead of assuming them away.</p>
+    <ul class="checks" style="margin-top:18px;">
+      <li>Base-building versus tenant-improvement scope kept on separate lines so you price your contract, not the landlord's</li>
+      <li>Mechanical, plumbing, kitchen, and specialty equipment power reconciled against the electrical schedules</li>
+      <li>Phased and occupied-space sequencing, temporary power, and after-hours assumptions written into the labour basis</li>
+      <li>Landlord-provided, utility, and existing-to-remain items called out as exclusions, not silent guesses</li>
+      <li>Lighting, controls, and life-safety devices cross-checked against reflected ceiling and fire-alarm sheets</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5. CEC-AWARE APPROACH -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Approach</div>
+    <h2 class="h2">A CEC-aware approach to commercial scope</h2>
+    <p class="lead">Our commercial estimating and Canadian Electrical Code-informed scope review are guided by CSA C22.1 / the Canadian Electrical Code, provincial amendments and practices, project specifications, local utility requirements, and the bid documents. We quantify what the documents call for and flag where they conflict — using regional labour adjustment and project-specific labour assumptions built for Canadian market pricing.</p>
+    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction (AHJ), and applicable provincial/territorial requirements. MeTiger provides estimating and coordination support — not stamped drawings, sealed engineering, permit-ready engineering, or code-compliance certification — and works alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Send your drawings or a plan link','body':'Share your PDF or DWG set, specifications, and addenda — or a Dropbox / Drive / Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm the project location, commercial project type, base-building versus tenant split, and bid due date.'},
+      {'title':'Receive a fixed quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Takeoff and scope review','body':'We perform the takeoff and organize the electrical scope by area, floor, and system.'},
+      {'title':'Document assumptions and gaps','body':'Scope splits, exclusions, phasing assumptions, and RFIs are logged clearly.'},
+      {'title':'Deliver the package','body':'You receive the reviewable commercial estimate on the agreed window, ready to bid.'}
+    ]) }}
+  </div>
+</section>
+
+<!-- 7. PRICING TEASER -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Pricing</div>
+    <h2 class="h2">Commercial estimating pricing</h2>
+    <p class="lead">There is no flat menu price for a commercial fit-out — a two-floor office TI and a mixed-use base building are different animals. Every fee is quoted after drawing review, based on floor and sheet count, scope complexity, phasing, deadline, and the deliverables you need. Send the bid set and due date and MeTiger confirms scope, fee, and delivery window before work begins.</p>
+    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Request Commercial Estimate</a></div>
+  </div>
+</section>
+
+<!-- 8. RELATED SERVICES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Related services</div>
+    <h2 class="h2">Related estimating services</h2>
+    <div class="grid grid-4" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Industrial estimating</h3><p>Heavier plant, process, and warehouse electrical. See <a href="/industrial-electrical-estimating-canada/">industrial estimating</a>.</p></div>
+      <div class="card"><h3 class="h3">Retail estimating</h3><p>Storefronts and multi-unit retail fit-outs. See <a href="/retail-electrical-estimating-canada/">retail estimating</a>.</p></div>
+      <div class="card"><h3 class="h3">Restaurant estimating</h3><p>Kitchen power and interlock coordination. See <a href="/restaurant-electrical-estimating-canada/">restaurant estimating</a>.</p></div>
+      <div class="card"><h3 class="h3">Takeoffs &amp; bid review</h3><p>Standalone <a href="/electrical-takeoff-services-canada/">electrical takeoffs</a> or a full <a href="/canada-electrical-estimating-services/">estimating package</a>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Commercial estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+  </div>
+</section>
+
+<!-- 10. FINAL CTA -->
+{{ cta_band('Send your commercial bid set and get a fixed quote',
+    'Upload your drawings or share a plan link with the bid due date. MeTiger confirms scope, the base-building versus tenant split, fee, and delivery window before any work begins.',
+    [{'label':'Request Commercial Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}

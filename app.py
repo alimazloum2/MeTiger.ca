@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, Response
 import io, os, re, time, requests, hmac, hashlib
+from datetime import datetime
 from collections import OrderedDict
 from threading import Lock
 from dotenv import load_dotenv
 import segno
+import pages as page_registry
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,6 +24,18 @@ app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "0x4AAAAAAB8W
 TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "")
 EL_WEBHOOK_SECRET = os.getenv("EL_WEBHOOK_SECRET", "")
 limiter = Limiter(get_remote_address, app=app, default_limits=["100/hour"])
+
+
+@app.context_processor
+def inject_globals():
+    """Make Turnstile key + a fresh form-open timestamp available to every
+    template, so any page can include the shared quote form."""
+    return {
+        "TURNSTILE_SITE_KEY": app.config["TURNSTILE_SITE_KEY"],
+        "START_TS": int(time.time()),
+    }
+
+
 URL_RE = re.compile(r'https?://', re.I)
 DISPOSABLE = {"mailinator.com","guerrillamail.com","10minutemail.com","tempmail.dev","yopmail.com","getnada.com","trashmail.com"}
 
@@ -71,9 +85,7 @@ def verify_turnstile(token, remote_ip):
 
 @app.route("/")
 def index():
-    return render_template("index.html", 
-                         TURNSTILE_SITE_KEY=app.config["TURNSTILE_SITE_KEY"],
-                         START_TS=int(time.time()))
+    return render_template("home.html")
 
 BASE_URL = "https://metiger.ca"
 
@@ -105,72 +117,91 @@ def robots_txt():
     return Response("\n".join(lines) + "\n", mimetype="text/plain")
 
 
+_TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
+
+
+def _template_lastmod(template_rel):
+    """ISO date (YYYY-MM-DD) of a template's last modification, for <lastmod>."""
+    try:
+        mtime = os.path.getmtime(os.path.join(_TEMPLATE_DIR, template_rel))
+        return datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
+    except OSError:
+        return None
+
+
 @app.route("/sitemap.xml")
 @limiter.exempt
 def sitemap_xml():
-    pages = ["/", "/services", "/projects", "/estimate-calculator", "/electrical-budget-guide", "/contact"]
-    urls = "".join(
-        f"<url><loc>{BASE_URL}{p}</loc>"
-        f"<changefreq>monthly</changefreq>"
-        f"<priority>{'1.0' if p == '/' else '0.8'}</priority></url>"
-        for p in pages
+    urls = "\n".join(
+        f"<url><loc>{BASE_URL}{path}</loc>"
+        + (f"<lastmod>{lastmod}</lastmod>" if (lastmod := _template_lastmod(tmpl)) else "")
+        + "</url>"
+        for path, tmpl in page_registry.sitemap_entries()
     )
     xml = (
-        '<?xml version="1.0" encoding="UTF-8"?>'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        f"{urls}</urlset>"
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}\n</urlset>\n"
     )
     return Response(xml, mimetype="application/xml")
 
 
 # Plain-language summary for LLMs / answer engines (https://llmstxt.org/).
-_LLMS_TXT = """# MeTiger Inc.
+_LLMS_TXT = """# MeTiger Inc. — Canadian Electrical Estimating
 
-> MeTiger Inc. is a construction project management and electrical engineering
-> consulting firm registered in Nova Scotia, Canada, serving clients across the
-> United States. Tagline: "Delivering complex construction projects without drama."
+> MeTiger Inc. is a commercial and industrial electrical estimating consultancy
+> based in Bedford, Nova Scotia, Canada, serving electrical contractors and
+> general contractors across Canada. Tagline: "Canadian electrical estimating,
+> delivered without drama." (For USA estimating, see https://metiger.us.)
 
 ## About
 
-MeTiger Inc. partners with clients to plan, engineer, and construct resilient
-infrastructure. We work behind the scenes to de-risk construction, keep trades
-moving, and protect the schedule with senior engineering oversight and disciplined
-project management. Engineered in Nova Scotia, built across the U.S.
+MeTiger turns Canadian tender drawings, specifications, and addenda into clean
+electrical takeoffs, material lists, labour summaries, colour-coded marked-up
+drawings, and scope notes built for review. Estimating support is informed by
+CSA C22.1 / the Canadian Electrical Code, provincial practices, project
+specifications, local utility requirements, and bid documents. Final compliance
+remains subject to the project engineer, the authority having jurisdiction, and
+applicable provincial/territorial requirements. MeTiger provides estimating and
+coordination support, not sealed or stamped engineering.
 
 - Founded: 2022
 - Office: 620 Nine Mile Drive, Bedford, NS B4A 0H4, Canada
 - Email: info@metiger.ca
 - Phone: +1 (782) 640-5557
-- Area served: United States (firm registered in Canada)
-- Certified Procore partner
+- Area served: Canada (remote delivery across all provinces and territories)
+- NDA available on request
 
 ## Services
 
-- Electrical Engineering: Coordinated, code-compliant electrical solutions that
-  bridge engineering intent with construction execution, improving safety, energy
-  efficiency, and reliability.
-- Project Management: Scope review, RFIs and submittals, subcontract negotiation,
-  cost forecasting, progress claims, and budget/cash-flow control.
-- Construction Documentation: RFQs, tender front-end packages, and addenda before
-  award; CDs, CCNs, and CCOs after award to keep scope, cost, and drawings aligned.
-- Tender Review & Cost Estimating: Drawing review, quantity verification, and
-  organized trade packages for builders and clients.
+- Canadian Electrical Estimating: Takeoffs and labour summaries built from your
+  PDF or DWG tender set, delivered as a reviewable estimate package.
+- Electrical Takeoffs: Standalone quantity takeoffs by system and marked-up plans.
+- Commercial & Industrial Estimating: Tenant improvements, retail, warehouses,
+  and heavier industrial/utility electrical scopes.
+- Electrical Bid Review: An independent second set of eyes on drawings,
+  quantities, exclusions, and scope gaps before you submit.
+- Construction Documentation Support and Electrical Design Coordination Support,
+  working alongside the engineer of record where required.
 
-## Selected projects
+## Project types
 
-- Retail Remodel — Walmart Supercenter, Pembroke Pines, FL: electrical estimating
-  and engineering for an interior remodel coordinated around live store operations.
-- Restaurant Tenant Improvement — CAVA, Doral, FL: electrical estimating and
-  coordination for a new restaurant build-out, supporting an on-time opening.
-- Utility Infrastructure — Lift Station Electrical, Hernando County, FL:
-  engineering and estimating for municipal wastewater lift station packages.
+Commercial tenant improvements, retail fit-outs, restaurants and hospitality,
+warehouses and light industrial, multi-family residential, municipal facilities,
+pump stations and utility infrastructure, schools and institutional, office and
+mixed-use, and service upgrades / distribution work.
 
 ## Links
 
 - Website: https://metiger.ca/
-- Services: https://metiger.ca/services
-- Projects: https://metiger.ca/projects
-- Contact: https://metiger.ca/contact
+- Electrical Estimating Services: https://metiger.ca/canada-electrical-estimating-services/
+- Electrical Takeoffs: https://metiger.ca/electrical-takeoff-services-canada/
+- Bid Review: https://metiger.ca/electrical-bid-review-canada/
+- Pricing: https://metiger.ca/pricing/
+- Samples: https://metiger.ca/samples/
+- Case Studies: https://metiger.ca/case-studies/
+- Contact / Quote: https://metiger.ca/contact/
+- USA estimating: https://metiger.us
 - LinkedIn: https://www.linkedin.com/company/metiger
 - YouTube: https://www.youtube.com/@MeTigerCa
 """
@@ -206,11 +237,13 @@ def debug():
 
 @app.route("/services")
 def services():
-    return render_template("services.html")
+    # Legacy USA-era route → Canada estimating hub (preserve inbound links).
+    return redirect("/canada-electrical-estimating-services/", code=301)
 
 @app.route("/projects")
 def projects():
-    return render_template("projects.html")
+    # Legacy USA-era route → Canada case studies.
+    return redirect("/case-studies/", code=301)
 
 @app.route("/estimate-calculator")
 def estimate_calculator():
@@ -224,20 +257,11 @@ def electrical_budget_guide():
 def test_turnstile():
     return render_template("test_turnstile.html")
 
-@app.route("/contact", methods=['GET', 'POST'])
+@app.route("/contact/")
 def contact():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        company = request.form.get('company')
-        message = request.form.get('message')
-        
-        # Here you would typically send an email or save to database
-        # For now, we'll just flash a success message
-        flash(f'Thank you {name}! We will get back to you soon.', 'success')
-        return redirect(url_for('contact'))
-    
-    return render_template("contact.html")
+    # Quote-request page. The form posts to /send_message (the live SMTP path);
+    # this route only renders. Flask 308-redirects /contact -> /contact/.
+    return render_template("quote.html")
 
 
 def _verify_elevenlabs_signature(raw_body, sig_header):
@@ -345,12 +369,13 @@ def send_message():
     name = (request.form.get("name") or "").strip()
     email = (request.form.get("email") or "").strip().lower()
     msg = (request.form.get("message") or "").strip()
-    honeypot = request.form.get("company", "")
+    # Honeypot renamed from 'company' -> 'website' so 'company' can be a real
+    # quote field. Do NOT check 'company' here or legit submissions get blocked.
+    honeypot = request.form.get("website", "")
     started_at = request.form.get("started_at", "0")
     token = request.form.get("cf-turnstile-response", "")
-    
-    # Debug logging (remove in production)
-    print(f"Form data: name={name}, email={email}, started_at={started_at}, honeypot={honeypot}, token={'present' if token else 'missing'}")
+
+    print(f"Form data: name={name}, email={email}, started_at={started_at}, honeypot={'yes' if honeypot else 'no'}, token={'present' if token else 'missing'}", flush=True)
 
     if honeypot:
         return jsonify(success=False, message="Bad request"), 400
@@ -380,49 +405,72 @@ def send_message():
     if not name or len(msg) < 6:
         return jsonify(success=False, message="Please complete all fields."), 400
 
+    # Collect optional quote-form fields. All optional — the required name /
+    # email / message above keep the simple contact path working unchanged.
+    details = {
+        "Company": request.form.get("company", "").strip(),
+        "Phone": request.form.get("phone", "").strip(),
+        "Province": request.form.get("province", "").strip(),
+        "Project type": request.form.get("project_type", "").strip(),
+        "Service needed": request.form.get("service", "").strip(),
+        "Bid due date": request.form.get("bid_date", "").strip(),
+        "Plan link": request.form.get("plan_link", "").strip(),
+        "NDA": request.form.get("nda", "").strip(),
+        "Consent to contact": "Yes" if request.form.get("consent") else "No",
+        "Submitted from": request.form.get("source", "").strip(),
+    }
+
     # Send email
     try:
-        # Temporarily hardcode SendGrid for testing
-        send_contact_email(name, email, msg)
-        return jsonify(success=True, message="Thanks — we'll get back to you"), 200
+        send_contact_email(name, email, msg, details)
+        return jsonify(success=True, message="Thanks — we'll review your request and get back to you."), 200
     except Exception as e:
-        print(f"Email error: {e}")
+        print(f"Email error: {e}", flush=True)
         return jsonify(success=False, message="Error sending message. Please try again."), 500
 
-def send_contact_email(name, email, message):
-    """Send contact form email using Microsoft SMTP"""
-    
+def send_contact_email(name, email, message, details=None):
+    """Send a contact/quote email via Microsoft 365 SMTP.
+
+    `details` is an optional dict of extra quote fields; only non-empty values
+    are included in the body. The From address must match the authenticated
+    SMTP user or Office365 rejects the message; Reply-To is the visitor so
+    replies reach them directly.
+    """
     smtp_server = "smtp.office365.com"
     smtp_port = 587
     sender_email = "info@metiger.ca"  # Must match the authenticated account
+    recipient = os.environ.get("TO_EMAIL") or "info@metiger.ca"
     smtp_user = os.environ.get("SMTP_USER")
     smtp_password = os.environ.get("SMTP_PASSWORD")
 
     if not smtp_user or not smtp_password:
         raise ValueError("SMTP credentials not configured")
 
-    # Email content
+    details = details or {}
+    project_type = details.get("Project type") or "General"
+    province = details.get("Province") or "Canada"
+
     msg = MIMEMultipart()
     msg['From'] = f"MeTiger Website <{sender_email}>"
-    msg['To'] = "info@metiger.ca"
-    msg['Subject'] = f"New Contact Form Submission from {name}"
+    msg['To'] = recipient
+    msg['Subject'] = f"metiger.ca Quote Request – {project_type} – {province}"
     msg['Reply-To'] = email  # Allow direct reply to the visitor
 
-    body = f"""
-    New contact form submission:
-    
-    Name: {name}
-    Email: {email}
-    
-    Message:
-    {message}
-    
-    ---
-    This message was sent from the MeTiger Inc. website contact form.
-    """
-    
+    lines = [
+        "New quote / contact request from metiger.ca",
+        "",
+        f"Name:  {name}",
+        f"Email: {email}",
+    ]
+    for label, value in details.items():
+        if value:
+            lines.append(f"{label}: {value}")
+    lines += ["", "Message / scope notes:", message, "",
+              "---", "Sent from the MeTiger Inc. (metiger.ca) website."]
+    body = "\n".join(lines)
+
     msg.attach(MIMEText(body, 'plain'))
-    
+
     # Send email
     try:
         server = smtplib.SMTP(smtp_server, smtp_port)
@@ -434,6 +482,28 @@ def send_contact_email(name, email, message):
     except Exception as e:
         print(f"SMTP Error: {e}")
         raise e
+
+# ---------------------------------------------------------------------------
+# Register CA marketing / service / province pages from the registry. Each
+# renders a self-contained template (templates/pages/*) that carries its own
+# SEO metadata + JSON-LD via template blocks.
+# ---------------------------------------------------------------------------
+def _make_page_view(template_name):
+    def _view():
+        return render_template(template_name)
+    return _view
+
+
+for _path, _template, _endpoint, _prio in page_registry.ALL_REGISTRY_PAGES:
+    app.add_url_rule(_path, _endpoint, _make_page_view(_template))
+
+
+@app.route("/payments")
+def payments():
+    # Crypto / TigerCoin consultation payments, kept off the main estimating
+    # funnel. Still served by the Turnstile-gated /api/reveal-payment endpoint.
+    return render_template("payments.html")
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

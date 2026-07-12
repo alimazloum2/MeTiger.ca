@@ -1,0 +1,143 @@
+{% extends "base_page.html" %}
+{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
+
+{% block page_title %}Prince Edward Island Electrical Estimating | MeTiger{% endblock %}
+{% block meta_description %}Prince Edward Island electrical estimating for contractors and GCs in Charlottetown, Summerside, Stratford and Cornwall. Remote delivery from your drawings.{% endblock %}
+
+{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':'/canada-electrical-estimating-services/'}, {'name':'Prince Edward Island Electrical Estimating','url':None}] %}
+{% set page_faqs = [
+    {'q':'Do you provide electrical estimating across Prince Edward Island?','a':'Yes. We support electrical contractors and general contractors right across the Island remotely — Charlottetown, Summerside, Stratford, Cornwall, and the smaller communities in between. Everything is delivered from your PDF or DWG tender set, so a smaller-centre location never limits the senior estimating support you can draw on.'},
+    {'q':'Which electrical code do you estimate to in Prince Edward Island?','a':'Our takeoffs and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in Prince Edward Island, together with the project specifications, drawings, addenda, and local utility requirements. Final compliance remains subject to the project engineer, the Prince Edward Island authority having jurisdiction, and applicable provincial requirements.'},
+    {'q':'Can you work from PDF or DWG drawings?','a':'Both. Send a PDF tender set or DWG / CAD files, the specifications, and any addenda — or share a Dropbox, Drive, or Procore link. We work from whatever the design team issued.'},
+    {'q':'How does remote delivery work for a smaller market like PEI?','a':'Remote delivery is exactly what makes senior estimating accessible on the Island. You send drawings and we return a reviewable package on an agreed window, so you get experienced takeoff support without needing a full-time estimator on staff for the volume a smaller centre carries.'},
+    {'q':'Do you sign an NDA before we share drawings?','a':'Yes. A non-disclosure agreement is available on request before you share any tender documents or plan links. Your bid information stays confidential.'}
+] %}
+
+{% block head_schema %}
+    {{ breadcrumb_schema(crumbs) }}
+    {{ service_schema('Prince Edward Island Electrical Estimating Services', 'Electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review for Prince Edward Island commercial, tourism, institutional, and municipal projects, delivered remotely.', '/prince-edward-island-electrical-estimating-services/', 'Prince Edward Island') }}
+    {{ faq_schema(page_faqs) }}
+{% endblock %}
+
+{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
+
+{% block content %}
+<!-- HERO / INTRO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Prince Edward Island Electrical Estimating</div>
+    <h1 class="h1">Prince Edward Island Electrical Estimating Services</h1>
+    <p class="lead">MeTiger provides electrical estimating and takeoff support for contractors and general contractors working across Prince Edward Island &mdash; from Charlottetown and Stratford to Summerside and Cornwall. We turn your tender drawings, specifications, and addenda into clean quantities, labour summaries, marked-up plans, and documented scope, delivered remotely so a smaller-centre project has the same senior support as a job in the capital.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact/">Request an Estimate</a>
+      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
+    </div>
+    {{ trust_bar(['PEI-focused estimating','CEC-aware scope review','Remote delivery Island-wide','Marked-up plans','Labour & material summaries','NDA on request']) }}
+  </div>
+</section>
+
+<!-- 1. BUILT FOR PEI -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Local context</div>
+    <h2 class="h2">Electrical estimating built for Prince Edward Island projects</h2>
+    <p class="lead">Prince Edward Island electrical work follows the Canadian Electrical Code (CSA C22.1) as adopted in the province, with inspection and permitting handled through the provincial electrical inspection authority and the local authority having jurisdiction. We estimate to what the tender documents call for and keep that provincial context in view while we count.</p>
+    <p style="margin-top:14px;">Across the Island, most projects connect to the Maritime Electric distribution network, and service entrance, metering, and utility-coordination details can shape the electrical scope on any given job. We account for the servicing shown on your drawings, note where the utility interface is left unclear, and flag it so the question can be settled before bid day rather than after award. For a smaller market, that discipline matters: remote delivery is what makes experienced estimating support practical for Island contractors who do not carry a full-time estimator for every tender.</p>
+  </div>
+</section>
+
+<!-- 2. PEI PROJECT TYPES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Project types</div>
+    <h2 class="h2">Prince Edward Island project types we estimate</h2>
+    <div class="grid grid-3" style="margin-top:22px;">
+      <div class="card"><h3 class="h3">Commercial &amp; retail</h3><p>Retail fit-outs, offices, and commercial tenant improvements across Charlottetown, Summerside, and Stratford.</p></div>
+      <div class="card"><h3 class="h3">Tourism &amp; hospitality</h3><p>Hotels, resorts, restaurants, and seasonal hospitality build-outs with kitchen power and guest-area lighting.</p></div>
+      <div class="card"><h3 class="h3">Institutional</h3><p>Schools, healthcare, and public facilities with life-safety, emergency lighting, and systems coordination.</p></div>
+      <div class="card"><h3 class="h3">Municipal</h3><p>Municipal buildings, pump stations, and community infrastructure with controls and site electrical.</p></div>
+      <div class="card"><h3 class="h3">Mixed-use &amp; multi-family</h3><p>Mixed-use and residential developments with suite power, common areas, and distribution risers.</p></div>
+      <div class="card"><h3 class="h3">Service &amp; upgrades</h3><p>Service upgrades, distribution changes, and retrofit work on existing Island buildings.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHAT YOUR ESTIMATE INCLUDES -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Deliverables</div>
+    <h2 class="h2">What your Prince Edward Island estimate includes</h2>
+    <ul class="checks cols" style="margin-top:18px;">
+      <li>Quantity takeoff workbook</li>
+      <li>Colour-coded marked-up drawings</li>
+      <li>Material list by system</li>
+      <li>Labour-hour summary</li>
+      <li>Labour-unit basis and project-specific assumptions</li>
+      <li>Regional labour adjustment for the PEI market</li>
+      <li>Inclusions and exclusions</li>
+      <li>Drawing and specification assumptions</li>
+      <li>RFI and scope-gap log</li>
+      <li>Addenda review</li>
+      <li>Utility-coordination notes where shown</li>
+      <li>Bid summary</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. SYSTEMS WE QUANTIFY -->
+<section>
+  <div class="container">
+    <div class="eyebrow section-head">Coverage</div>
+    <h2 class="h2">Electrical systems we quantify</h2>
+    {{ systems([
+      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering and utility interface']},
+      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical equipment power']},
+      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
+      {'title':'Lighting','items':['Interior lighting and controls','Emergency lighting and life safety','Site and parking lighting','Underground electrical']},
+      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
+      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Access control / security rough-in where included','EV charger rough-in where included']}
+    ]) }}
+  </div>
+</section>
+
+<!-- 5. PEI CODE & COMPLIANCE -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Code &amp; compliance</div>
+    <h2 class="h2">Prince Edward Island code &amp; compliance</h2>
+    <p class="lead">Our estimating and scope review are informed by the Canadian Electrical Code (CSA C22.1) as adopted in Prince Edward Island, alongside the project specifications, drawings, addenda, and Maritime Electric utility requirements. We estimate what the documents describe and note where they conflict or leave a gap, so nothing is priced on a silent assumption.</p>
+    <div class="note warn" style="margin-top:18px;">MeTiger provides CEC-aware estimating and coordination support only &mdash; not stamped drawings, sealed or professional engineering, permit-ready engineering, or code-compliance certification. Final compliance remains subject to the project engineer, the Prince Edward Island authority having jurisdiction, and applicable provincial requirements. We work alongside the engineer of record where required.</div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">Process</div>
+    <h2 class="h2">How it works</h2>
+    {{ process_steps([
+      {'title':'Upload drawings or send a plan link','body':'Send your PDF or DWG set, specifications, and addenda — or a Dropbox, Drive, or Procore link.'},
+      {'title':'Confirm scope and deadline','body':'We confirm the Prince Edward Island location, project type, scope, and bid due date.'},
+      {'title':'Receive a quote','body':'A fee and delivery window, quoted after drawing review, before any work begins.'},
+      {'title':'Takeoff and scope review','body':'We perform the takeoff and organize the electrical scope by system.'},
+      {'title':'Deliver the package','body':'You receive the reviewable estimate package, with an optional walkthrough call before submission.'}
+    ]) }}
+    <p class="muted" style="margin-top:20px; font-size:14px;">Looking for USA estimating? Visit <a href="https://metiger.us" style="color:var(--primary);">metiger.us</a>.</p>
+  </div>
+</section>
+
+<!-- 7. FAQ -->
+<section>
+  <div class="container narrow">
+    <div class="eyebrow section-head">FAQ</div>
+    <h2 class="h2">Prince Edward Island estimating FAQ</h2>
+    {{ faq_list(page_faqs) }}
+    <p class="lead" style="margin-top:26px;">Explore our full <a href="/canada-electrical-estimating-services/" style="color:var(--primary);">Canadian electrical estimating services</a>, or see sibling Maritime coverage for <a href="/nova-scotia-electrical-estimating-services/" style="color:var(--primary);">Nova Scotia</a> and <a href="/new-brunswick-electrical-estimating-services/" style="color:var(--primary);">New Brunswick</a>.</p>
+  </div>
+</section>
+
+<!-- 8. FINAL CTA -->
+{{ cta_band('Estimating support for your next Prince Edward Island project',
+    'Upload your drawings or share a plan link with the bid due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
+    [{'label':'Request an Estimate','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+{% endblock %}
