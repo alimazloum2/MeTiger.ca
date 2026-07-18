@@ -23,8 +23,6 @@
   header.site-header nav a { color: #b9c4da; font-weight: 500; font-size: 14px; opacity: 0.92; text-decoration: none; white-space: nowrap; }
   header.site-header nav a:hover { color: #e7eefc; }
   header.site-header nav a.active { color: #f59e0b; opacity: 1; }
-  header.site-header .usa-link { color: #8fa3c7; font-size: 12.5px; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
-  header.site-header .usa-link:hover { color: #e7eefc; border-color: rgba(255,255,255,0.25); }
   header.site-header .hdr-cta { color: #1c1203; background: linear-gradient(180deg,#fbbf24,#f59e0b); border-radius: 999px; padding: 9px 16px; font-weight: 600; font-size: 13.5px; white-space: nowrap; }
   header.site-header .hdr-right { display: flex; align-items: center; gap: 12px; }
   header.site-header .menu-toggle { display: none; background: transparent; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 10px; cursor: pointer; color: #e7eefc; }
@@ -39,7 +37,7 @@
     header.site-header .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 40; }
     header.site-header .nav-overlay.open { opacity: 1; pointer-events: auto; }
   }
-  @media (min-width: 941px) { header.site-header .nav-overlay { display: none; } header.site-header .nav-usa-mobile { display: none; } }
+  @media (min-width: 941px) { header.site-header .nav-overlay { display: none; } }
 </style>
 
 <header class="site-header">
@@ -54,11 +52,9 @@
                 {% for label, href in nav_items %}
                 <li><a href="{{ href }}"{% if p == href or (href != '/' and p.rstrip('/') == href.rstrip('/')) %} class="active"{% endif %}>{{ label }}</a></li>
                 {% endfor %}
-                <li class="nav-usa-mobile"><a href="https://metiger.us" class="usa-link">USA Site ↗</a></li>
             </ul>
         </nav>
         <div class="hdr-right">
-            <a href="https://metiger.us" class="usa-link" title="MeTiger USA estimating">USA Site ↗</a>
             <a href="/contact/" class="hdr-cta">Request a Quote</a>
             <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" data-nav-open>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>

@@ -152,7 +152,7 @@ _LLMS_TXT = """# MeTiger Inc. — Canadian Electrical Estimating
 > MeTiger Inc. is a commercial and industrial electrical estimating consultancy
 > based in Bedford, Nova Scotia, Canada, serving electrical contractors and
 > general contractors across Canada. Tagline: "Canadian electrical estimating,
-> delivered without drama." (For USA estimating, see https://metiger.us.)
+> delivered without drama."
 
 ## About
 
@@ -201,7 +201,6 @@ mixed-use, and service upgrades / distribution work.
 - Samples: https://metiger.ca/samples/
 - Case Studies: https://metiger.ca/case-studies/
 - Contact / Quote: https://metiger.ca/contact/
-- USA estimating: https://metiger.us
 - LinkedIn: https://www.linkedin.com/company/metiger
 - YouTube: https://www.youtube.com/@MeTigerCa
 """
@@ -237,12 +236,12 @@ def debug():
 
 @app.route("/services")
 def services():
-    # Legacy USA-era route → Canada estimating hub (preserve inbound links).
+    # Legacy route → Canada estimating hub (preserve inbound links).
     return redirect("/canada-electrical-estimating-services/", code=301)
 
 @app.route("/projects")
 def projects():
-    # Legacy USA-era route → Canada case studies.
+    # Legacy route → Canada case studies.
     return redirect("/case-studies/", code=301)
 
 @app.route("/estimate-calculator")
