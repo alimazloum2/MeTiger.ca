@@ -236,12 +236,12 @@ def debug():
 
 @app.route("/services")
 def services():
-    # Legacy USA-era route → Canada estimating hub (preserve inbound links).
+    # Legacy route → Canada estimating hub (preserve inbound links).
     return redirect("/canada-electrical-estimating-services/", code=301)
 
 @app.route("/projects")
 def projects():
-    # Legacy USA-era route → Canada case studies.
+    # Legacy route → Canada case studies.
     return redirect("/case-studies/", code=301)
 
 @app.route("/estimate-calculator")
