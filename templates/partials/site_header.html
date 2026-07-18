@@ -54,11 +54,9 @@
                 {% for label, href in nav_items %}
                 <li><a href="{{ href }}"{% if p == href or (href != '/' and p.rstrip('/') == href.rstrip('/')) %} class="active"{% endif %}>{{ label }}</a></li>
                 {% endfor %}
-                <li class="nav-usa-mobile"><a href="https://metiger.us" class="usa-link">USA Site ↗</a></li>
             </ul>
         </nav>
         <div class="hdr-right">
-            <a href="https://metiger.us" class="usa-link" title="MeTiger USA estimating">USA Site ↗</a>
             <a href="/contact/" class="hdr-cta">Request a Quote</a>
             <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" data-nav-open>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>

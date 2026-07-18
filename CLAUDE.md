@@ -25,7 +25,7 @@ There is no test suite, no linter, and no build step.
 
 ## Market positioning
 
-`metiger.ca` is the **Canada** market site (this repo). `metiger.us` is a **separate** USA site. Keep USA-only language (Florida/Texas/NEC/NECA/"United States") OFF metiger.ca except the single "Looking for USA estimating? Visit metiger.us" cross-link. Use Canadian positioning: CSA C22.1 / Canadian Electrical Code, "CEC-aware", labour/colour/centre spelling. MeTiger provides **estimating and coordination support, not stamped/sealed engineering** — never claim otherwise.
+`metiger.ca` is the **Canada** market site (this repo). Keep USA-only language (Florida/Texas/NEC/NECA/"United States") OFF metiger.ca entirely — there is no USA cross-link. Use Canadian positioning: CSA C22.1 / Canadian Electrical Code, "CEC-aware", labour/colour/centre spelling. MeTiger provides **estimating and coordination support, not stamped/sealed engineering** — never claim otherwise.
 
 ## Architecture
 
@@ -33,7 +33,7 @@ Flask app (`app.py`) serving Jinja2 templates from `templates/`. Two shared layo
 - **`base_page.html`** — the premium dark layout used by the homepage and all CA marketing/service/province pages. Provides SEO/canonical/OG/hreflang blocks, a per-page `head_schema` block, and pulls in the shared header/footer. Pages extend it and compose sections with macros from **`partials/ui.html`** (`trust_bar`, `checks`, `process_steps`, `systems`, `faq_list`, `faq_schema`, `breadcrumb`, `breadcrumb_schema`, `service_schema`, `cta_band`). NOTE: inside macro args use a raw `&` (macros autoescape); in literal template text use `&amp;`.
 - **`base.html`** — legacy light layout, still used only by `estimate_calculator.html` and `budget_guide.html`.
 
-Shared chrome partials: `partials/site_header.html` (Canada nav + mobile menu + USA cross-link + "Request a Quote" CTA), `partials/site_footer.html` (Canada footer + USA link + Privacy/Vision/Mission modals), `partials/structured_data.html` (global Org/WebSite/ProfessionalService JSON-LD, Canada), `partials/quote_form.html` (the shared multi-field quote form).
+Shared chrome partials: `partials/site_header.html` (Canada nav + mobile menu + "Request a Quote" CTA), `partials/site_footer.html` (Canada footer + Privacy/Vision/Mission modals), `partials/structured_data.html` (global Org/WebSite/ProfessionalService JSON-LD, Canada), `partials/quote_form.html` (the shared multi-field quote form).
 
 **Page registry:** `pages.py` maps every CA URL → template (under `templates/pages/`) → endpoint. `app.py` registers a render view for each in a loop and builds `/sitemap.xml` from `pages.sitemap_entries()`. To add a page: create the template extending `base_page.html`, add a line to `pages.py`. Key routes: `/` (home.html), `/contact/` (quote.html), `/canada-electrical-estimating-services/` (main SEO landing), 7 service pages, `/pricing/` `/samples/` `/case-studies/`, 10 province pages, `/payments` (crypto, off-funnel). `/services`→landing and `/projects`→`/case-studies/` are 301s. There is no database; the only dynamic surface is the quote/contact form.
 
