@@ -16,6 +16,8 @@ from flask_limiter.util import get_remote_address
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
@@ -25,6 +27,29 @@ app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "0x4AAAAAAB8W
 TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "")
 EL_WEBHOOK_SECRET = os.getenv("EL_WEBHOOK_SECRET", "")
 limiter = Limiter(get_remote_address, app=app, default_limits=["100/hour"])
+
+# Drawing uploads on the quote form. Files are emailed as attachments (there is
+# no object store), so the total is capped well under typical 25 MB mailbox
+# limits — base64 inflates attachments ~33%. Larger sets use the plan-link field.
+MAX_ATTACH_TOTAL = 15 * 1024 * 1024      # 15 MB combined, raw bytes
+MAX_ATTACH_FILES = 10
+ALLOWED_ATTACH_EXT = {
+    "pdf", "dwg", "dxf", "dwf", "rvt", "zip",
+    "png", "jpg", "jpeg", "gif", "tif", "tiff",
+    "csv", "xls", "xlsx", "doc", "docx", "txt",
+}
+# Hard request ceiling (> MAX_ATTACH_TOTAL to leave room for the other fields).
+# Exceeding it raises 413 before the view runs; see the handler below.
+app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024
+
+
+@app.errorhandler(413)
+def _too_large(_e):
+    return jsonify(
+        success=False,
+        message="Files too large. Keep attachments under 15 MB total, "
+                "or share a plan link instead.",
+    ), 413
 
 
 @app.context_processor
@@ -432,21 +457,42 @@ def send_message():
         "Submitted from": request.form.get("source", "").strip(),
     }
 
+    # Collect optional drawing uploads. Field name "attachments" (multiple).
+    uploads = [f for f in request.files.getlist("attachments") if f and f.filename]
+    if len(uploads) > MAX_ATTACH_FILES:
+        return jsonify(success=False, message=f"Please attach at most {MAX_ATTACH_FILES} files."), 400
+    attachments = []
+    total = 0
+    for f in uploads:
+        safe = secure_filename(f.filename) or "attachment"
+        ext = safe.rsplit(".", 1)[-1].lower() if "." in safe else ""
+        if ext not in ALLOWED_ATTACH_EXT:
+            return jsonify(success=False, message=f"File type not allowed: {f.filename}"), 400
+        data = f.read()
+        total += len(data)
+        if total > MAX_ATTACH_TOTAL:
+            return jsonify(success=False, message="Attachments exceed 15 MB total. Share a plan link for larger sets."), 400
+        attachments.append((safe, data))
+    if attachments:
+        details["Attachments"] = ", ".join(n for n, _ in attachments)
+
     # Send email
     try:
-        send_contact_email(name, email, msg, details)
+        send_contact_email(name, email, msg, details, attachments=attachments)
         return jsonify(success=True, message="Thanks — we'll review your request and get back to you."), 200
     except Exception as e:
         print(f"Email error: {e}", flush=True)
         return jsonify(success=False, message="Error sending message. Please try again."), 500
 
-def send_contact_email(name, email, message, details=None):
+def send_contact_email(name, email, message, details=None, attachments=None):
     """Send a contact/quote email over SMTP.
 
     `details` is an optional dict of extra quote fields; only non-empty values
-    are included in the body. The From address must match the authenticated
-    SMTP user on most providers or the message is rejected; Reply-To is the
-    visitor so replies reach them directly.
+    are included in the body. `attachments` is an optional list of
+    (filename, bytes) tuples attached to the message (drawing uploads). The
+    From address must match the authenticated SMTP user on most providers or
+    the message is rejected; Reply-To is the visitor so replies reach them
+    directly.
 
     Server/port/security/sender are read from the environment so the mailbox
     can move hosts (e.g. Office365 -> mail.oqumail.com) without a code change:
@@ -492,6 +538,11 @@ def send_contact_email(name, email, message, details=None):
     body = "\n".join(lines)
 
     msg.attach(MIMEText(body, 'plain'))
+
+    for fname, data in (attachments or []):
+        part = MIMEApplication(data, Name=fname)
+        part['Content-Disposition'] = f'attachment; filename="{fname}"'
+        msg.attach(part)
 
     # Send email. SSL (port 465) opens an encrypted socket directly; STARTTLS
     # (port 587) upgrades a plaintext connection. mail.oqumail.com-style hosts
