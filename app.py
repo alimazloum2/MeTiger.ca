@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 import segno
 import pages as page_registry
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file (explicit path so it loads no
+# matter what CWD the service starts in).
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -282,18 +283,29 @@ def _verify_elevenlabs_signature(raw_body, sig_header):
 
 
 def _send_call_summary_email(subject, body):
-    """Email an ElevenLabs post-call summary to the business inbox via Office365 SMTP."""
+    """Email an ElevenLabs post-call summary to the business inbox via SMTP.
+
+    Reads the same SMTP_SERVER/SMTP_PORT/SMTP_SECURITY/SMTP_FROM env vars as
+    send_contact_email() so both paths follow the mailbox host.
+    """
+    smtp_server = os.environ.get("SMTP_SERVER", "smtp.office365.com")
+    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    smtp_security = os.environ.get("SMTP_SECURITY", "starttls").strip().lower()
     smtp_user = os.environ.get("SMTP_USER")
     smtp_password = os.environ.get("SMTP_PASSWORD")
     if not smtp_user or not smtp_password:
         raise ValueError("SMTP credentials not configured")
+    sender_email = os.environ.get("SMTP_FROM") or smtp_user or "info@metiger.ca"
     msg = MIMEMultipart()
-    msg["From"] = "MeTiger Website <info@metiger.ca>"
+    msg["From"] = f"MeTiger Website <{sender_email}>"
     msg["To"] = os.environ.get("EMAIL_TO") or "info@metiger.ca"
     msg["Subject"] = subject
     msg.attach(MIMEText(body, "plain"))
-    server = smtplib.SMTP("smtp.office365.com", 587)
-    server.starttls()
+    if smtp_security == "ssl":
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=20)
+    else:
+        server = smtplib.SMTP(smtp_server, smtp_port, timeout=20)
+        server.starttls()
     server.login(smtp_user, smtp_password)
     server.send_message(msg)
     server.quit()
@@ -429,19 +441,28 @@ def send_message():
         return jsonify(success=False, message="Error sending message. Please try again."), 500
 
 def send_contact_email(name, email, message, details=None):
-    """Send a contact/quote email via Microsoft 365 SMTP.
+    """Send a contact/quote email over SMTP.
 
     `details` is an optional dict of extra quote fields; only non-empty values
     are included in the body. The From address must match the authenticated
-    SMTP user or Office365 rejects the message; Reply-To is the visitor so
-    replies reach them directly.
+    SMTP user on most providers or the message is rejected; Reply-To is the
+    visitor so replies reach them directly.
+
+    Server/port/security/sender are read from the environment so the mailbox
+    can move hosts (e.g. Office365 -> mail.oqumail.com) without a code change:
+      SMTP_SERVER   (default smtp.office365.com)
+      SMTP_PORT     (default 587)
+      SMTP_SECURITY starttls | ssl  (default starttls)
+      SMTP_FROM     (default: SMTP_USER, else info@metiger.ca)
     """
-    smtp_server = "smtp.office365.com"
-    smtp_port = 587
-    sender_email = "info@metiger.ca"  # Must match the authenticated account
-    recipient = os.environ.get("TO_EMAIL") or "info@metiger.ca"
+    smtp_server = os.environ.get("SMTP_SERVER", "smtp.office365.com")
+    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    smtp_security = os.environ.get("SMTP_SECURITY", "starttls").strip().lower()
     smtp_user = os.environ.get("SMTP_USER")
     smtp_password = os.environ.get("SMTP_PASSWORD")
+    # From must match the authenticated account on most hosts.
+    sender_email = os.environ.get("SMTP_FROM") or smtp_user or "info@metiger.ca"
+    recipient = os.environ.get("TO_EMAIL") or "info@metiger.ca"
 
     if not smtp_user or not smtp_password:
         raise ValueError("SMTP credentials not configured")
@@ -450,8 +471,9 @@ def send_contact_email(name, email, message, details=None):
     project_type = details.get("Project type") or "General"
     province = details.get("Province") or "Canada"
 
+    from_name = os.environ.get("SMTP_FROM_NAME", "MeTiger Inc.")
     msg = MIMEMultipart()
-    msg['From'] = f"MeTiger Website <{sender_email}>"
+    msg['From'] = f"{from_name} <{sender_email}>"
     msg['To'] = recipient
     msg['Subject'] = f"metiger.ca Quote Request – {project_type} – {province}"
     msg['Reply-To'] = email  # Allow direct reply to the visitor
@@ -471,10 +493,15 @@ def send_contact_email(name, email, message, details=None):
 
     msg.attach(MIMEText(body, 'plain'))
 
-    # Send email
+    # Send email. SSL (port 465) opens an encrypted socket directly; STARTTLS
+    # (port 587) upgrades a plaintext connection. mail.oqumail.com-style hosts
+    # typically use one of these two.
     try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()  # Secure the connection
+        if smtp_security == "ssl":
+            server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=20)
+        else:
+            server = smtplib.SMTP(smtp_server, smtp_port, timeout=20)
+            server.starttls()  # Secure the connection
         server.login(smtp_user, smtp_password)
         server.send_message(msg)
         server.quit()
