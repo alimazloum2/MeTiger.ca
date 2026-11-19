@@ -7,14 +7,17 @@ from dotenv import load_dotenv
 import segno
 import pages as page_registry
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file (explicit path so it loads no
+# matter what CWD the service starts in).
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
@@ -24,6 +27,29 @@ app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "0x4AAAAAAB8W
 TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "")
 EL_WEBHOOK_SECRET = os.getenv("EL_WEBHOOK_SECRET", "")
 limiter = Limiter(get_remote_address, app=app, default_limits=["100/hour"])
+
+# Drawing uploads on the quote form. Files are emailed as attachments (there is
+# no object store), so the total is capped well under typical 25 MB mailbox
+# limits — base64 inflates attachments ~33%. Larger sets use the plan-link field.
+MAX_ATTACH_TOTAL = 15 * 1024 * 1024      # 15 MB combined, raw bytes
+MAX_ATTACH_FILES = 10
+ALLOWED_ATTACH_EXT = {
+    "pdf", "dwg", "dxf", "dwf", "rvt", "zip",
+    "png", "jpg", "jpeg", "gif", "tif", "tiff",
+    "csv", "xls", "xlsx", "doc", "docx", "txt",
+}
+# Hard request ceiling (> MAX_ATTACH_TOTAL to leave room for the other fields).
+# Exceeding it raises 413 before the view runs; see the handler below.
+app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024
+
+
+@app.errorhandler(413)
+def _too_large(_e):
+    return jsonify(
+        success=False,
+        message="Files too large. Keep attachments under 15 MB total, "
+                "or share a plan link instead.",
+    ), 413
 
 
 @app.context_processor
@@ -282,18 +308,29 @@ def _verify_elevenlabs_signature(raw_body, sig_header):
 
 
 def _send_call_summary_email(subject, body):
-    """Email an ElevenLabs post-call summary to the business inbox via Office365 SMTP."""
+    """Email an ElevenLabs post-call summary to the business inbox via SMTP.
+
+    Reads the same SMTP_SERVER/SMTP_PORT/SMTP_SECURITY/SMTP_FROM env vars as
+    send_contact_email() so both paths follow the mailbox host.
+    """
+    smtp_server = os.environ.get("SMTP_SERVER", "smtp.office365.com")
+    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    smtp_security = os.environ.get("SMTP_SECURITY", "starttls").strip().lower()
     smtp_user = os.environ.get("SMTP_USER")
     smtp_password = os.environ.get("SMTP_PASSWORD")
     if not smtp_user or not smtp_password:
         raise ValueError("SMTP credentials not configured")
+    sender_email = os.environ.get("SMTP_FROM") or smtp_user or "info@metiger.ca"
     msg = MIMEMultipart()
-    msg["From"] = "MeTiger Website <info@metiger.ca>"
+    msg["From"] = f"MeTiger Website <{sender_email}>"
     msg["To"] = os.environ.get("EMAIL_TO") or "info@metiger.ca"
     msg["Subject"] = subject
     msg.attach(MIMEText(body, "plain"))
-    server = smtplib.SMTP("smtp.office365.com", 587)
-    server.starttls()
+    if smtp_security == "ssl":
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=20)
+    else:
+        server = smtplib.SMTP(smtp_server, smtp_port, timeout=20)
+        server.starttls()
     server.login(smtp_user, smtp_password)
     server.send_message(msg)
     server.quit()
@@ -420,28 +457,58 @@ def send_message():
         "Submitted from": request.form.get("source", "").strip(),
     }
 
+    # Collect optional drawing uploads. Field name "attachments" (multiple).
+    uploads = [f for f in request.files.getlist("attachments") if f and f.filename]
+    if len(uploads) > MAX_ATTACH_FILES:
+        return jsonify(success=False, message=f"Please attach at most {MAX_ATTACH_FILES} files."), 400
+    attachments = []
+    total = 0
+    for f in uploads:
+        safe = secure_filename(f.filename) or "attachment"
+        ext = safe.rsplit(".", 1)[-1].lower() if "." in safe else ""
+        if ext not in ALLOWED_ATTACH_EXT:
+            return jsonify(success=False, message=f"File type not allowed: {f.filename}"), 400
+        data = f.read()
+        total += len(data)
+        if total > MAX_ATTACH_TOTAL:
+            return jsonify(success=False, message="Attachments exceed 15 MB total. Share a plan link for larger sets."), 400
+        attachments.append((safe, data))
+    if attachments:
+        details["Attachments"] = ", ".join(n for n, _ in attachments)
+
     # Send email
     try:
-        send_contact_email(name, email, msg, details)
+        send_contact_email(name, email, msg, details, attachments=attachments)
         return jsonify(success=True, message="Thanks — we'll review your request and get back to you."), 200
     except Exception as e:
         print(f"Email error: {e}", flush=True)
         return jsonify(success=False, message="Error sending message. Please try again."), 500
 
-def send_contact_email(name, email, message, details=None):
-    """Send a contact/quote email via Microsoft 365 SMTP.
+def send_contact_email(name, email, message, details=None, attachments=None):
+    """Send a contact/quote email over SMTP.
 
     `details` is an optional dict of extra quote fields; only non-empty values
-    are included in the body. The From address must match the authenticated
-    SMTP user or Office365 rejects the message; Reply-To is the visitor so
-    replies reach them directly.
+    are included in the body. `attachments` is an optional list of
+    (filename, bytes) tuples attached to the message (drawing uploads). The
+    From address must match the authenticated SMTP user on most providers or
+    the message is rejected; Reply-To is the visitor so replies reach them
+    directly.
+
+    Server/port/security/sender are read from the environment so the mailbox
+    can move hosts (e.g. Office365 -> mail.oqumail.com) without a code change:
+      SMTP_SERVER   (default smtp.office365.com)
+      SMTP_PORT     (default 587)
+      SMTP_SECURITY starttls | ssl  (default starttls)
+      SMTP_FROM     (default: SMTP_USER, else info@metiger.ca)
     """
-    smtp_server = "smtp.office365.com"
-    smtp_port = 587
-    sender_email = "info@metiger.ca"  # Must match the authenticated account
-    recipient = os.environ.get("TO_EMAIL") or "info@metiger.ca"
+    smtp_server = os.environ.get("SMTP_SERVER", "smtp.office365.com")
+    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    smtp_security = os.environ.get("SMTP_SECURITY", "starttls").strip().lower()
     smtp_user = os.environ.get("SMTP_USER")
     smtp_password = os.environ.get("SMTP_PASSWORD")
+    # From must match the authenticated account on most hosts.
+    sender_email = os.environ.get("SMTP_FROM") or smtp_user or "info@metiger.ca"
+    recipient = os.environ.get("TO_EMAIL") or "info@metiger.ca"
 
     if not smtp_user or not smtp_password:
         raise ValueError("SMTP credentials not configured")
@@ -450,8 +517,9 @@ def send_contact_email(name, email, message, details=None):
     project_type = details.get("Project type") or "General"
     province = details.get("Province") or "Canada"
 
+    from_name = os.environ.get("SMTP_FROM_NAME", "MeTiger Inc.")
     msg = MIMEMultipart()
-    msg['From'] = f"MeTiger Website <{sender_email}>"
+    msg['From'] = f"{from_name} <{sender_email}>"
     msg['To'] = recipient
     msg['Subject'] = f"metiger.ca Quote Request – {project_type} – {province}"
     msg['Reply-To'] = email  # Allow direct reply to the visitor
@@ -471,10 +539,20 @@ def send_contact_email(name, email, message, details=None):
 
     msg.attach(MIMEText(body, 'plain'))
 
-    # Send email
+    for fname, data in (attachments or []):
+        part = MIMEApplication(data, Name=fname)
+        part['Content-Disposition'] = f'attachment; filename="{fname}"'
+        msg.attach(part)
+
+    # Send email. SSL (port 465) opens an encrypted socket directly; STARTTLS
+    # (port 587) upgrades a plaintext connection. mail.oqumail.com-style hosts
+    # typically use one of these two.
     try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()  # Secure the connection
+        if smtp_security == "ssl":
+            server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=20)
+        else:
+            server = smtplib.SMTP(smtp_server, smtp_port, timeout=20)
+            server.starttls()  # Secure the connection
         server.login(smtp_user, smtp_password)
         server.send_message(msg)
         server.quit()

@@ -122,6 +122,11 @@ server {
     listen 80;
     server_name your-domain.com www.your-domain.com;  # Replace with your domain
 
+    # Allow drawing uploads on the quote form (default is 1 MB). Must be >=
+    # the app's attachment cap (15 MB) plus headroom. Keep in sync with
+    # app.config["MAX_CONTENT_LENGTH"].
+    client_max_body_size 20m;
+
     location / {
         proxy_pass http://127.0.0.1:8000;
         proxy_set_header Host $host;

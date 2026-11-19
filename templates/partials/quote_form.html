@@ -99,6 +99,14 @@
     </div>
 
     <div>
+        <label for="q-attachments">Attach drawings (optional)</label>
+        <input type="file" id="q-attachments" name="attachments" multiple
+               accept=".pdf,.dwg,.dxf,.dwf,.rvt,.zip,.png,.jpg,.jpeg,.gif,.tif,.tiff,.csv,.xls,.xlsx,.doc,.docx,.txt" />
+        <p class="note" style="margin-top:6px;">PDF, DWG, DXF, RVT, ZIP, images, and office files. Up to 10 files, 15 MB total. For larger sets, use the plan link above.</p>
+        <div class="error" id="err-attachments"></div>
+    </div>
+
+    <div>
         <label for="q-message">Message / scope notes *</label>
         <textarea id="q-message" name="message" placeholder="Tell us about the project, scope, sheet count, and anything we should know." required></textarea>
         <div class="error" id="err-message"></div>
@@ -165,7 +173,18 @@
         setErr('err-email', emailOk ? '' : 'Enter a valid work email');
         setErr('err-message', msgOk ? '' : 'Please add a short scope note');
         if (!consentOk) status.textContent = 'Please provide consent so we can reply.';
-        if (!(nameOk && emailOk && msgOk && consentOk)) return;
+
+        // Attachment limits (mirror the server: 10 files, 15 MB total).
+        setErr('err-attachments', '');
+        var filesEl = document.getElementById('q-attachments');
+        var filesOk = true;
+        if (filesEl && filesEl.files && filesEl.files.length) {
+            var total = 0;
+            for (var i = 0; i < filesEl.files.length; i++) total += filesEl.files[i].size;
+            if (filesEl.files.length > 10) { setErr('err-attachments', 'Attach at most 10 files.'); filesOk = false; }
+            else if (total > 15 * 1024 * 1024) { setErr('err-attachments', 'Attachments exceed 15 MB total. Use the plan link for larger sets.'); filesOk = false; }
+        }
+        if (!(nameOk && emailOk && msgOk && consentOk && filesOk)) return;
 
         sending = true;
         submitBtn.disabled = true;
