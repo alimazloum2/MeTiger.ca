@@ -53,6 +53,7 @@
 
     {% include 'partials/site_footer.html' %}
     <script src="{{ url_for('static', filename='js/site.js') }}?v={{ ASSET_V }}" defer></script>
+    {% if CHAT_ENABLED %}{% include 'partials/chat_widget.html' %}{% endif %}
     {% block body_scripts %}{% endblock %}
 </body>
 </html>

@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import segno
 import pages as page_registry
 import insights as insights_module
+import chat as chat_module
 
 # Load environment variables from .env file (explicit path so it loads no
 # matter what CWD the service starts in).
@@ -654,6 +655,7 @@ def payments():
 
 
 insights_module.init_app(app, limiter=limiter, strict_key=get_remote_address)
+chat_module.init_app(app, limiter=limiter, visitor_key=client_ip)
 
 
 if __name__ == "__main__":
