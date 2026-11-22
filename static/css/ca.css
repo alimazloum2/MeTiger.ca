@@ -246,3 +246,11 @@ main.legacy-page { color: var(--ink); max-width: 1120px; padding: 20px 20px 64px
   .mt-chat-launch { width: 52px; padding: 0; }
   .mt-chat-launch .mt-chat-mark { width: 40px; height: 40px; }
 }
+/* Chat logo: the tiger mark is square, so it needs room inside the round badge
+   or the circle clips its ears. */
+.mt-chat-mark { box-sizing: border-box; width: 40px; height: 40px; padding: 7px; }
+.mt-chat-launch { padding-left: 5px; }
+@media (max-width: 820px) {
+  .mt-chat-launch { padding: 0; }
+  .mt-chat-launch .mt-chat-mark { width: 44px; height: 44px; padding: 8px; }
+}
