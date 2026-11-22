@@ -1,0 +1,28 @@
+{% extends "base_page.html" %}
+{% from "partials/ui.html" import breadcrumb_schema %}
+{% block page_title %}Terms | MeTiger{% endblock %}
+{% block meta_description %}Read the MeTiger website terms for commercial electrical estimating content, planning calculator use, quote requests, and project communications.{% endblock %}
+{% block main_class %}legal-page{% endblock %}
+{% block head_schema %}
+    {{ breadcrumb_schema([{"name":"Home","url":"/"}, {"name":"Terms","url":"/terms/"}]) }}
+{% endblock %}
+{% block content %}
+<section class="article-page">
+<p class="kicker">MeTiger Legal</p>
+<h1>Terms</h1>
+<p>The MeTiger website provides commercial electrical estimating information, planning tools, and inquiry forms for contractors and project teams.</p>
+<h2>Planning content</h2>
+<p>Calculator outputs and website content are budgetary planning references only. Project-specific pricing requires drawing review, scope confirmation, and written quote communication.</p>
+<h2>Quote requests</h2>
+<p>Submitting a contact or quote request does not create a contract. MeTiger may review submitted details and respond with questions, scope clarification, pricing, or next steps.</p>
+<h2>Fees</h2>
+<p>Takeoff and NECA labour fees are published on the <a href="/canada-electrical-estimating-services/#pricing">Electrical Estimating page</a> in CAD and are confirmed in a written quote before any work begins. Addenda and revisions are billed hourly.</p>
+<h2>Review only</h2>
+<p>All estimating deliverables are for the bidder's review. The bidder verifies quantities, assumptions, and exclusions before submitting a bid. Material pricing and supplier quotes are by the bidder.</p>
+<h2>Website use</h2>
+<p>Do not submit unlawful content, sensitive personal information unrelated to a project inquiry, or materials you are not authorized to share.</p>
+<h2>Contact</h2>
+<p>Questions about these terms can be submitted through the <a href="/contact/">MeTiger contact page</a>.</p>
+<p class="legal-updated">MeTiger Inc. · Last updated: November 22, 2026.</p>
+</section>
+{% endblock %}

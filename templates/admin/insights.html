@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% block title %}Insights{% endblock %}
+{% block content %}
+<section class="form-panel">
+<div class="admin-head">
+<h1 class="admin-h1">Insights articles</h1>
+<a class="cta" href="{{ url_for('insights.admin_insight_new') }}">New article</a>
+</div>
+{% if saved %}<p class="trust" role="status">Saved. <a href="/insights/{{ saved }}/" target="_blank" rel="noopener">View the article</a></p>{% endif %}
+{% if posts %}
+<div class="service-table-wrap">
+<table class="project-table admin-table">
+<thead><tr><th scope="col">Title</th><th scope="col">Date</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+<tbody>
+{% for post in posts %}
+<tr>
+<td><strong>{{ post.title }}</strong><br><span class="helper">/insights/{{ post.slug }}/</span></td>
+<td>{{ post.date | pretty_date }}</td>
+<td>{{ 'Published' if post.get('published', True) else 'Draft (hidden)' }}</td>
+<td class="admin-actions">
+<a href="{{ url_for('insights.admin_insight_edit', slug=post.slug) }}">Edit</a>
+{% if post.get('published', True) %}<a href="/insights/{{ post.slug }}/" target="_blank" rel="noopener">View</a>{% endif %}
+<details>
+<summary>Delete</summary>
+<form method="post" action="{{ url_for('insights.admin_insight_delete', slug=post.slug) }}">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<input type="hidden" name="confirm" value="{{ post.slug }}">
+<p class="validation">This permanently removes the article.</p>
+<button class="cta admin-danger" type="submit">Yes, delete it</button>
+</form>
+</details>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<p class="helper">No articles yet. Use “New article” to write the first one.</p>
+{% endif %}
+</section>
+{% endblock %}

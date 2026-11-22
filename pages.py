@@ -44,6 +44,10 @@ CORE_PAGES = [
     ("/contact/", "quote.html", "0.8"),
     ("/estimate-calculator", "estimate_calculator.html", "0.6"),
     ("/electrical-budget-guide", "budget_guide.html", "0.6"),
+    ("/technology/", "technology.html", "0.6"),
+    ("/insights/", "insights_index.html", "0.6"),
+    ("/privacy/", "privacy.html", "0.3"),
+    ("/terms/", "terms.html", "0.3"),
 ]
 
 ALL_REGISTRY_PAGES = SERVICE_PAGES + PROVINCE_PAGES

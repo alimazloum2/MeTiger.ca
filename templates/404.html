@@ -1,0 +1,21 @@
+{% extends "base_page.html" %}
+{% block page_title %}Page not found | MeTiger{% endblock %}
+{% block meta_description %}The requested page was not found on metiger.ca.{% endblock %}
+{% block robots %}noindex,nofollow{% endblock %}
+{% block main_class %}notfound-page{% endblock %}
+{% block content %}
+<section class="hero">
+<p class="kicker">404</p>
+<h1>Page not found</h1>
+<p>This address does not exist on metiger.ca. Try one of these pages:</p>
+<nav class="notfound-links" aria-label="Helpful links">
+<a href="/">Home</a>
+<a href="/canada-electrical-estimating-services/">Electrical Estimating</a>
+<a href="/estimate-calculator">Calculator</a>
+<a href="/contact/">Contact</a>
+</nav>
+<div class="service-hero-actions">
+<a class="cta" href="/contact/#quote">Get a quote</a>
+</div>
+</section>
+{% endblock %}

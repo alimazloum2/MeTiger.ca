@@ -1,8 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_page.html" %}
 
-{% block title %}How to Budget the Electrical Scope of Your Project | MeTiger Inc.{% endblock %}
-{% block description %}How to build a reliable electrical budget for a commercial or industrial project — cost drivers, what an electrical estimate costs, and when to hire an estimator. By MeTiger Inc.{% endblock %}
+{% block page_title %}How to Budget the Electrical Scope of Your Project | MeTiger Inc.{% endblock %}
+{% block meta_description %}How to build a reliable electrical budget for a commercial or industrial project — cost drivers, what an electrical estimate costs, and when to hire an estimator. By MeTiger Inc.{% endblock %}
 
+{% block main_class %}guide-page{% endblock %}
 {% block content %}
 {% raw %}
 <article class="mt-article" id="budget-guide" lang="en">
@@ -18,24 +19,24 @@
     .mt-article ul { padding-left: 1.25rem; }
     .mt-article .mt-cta { margin: 2.6rem 0 0; padding: 1.4rem 1.5rem; border: 1px solid currentColor; border-radius: 12px; opacity: 0.97; }
     .mt-article .mt-cta p { margin: 0 0 1rem; }
-    .mt-article .mt-cta a { display: inline-block; background: #004c97; border: 1px solid #004c97; padding: 0.6rem 1.3rem; border-radius: 8px; text-decoration: none; font-weight: 700; color: #fff; }
-    .mt-article .mt-cta a:hover { background: #0066cc; border-color: #0066cc; }
+    .mt-article .mt-cta a { display: inline-block; background: #0b5f87; border: 1px solid #0b5f87; padding: 0.6rem 1.3rem; border-radius: 8px; text-decoration: none; font-weight: 700; color: #fff; }
+    .mt-article .mt-cta a:hover { background: #093f5c; border-color: #093f5c; }
     .mt-article .mt-faq h3 { font-size: 1.1rem; margin-top: 1.7rem; }
     .mt-article .mt-fine { margin-top: 2.4rem; padding-top: 1.2rem; border-top: 1px solid currentColor; opacity: 0.6; font-size: 0.85rem; }
-    /* Explicit dark-theme colors to match the site (override base.html's light bg-gray-50 / inherited defaults) */
-    body { background: #0b0f17 !important; }
-    .mt-article { color: #b9c4da; }
-    .mt-article h1, .mt-article h2, .mt-article h3 { color: #ffffff; }
-    .mt-article .mt-eyebrow { color: #8fa3c7; opacity: 1; }
-    .mt-article .mt-byline { color: #8fa3c7; opacity: 1; }
-    .mt-article .mt-fine { color: #8fa3c7; opacity: 1; border-top-color: rgba(255,255,255,0.08); }
-    .mt-article .mt-capsule { color: #e7eefc; opacity: 1; border-left-color: #f59e0b; }
-    .mt-article .mt-cta { color: #b9c4da; opacity: 1; border-color: rgba(255,255,255,0.08); }
-    .mt-article a { color: #f59e0b; }
+    /* Light theme matching the site palette (navy ink, copper accents) */
+    .mt-article { color: #2e3a4c; background: #fff; border: 1px solid #e1e7ef; border-radius: 28px; box-shadow: 0 16px 46px #17203314; margin-top: 24px; margin-bottom: 40px; padding-left: clamp(1.2rem,4vw,2.4rem); padding-right: clamp(1.2rem,4vw,2.4rem); }
+    .mt-article h1, .mt-article h2, .mt-article h3 { color: #0e2a47; }
+    .mt-article .mt-eyebrow { color: #9e6111; opacity: 1; }
+    .mt-article .mt-byline { color: #5c6e82; opacity: 1; }
+    .mt-article .mt-fine { color: #5c6e82; opacity: 1; border-top-color: #0e2a471f; }
+    .mt-article .mt-capsule { color: #0e2a47; opacity: 1; border-left-color: #eaa33d; }
+    .mt-article .mt-cta { color: #2e3a4c; opacity: 1; border-color: #0e2a471f; background: #f4f7fa; }
+    .mt-article a { color: #0b5f87; }
+    .mt-article .mt-cta a { color: #fff; }
   </style>
   <p class="mt-eyebrow">MeTiger Insights</p>
   <h1>How to Budget the Electrical Scope of Your Project</h1>
-  <p class="mt-byline">By Ali Mazloum — Founder, MeTiger Inc. &nbsp;·&nbsp; Last updated: June 2026</p>
+  <p class="mt-byline">By MeTiger Inc. &nbsp;·&nbsp; Last updated: June 2026</p>
   <p class="mt-capsule"><strong>In short:</strong> A reliable electrical budget comes from a quantity-based estimate, not a percentage rule of thumb. Electrical work commonly lands somewhere in the range of 8 to 15 percent of total construction cost on commercial projects, but that range swings widely by building type — and the only dependable number comes from taking off the actual drawings and pricing material and labour against current rates.</p>
   <p>Most electrical budgets go wrong the same way: someone applies a percentage to the overall construction cost, treats it as the number, and discovers the gap after bids come in. Percentages are useful for a first sanity check and useless for committing real money. A dependable budget is built from the drawings up — counting what the project actually requires and pricing it against the market it will be built in. This is what an electrical estimator does, and it is the difference between a number you can plan around and a guess you will revisit.</p>
   <h2>Why a percentage of construction cost is not a budget</h2>
@@ -81,7 +82,7 @@
   {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Article", "headline": "How to Budget the Electrical Scope of Your Project", "description": "How to build a reliable electrical budget for a commercial or industrial project — cost drivers, ballpark vs. detailed estimates, what an electrical estimate costs, and when to bring in an estimator.", "inLanguage": "en", "datePublished": "2026-06-28", "dateModified": "2026-06-28", "mainEntityOfPage": { "@type": "WebPage", "@id": "https://metiger.ca/electrical-budget-guide" }, "author": { "@type": "Person", "@id": "https://metiger.ca/#ali-mazloum", "name": "Ali Mazloum" }, "publisher": { "@type": "Organization", "@id": "https://metiger.ca/#organization", "name": "MeTiger Inc." }, "about": ["Electrical estimating", "Construction budgeting", "Commercial electrical cost", "Electrical takeoffs"] },
+      { "@type": "Article", "headline": "How to Budget the Electrical Scope of Your Project", "description": "How to build a reliable electrical budget for a commercial or industrial project — cost drivers, ballpark vs. detailed estimates, what an electrical estimate costs, and when to bring in an estimator.", "inLanguage": "en", "datePublished": "2026-06-28", "dateModified": "2026-06-28", "mainEntityOfPage": { "@type": "WebPage", "@id": "https://metiger.ca/electrical-budget-guide" }, "author": { "@type": "Organization", "@id": "https://metiger.ca/#organization", "name": "MeTiger Inc." }, "publisher": { "@type": "Organization", "@id": "https://metiger.ca/#organization", "name": "MeTiger Inc." }, "about": ["Electrical estimating", "Construction budgeting", "Commercial electrical cost", "Electrical takeoffs"] },
       { "@type": "FAQPage", "mainEntity": [
         { "@type": "Question", "name": "How do I budget the electrical scope of a construction project?", "acceptedAnswer": { "@type": "Answer", "text": "Build the budget from a quantity-based estimate, not a percentage. Take off the actual drawings, count every electrical system, and price material and labour against current rates for the project's location. A percentage of total construction cost is only a rough first check; a dependable budget comes from the drawings up." } },
         { "@type": "Question", "name": "What percentage of construction cost is electrical?", "acceptedAnswer": { "@type": "Answer", "text": "As a rough rule of thumb, electrical work commonly falls in the range of 8 to 15 percent of total construction cost on commercial projects, but it varies widely by building type. Use the percentage only for an early sanity check, never as the number you commit against." } },

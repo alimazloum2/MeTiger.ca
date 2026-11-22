@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>{% block title %}Admin{% endblock %} | MeTiger</title>
+<link rel="icon" href="{{ url_for('static', filename='brand/favicon.ico') }}" sizes="any" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ca.css') }}?v={{ ASSET_V }}">
+</head>
+<body class="admin-body">
+<header class="site-header">
+<a class="brand" href="/"><img class="brand-mark" src="{{ url_for('static', filename='brand/metiger-mark.png') }}" alt="" width="38" height="38">Me<span>Tiger</span></a>
+<nav aria-label="Admin navigation" class="admin-nav">
+{% if session.get('admin') %}
+<a href="{{ url_for('insights.admin_insights') }}">Insights admin</a>
+<a href="/insights/" target="_blank" rel="noopener">View site</a>
+<form method="post" action="{{ url_for('insights.admin_logout') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="admin-linklike" type="submit">Log out</button></form>
+{% endif %}
+</nav>
+</header>
+<main id="main-content" class="admin-main">
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

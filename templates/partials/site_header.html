@@ -1,86 +1,33 @@
-{# Shared site header (dark, sticky). Included by base_page.html / base.html /
-   index.html so every page renders the identical header. Self-contained:
-   hardcoded colours + own fonts + own mobile-menu JS. Nav points to real CA
-   routes; the current page is highlighted from request.path. #}
-{% set p = request.path %}
-{% set nav_items = [
-    ('Services', '/canada-electrical-estimating-services/'),
-    ('Takeoffs', '/electrical-takeoff-services-canada/'),
-    ('Bid Review', '/electrical-bid-review-canada/'),
-    ('Samples', '/samples/'),
-    ('Pricing', '/pricing/'),
-    ('Insights', '/electrical-budget-guide'),
-    ('Contact', '/contact/')
-] %}
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  header.site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, #0e1420 82%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.08); font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-  header.site-header .nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; gap: 16px; }
-  header.site-header .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: 0.3px; color: #e7eefc; text-decoration: none; flex-shrink: 0; }
-  header.site-header .brand span { font-family: Poppins, Inter, sans-serif; font-weight: 700; font-size: 17px; }
-  header.site-header .brand-logo { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; box-shadow: 0 0 0 2px rgba(255,255,255,0.05), 0 10px 30px rgba(245,158,11,0.22); }
-  header.site-header nav ul { list-style: none; display: flex; align-items: center; gap: 18px; margin: 0; padding: 0; }
-  header.site-header nav a { color: #b9c4da; font-weight: 500; font-size: 14px; opacity: 0.92; text-decoration: none; white-space: nowrap; }
-  header.site-header nav a:hover { color: #e7eefc; }
-  header.site-header nav a.active { color: #f59e0b; opacity: 1; }
-  header.site-header .usa-link { color: #8fa3c7; font-size: 12.5px; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
-  header.site-header .usa-link:hover { color: #e7eefc; border-color: rgba(255,255,255,0.25); }
-  header.site-header .hdr-cta { color: #1c1203; background: linear-gradient(180deg,#fbbf24,#f59e0b); border-radius: 999px; padding: 9px 16px; font-weight: 600; font-size: 13.5px; white-space: nowrap; }
-  header.site-header .hdr-right { display: flex; align-items: center; gap: 12px; }
-  header.site-header .menu-toggle { display: none; background: transparent; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 10px; cursor: pointer; color: #e7eefc; }
-  header.site-header .menu-toggle svg { display: block; }
-  @media (max-width: 940px) {
-    header.site-header .primary-nav { position: fixed; inset: 0 0 0 auto; width: min(320px, 84vw); background: #0e1420; border-left: 1px solid rgba(255,255,255,0.08); transform: translateX(100%); transition: transform .25s ease; padding: 76px 24px 24px; overflow-y: auto; }
-    header.site-header .primary-nav.open { transform: translateX(0); }
-    header.site-header nav ul { flex-direction: column; align-items: flex-start; gap: 22px; }
-    header.site-header nav a { font-size: 16px; }
-    header.site-header .menu-toggle { display: inline-flex; }
-    header.site-header .hdr-cta { display: none; }
-    header.site-header .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 40; }
-    header.site-header .nav-overlay.open { opacity: 1; pointer-events: auto; }
-  }
-  @media (min-width: 941px) { header.site-header .nav-overlay { display: none; } header.site-header .nav-usa-mobile { display: none; } }
-</style>
-
-<header class="site-header">
-    <div class="nav">
-        <a href="/" class="brand" aria-label="MeTiger Inc. home">
-            <img src="{{ url_for('static', filename='images/metiger_logo.png') }}" alt="MeTiger Inc. logo" class="brand-logo" />
-            <span>MeTiger Inc.</span>
-        </a>
-        <div class="nav-overlay" data-nav-close></div>
-        <nav class="primary-nav" aria-label="Primary">
-            <ul>
-                {% for label, href in nav_items %}
-                <li><a href="{{ href }}"{% if p == href or (href != '/' and p.rstrip('/') == href.rstrip('/')) %} class="active"{% endif %}>{{ label }}</a></li>
-                {% endfor %}
-                <li class="nav-usa-mobile"><a href="https://metiger.us" class="usa-link">USA Site ↗</a></li>
-            </ul>
-        </nav>
-        <div class="hdr-right">
-            <a href="https://metiger.us" class="usa-link" title="MeTiger USA estimating">USA Site ↗</a>
-            <a href="/contact/" class="hdr-cta">Request a Quote</a>
-            <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" data-nav-open>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-            </button>
-        </div>
+{# Shared site chrome (top strip + header), matching metiger.us.
+   The phone number is shown ONLY in this top strip — nowhere else on the site.
+   QUOTE_HREF: pages that include the quote form set has_quote_form = true so
+   the CTA scrolls to it; every other page links to the contact page form. #}
+{% set quote_href = '#quote' if has_quote_form else '/contact/#quote' %}
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<noscript><style>@media (max-width:820px){.site-header nav{display:flex!important}.site-header .menu-toggle{display:none!important}}</style></noscript>
+<div class="metiger-top-bar" aria-label="MeTiger contact and quote bar">
+    <div class="metiger-top-bar__contact" aria-label="Contact MeTiger">
+        <a class="metiger-top-bar__phone" href="tel:+18386384437" aria-label="Call +1 (838) 638-4437">+1 (838) ME-TIGER <span class="metiger-spell">(638-4437)</span></a>
+        <span class="metiger-top-bar__sep" aria-hidden="true">•</span>
+        <span class="metiger-top-bar__email"><a href="mailto:info@metiger.ca">info@metiger.ca</a></span>
     </div>
+    <p class="metiger-top-bar__turnaround">Fixed quote within 1 business day · Typical estimate turnaround 24 to 48 hours</p>
+    <a class="metiger-top-bar__cta" href="{{ quote_href }}">Get a Fixed Quote</a>
+</div>
+<header class="site-header">
+    <a class="brand" href="/"><img class="brand-mark" src="{{ url_for('static', filename='brand/metiger-mark.png') }}" alt="" width="38" height="38">Me<span>Tiger</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" aria-label="Primary navigation">
+        {% set nav = [
+            ('/', 'Home'),
+            ('/estimate-calculator', 'Calculator'),
+            ('/canada-electrical-estimating-services/', 'Electrical Estimating'),
+            ('/technology/', 'Technology'),
+            ('/insights/', 'Insights'),
+            ('/contact/', 'Contact'),
+        ] %}
+        {% for href, label in nav %}
+        <a href="{{ href }}"{% if request.path == href or (href != '/' and request.path.startswith(href)) %} aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+    </nav>
 </header>
-<script>
-  (function () {
-    var nav = document.querySelector('.site-header .primary-nav');
-    var overlay = document.querySelector('.site-header .nav-overlay');
-    var openBtn = document.querySelector('.site-header [data-nav-open]');
-    if (!nav || !openBtn) return;
-    function setOpen(open) {
-      nav.classList.toggle('open', open);
-      if (overlay) overlay.classList.toggle('open', open);
-      openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
-    }
-    openBtn.addEventListener('click', function () { setOpen(!nav.classList.contains('open')); });
-    if (overlay) overlay.addEventListener('click', function () { setOpen(false); });
-    nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
-  })();
-</script>

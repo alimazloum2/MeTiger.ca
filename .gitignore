@@ -3,3 +3,14 @@ venv/
 __pycache__/
 *.pyc
 .DS_Store
+
+# Local-only files (start_app.sh holds live keys)
+start_app.sh
+app.log
+.ssh
+
+# Insights posts written through the admin page (live content, not code)
+data/
+
+# Local preview screenshots
+preview/

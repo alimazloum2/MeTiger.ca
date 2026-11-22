@@ -1,0 +1,58 @@
+{% extends "base_page.html" %}
+{% from "partials/ui.html" import breadcrumb_schema %}
+{% block page_title %}{{ post.title }} | MeTiger Insights{% endblock %}
+{% block meta_description %}{{ post.description or post.title }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block main_class %}insights-page{% endblock %}
+{% block head_schema %}
+    {{ breadcrumb_schema([{'name':'Home','url':'/'}, {'name':'Insights','url':'/insights/'}, {'name': post.title, 'url': '/insights/' ~ post.slug ~ '/'}]) }}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": {{ post.title | tojson }},
+      "description": {{ (post.description or post.title) | tojson }},
+      "datePublished": {{ post.date | tojson }},
+      "dateModified": {{ (post.updated or post.date) | tojson }},
+      "mainEntityOfPage": {{ ("https://metiger.ca/insights/" ~ post.slug ~ "/") | tojson }},
+      "author": { "@type": "Organization", "name": "MeTiger Inc.", "url": "https://metiger.ca/" },
+      "publisher": { "@id": "https://metiger.ca/#organization" }
+    }
+    </script>
+{% endblock %}
+{% block content %}
+<article class="article-page">
+<p class="kicker">Commercial electrical estimating insight</p>
+<h1>{{ post.title }}</h1>
+<p class="byline">By MeTiger Insights · <time datetime="{{ post.date }}">{{ post.date | pretty_date }}</time></p>
+{% if post.tags %}
+<ul class="tag-list" aria-label="Article tags">
+{% for tag in post.tags %}<li>{{ tag }}</li>{% endfor %}
+</ul>
+{% endif %}
+<div class="article-body">
+{{ body_html }}
+</div>
+<aside class="article-aside">
+<h2>Use this with the calculator</h2>
+<p>Use this commentary as planning context only. Project-specific pricing still requires drawing review, scope confirmation, and a written estimate.</p>
+<a class="cta" href="/estimate-calculator">Use the electrical estimate calculator</a>
+</aside>
+<section class="article-cta" aria-label="Request a fixed estimating quote">
+<h2>Pricing a real bid?</h2>
+<p>Send the drawings and get a fixed estimating quote.</p>
+<div class="closing-actions">
+<a class="cta" href="/contact/#quote">Get a quote</a>
+</div>
+</section>
+{% if related %}
+<section class="related-posts">
+<h2>Related electrical estimating insights</h2>
+<ul>
+{% for r in related %}<li><a href="/insights/{{ r.slug }}/">{{ r.title }}</a></li>
+{% endfor %}
+</ul>
+</section>
+{% endif %}
+</article>
+{% endblock %}

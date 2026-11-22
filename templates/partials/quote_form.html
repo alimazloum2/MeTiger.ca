@@ -1,197 +1,102 @@
-{# Shared quote-request form. Included by the homepage and the /contact/ page.
-   Posts to /send_message (the live SMTP pipeline). Include AT MOST ONCE per
-   page (single Turnstile widget + single set of element IDs).
-   Requires TURNSTILE_SITE_KEY and START_TS in context (injected globally by a
-   context processor in app.py). #}
-<form id="quoteForm" action="/send_message" method="POST" novalidate>
-    <!-- Honeypot (renamed from 'company' so 'company' can be a real field) -->
-    <input type="text" name="website" id="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-    <input type="hidden" name="started_at" id="started_at" value="{{ START_TS }}">
+{# Shared quote-request form (markup matches metiger.us). Include AT MOST ONCE
+   per page: one Turnstile widget, one set of element IDs, anchor #quote.
+   Posts via fetch (static/js/site.js) to /send_message, the live SMTP pipeline.
+   Field names are the ones app.py's send_message() already reads.
+   Caller sets: qf_class ("service-quote-card" | "contact-form"), qf_card (bool).
+   Requires TURNSTILE_SITE_KEY and START_TS (global context processor). #}
+<form id="quote" class="{{ qf_class or 'service-quote-card' }}" aria-label="Fixed quote request" action="/send_message" method="post" novalidate data-quote-form>
+    {% if qf_card %}
+    <p class="quote-card-title">Start your estimate</p>
+    <p>Send your plans, get a fixed estimating quote, and work directly with your estimator.</p>
+    {% endif %}
+    <p class="req-note"><span class="req" aria-hidden="true">*</span> Required</p>
+    <div class="hp-field" aria-hidden="true">
+        <label for="hq-website">Company website</label>
+        <input id="hq-website" type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <input type="hidden" name="started_at" value="{{ START_TS }}">
     <input type="hidden" name="source" value="{{ request.path }}">
-
-    <div class="field-row">
-        <div>
-            <label for="q-name">Name *</label>
-            <input type="text" id="q-name" name="name" placeholder="Your full name" required />
-            <div class="error" id="err-name"></div>
+    <div class="uform-grid">
+        <div class="uf">
+            <label for="hq-name">Name<span class="req" aria-hidden="true">*</span></label>
+            <input id="hq-name" type="text" autocomplete="name" required name="name" placeholder="Your name">
         </div>
-        <div>
-            <label for="q-company">Company</label>
-            <input type="text" id="q-company" name="company" placeholder="Company or organization" />
+        <div class="uf">
+            <label for="hq-email">Work email<span class="req" aria-hidden="true">*</span></label>
+            <input id="hq-email" type="email" autocomplete="email" required name="email" placeholder="you@company.ca">
         </div>
-    </div>
-
-    <div class="field-row">
-        <div>
-            <label for="q-email">Work email *</label>
-            <input type="email" id="q-email" name="email" placeholder="you@company.ca" required />
-            <div class="error" id="err-email"></div>
+        <div class="uf">
+            <label for="hq-phone">Phone (optional)</label>
+            <input id="hq-phone" type="tel" autocomplete="tel" name="phone">
         </div>
-        <div>
-            <label for="q-phone">Phone</label>
-            <input type="tel" id="q-phone" name="phone" placeholder="(optional)" />
+        <div class="uf">
+            <label for="hq-due-date">Bid / due date (optional)</label>
+            <input id="hq-due-date" type="text" name="bid_date" aria-describedby="hq-due-date-hint">
+            <p class="field-hint" id="hq-due-date-hint">For example: Friday, 2 pm, with your time zone</p>
         </div>
-    </div>
-
-    <div class="field-row">
-        <div>
-            <label for="q-province">Project location / province</label>
-            <select id="q-province" name="province">
-                <option value="">Select province / territory</option>
-                <option>Alberta</option>
-                <option>British Columbia</option>
-                <option>Manitoba</option>
-                <option>New Brunswick</option>
-                <option>Newfoundland &amp; Labrador</option>
-                <option>Nova Scotia</option>
-                <option>Ontario</option>
-                <option>Prince Edward Island</option>
-                <option>Quebec</option>
-                <option>Saskatchewan</option>
-                <option>Northwest Territories</option>
-                <option>Nunavut</option>
-                <option>Yukon</option>
-                <option>Multiple provinces</option>
-            </select>
+        <div class="uf uf-wide">
+            <label for="hq-plan-link">Plan / drawing link (optional)</label>
+            <input id="hq-plan-link" type="text" inputmode="url" name="plan_link" placeholder="Dropbox link (preferred)" aria-describedby="hq-plan-link-hint">
+            <p class="field-hint" id="hq-plan-link-hint">No link? <a href="https://www.dropbox.com/request/ug45tzycjpx5ntiuosix" target="_blank" rel="noopener">Upload your drawings to our Dropbox</a>, then send the form.</p>
         </div>
-        <div>
-            <label for="q-project-type">Project type</label>
-            <select id="q-project-type" name="project_type">
-                <option value="">Select project type</option>
-                <option>Commercial tenant improvement</option>
-                <option>Retail fit-out</option>
-                <option>Restaurant / hospitality</option>
-                <option>Warehouse / light industrial</option>
-                <option>Industrial / heavy</option>
-                <option>Multi-family residential</option>
-                <option>Municipal facility</option>
-                <option>Pump station / utility</option>
-                <option>School / institutional</option>
-                <option>Office / mixed-use</option>
-                <option>Service upgrade / distribution</option>
-                <option>Other</option>
-            </select>
+        <div class="uf uf-wide">
+            <label for="hq-message">Message (required if no drawing link)</label>
+            <textarea id="hq-message" name="message" rows="4" placeholder="Project location, scope notes, and how MeTiger can help"></textarea>
         </div>
-    </div>
-
-    <div class="field-row">
-        <div>
-            <label for="q-service">Service needed</label>
-            <select id="q-service" name="service">
-                <option value="">Select a service</option>
-                <option>Takeoff only</option>
-                <option>Full estimate</option>
-                <option>Bid review</option>
-                <option>Budget estimate</option>
-                <option>Documentation support</option>
-                <option>Other</option>
-            </select>
+        <details class="form-details uf-wide">
+            <summary>Add project details (optional)</summary>
+            <div class="form-details-grid">
+                <div class="uf">
+                    <label for="hq-company">Company (optional)</label>
+                    <input id="hq-company" type="text" autocomplete="organization" name="company" placeholder="Company name">
+                </div>
+                <div class="uf">
+                    <label for="hq-province">Project province / territory (optional)</label>
+                    <select id="hq-province" name="province">
+                        <option value="" selected>Select province or territory</option>
+                        <option value="Multiple provinces / Canada-wide">Multiple provinces / Canada-wide</option>
+                        {% for p in ['Alberta','British Columbia','Manitoba','New Brunswick','Newfoundland and Labrador','Northwest Territories','Nova Scotia','Nunavut','Ontario','Prince Edward Island','Quebec','Saskatchewan','Yukon'] %}
+                        <option value="{{ p }}">{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="uf">
+                    <label for="hq-project-type">Project type (optional)</label>
+                    <select id="hq-project-type" name="project_type">
+                        <option value="" selected>Select</option>
+                        {% for t in ['Commercial / Tenant Improvement','Retail & Restaurant','Warehouse / Light-Industrial','Power Distribution','Low-Voltage / Fire Alarm / Data','Other commercial scope'] %}
+                        <option value="{{ t }}">{{ t }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="uf">
+                    <label for="hq-service">Service needed (optional)</label>
+                    <select id="hq-service" name="service">
+                        <option value="" selected>Select</option>
+                        {% for s in ['Takeoff only','Takeoff + NECA labour hours','General question'] %}
+                        <option value="{{ s }}">{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </details>
+        <div class="uf uf-wide uf-check">
+            <label class="check">
+                <input id="hq-nda" type="checkbox" name="nda" value="Yes — please send an NDA first">
+                <span>Request an NDA before I share drawings</span>
+            </label>
         </div>
-        <div>
-            <label for="q-bid-date">Bid due date</label>
-            <input type="date" id="q-bid-date" name="bid_date" />
+        <div class="uf uf-wide uf-check">
+            <label class="check">
+                <input id="hq-consent" type="checkbox" name="consent" value="yes" required>
+                <span>I agree to MeTiger contacting me about this request<span class="req" aria-hidden="true">*</span></span>
+            </label>
         </div>
     </div>
-
-    <div>
-        <label for="q-plan-link">Drawing / plan link</label>
-        <input type="url" id="q-plan-link" name="plan_link" placeholder="Dropbox, Google Drive, OneDrive, Procore, or BuildingConnected link" />
-    </div>
-
-    <div>
-        <label for="q-message">Message / scope notes *</label>
-        <textarea id="q-message" name="message" placeholder="Tell us about the project, scope, sheet count, and anything we should know." required></textarea>
-        <div class="error" id="err-message"></div>
-    </div>
-
-    <div class="field-row">
-        <div>
-            <label for="q-nda">NDA required?</label>
-            <select id="q-nda" name="nda">
-                <option value="No">No</option>
-                <option value="Yes — please send an NDA first">Yes — please send an NDA first</option>
-            </select>
-        </div>
-        <div></div>
-    </div>
-
-    <p class="note" style="margin-top:16px;">Please do not upload or link confidential tender documents unless you are authorized to share them. NDA available on request.</p>
-
-    <div class="checkbox-row">
-        <input type="checkbox" id="q-consent" name="consent" value="yes" required />
-        <label for="q-consent">I consent to MeTiger Inc. contacting me about this request. *</label>
-    </div>
-
-    <div id="q-turnstile" class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" style="margin: 16px 0 6px;"></div>
-
-    <div class="cta-row" style="margin-top: 8px;">
-        <button class="btn btn-primary" type="submit" id="q-submit">Submit Quote Request</button>
-        <button class="btn btn-ghost" type="reset">Reset</button>
-    </div>
-    <div class="error" id="q-status" role="status" aria-live="polite" style="min-height:20px;"></div>
+    <div class="cf-turnstile uform-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" data-theme="auto"></div>
+    <p class="form-status" role="status" aria-live="polite" hidden></p>
+    <div class="form-fallback" hidden>Trouble submitting? Email MeTiger directly: <a href="mailto:info@metiger.ca">info@metiger.ca</a></div>
+    <button class="cta service-form-submit" type="submit">Send quote request</button>
+    {% if qf_card %}<small>No contracts · Per-project quote · NDA on request</small>{% endif %}
 </form>
-
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<script>
-(function () {
-    var form = document.getElementById('quoteForm');
-    if (!form) return;
-    var nameEl = document.getElementById('q-name');
-    var emailEl = document.getElementById('q-email');
-    var msgEl = document.getElementById('q-message');
-    var consentEl = document.getElementById('q-consent');
-    var submitBtn = document.getElementById('q-submit');
-    var status = document.getElementById('q-status');
-    var sending = false;
-
-    function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-    function setErr(id, msg) { var el = document.getElementById(id); if (el) el.textContent = msg || ''; }
-
-    // Fallback timestamp so the time-gate never fails on cached HTML.
-    var started = document.getElementById('started_at');
-    if (started && !started.value) started.value = Math.floor(Date.now() / 1000).toString();
-
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        if (sending) return;
-        status.textContent = '';
-        status.style.color = '#ffb4b4';
-
-        var nameOk = nameEl.value.trim().length > 1;
-        var emailOk = isEmail(emailEl.value.trim());
-        var msgOk = msgEl.value.trim().length > 5;
-        var consentOk = consentEl.checked;
-        setErr('err-name', nameOk ? '' : 'Please enter your name');
-        setErr('err-email', emailOk ? '' : 'Enter a valid work email');
-        setErr('err-message', msgOk ? '' : 'Please add a short scope note');
-        if (!consentOk) status.textContent = 'Please provide consent so we can reply.';
-        if (!(nameOk && emailOk && msgOk && consentOk)) return;
-
-        sending = true;
-        submitBtn.disabled = true;
-        var originalLabel = submitBtn.textContent;
-        submitBtn.textContent = 'Sending…';
-        try {
-            var resp = await fetch('/send_message', { method: 'POST', body: new FormData(form) });
-            var result = await resp.json();
-            if (result.success) {
-                status.style.color = '#9ef7c1';
-                status.textContent = result.message || 'Thanks — we’ll get back to you.';
-                form.reset();
-                if (started) started.value = Math.floor(Date.now() / 1000).toString();
-                if (window.turnstile) { try { window.turnstile.reset(); } catch (_) {} }
-            } else {
-                status.style.color = '#ffb4b4';
-                status.textContent = result.message || 'Something went wrong. Please try again.';
-            }
-        } catch (err) {
-            status.style.color = '#ffb4b4';
-            status.textContent = 'Error sending message. Please email info@metiger.ca.';
-        } finally {
-            sending = false;
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalLabel;
-        }
-    });
-})();
-</script>

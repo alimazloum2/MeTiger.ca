@@ -1,213 +1,481 @@
 {% extends "base_page.html" %}
-{% from 'partials/ui.html' import breadcrumb, breadcrumb_schema, service_schema, faq_schema, trust_bar, checks, process_steps, systems, faq_list, cta_band %}
-
-{% block page_title %}Canadian Electrical Estimating Services | MeTiger Inc.{% endblock %}
-{% block meta_description %}MeTiger provides Canadian electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review support for commercial, industrial, municipal, retail, and restaurant projects.{% endblock %}
-
-{% set crumbs = [{'name':'Home','url':'/'}, {'name':'Electrical Estimating Services','url':None}] %}
+{% from "partials/ui.html" import breadcrumb_schema, faq_schema, service_schema %}
+{% set has_quote_form = true %}
+{% block page_title %}Electrical Estimating Services Across Canada | MeTiger{% endblock %}
+{% block meta_description %}Canada-wide electrical estimating, takeoffs, and NECA labour-hour summaries for electrical contractors and GCs in every province and territory. Fixed quote after drawing review.{% endblock %}
+{% block main_class %}premium-service-page{% endblock %}
+{% set crumbs = [{"name":"Home","url":"/"}, {"name":"Electrical Estimating","url":"/canada-electrical-estimating-services/"}] %}
 {% set page_faqs = [
-    {'q':'Do you provide electrical estimating across Canada?','a':'Yes. We provide electrical estimating and takeoff support remotely for contractors and general contractors across every Canadian province and territory, working from your PDF or DWG tender set.'},
-    {'q':'Do you use the Canadian Electrical Code?','a':'Our estimating and scope review are informed by CSA C22.1 / the Canadian Electrical Code, provincial amendments and practices, project specifications, local utility requirements, and the bid documents. Final compliance remains subject to the project engineer and the authority having jurisdiction.'},
-    {'q':'What do I receive with the estimate?','a':'A reviewable package: a quantity takeoff workbook, colour-coded marked-up drawings, a material list by system, a labour-hour summary with the labour-unit basis and assumptions, inclusions and exclusions, an RFI / scope-gap log, addenda review, and a bid summary.'},
-    {'q':'Can you review addenda?','a':'Yes. Addenda review is part of the scope. Send every addendum issued and we reconcile it against the base set so nothing is missed.'},
-    {'q':'Do you provide stamped engineering?','a':'No. MeTiger provides estimating, takeoff, documentation, and coordination support. We do not replace the engineer of record, the authority having jurisdiction, or stamped professional engineering requirements.'},
-    {'q':'How fast can you deliver?','a':'Delivery depends on sheet count, scope complexity, and the bid deadline. We confirm a specific delivery window with your quote, before work begins.'},
-    {'q':'Do you sign NDAs?','a':'Yes. An NDA is available on request before you share tender documents or plan links.'}
+  {"q": "Do you provide electrical estimating across Canada?", "a": "Yes. MeTiger provides electrical estimating and takeoff support remotely for contractors and general contractors in every province and territory. We work from your PDF or DWG set and deliver a reviewable estimate package on an agreed window."},
+  {"q": "Do you use the Canadian Electrical Code (CEC)?", "a": "Our estimating and scope review are informed by the Canadian Electrical Code (CSA C22.1), project specifications, local utility requirements, and the bid documents. Final compliance remains subject to the project engineer, the authority having jurisdiction, and applicable provincial/territorial requirements."},
+  {"q": "Can you estimate from PDF drawings?", "a": "Yes. PDF bid sets are the most common input. Send the drawings, specifications, and any addenda, and we confirm scope before starting."},
+  {"q": "Can you work from DWG / CAD files?", "a": "Yes. We work from DWG/CAD backgrounds as well as PDFs. Let us know what format you have and we will confirm what we need."},
+  {"q": "What do I receive with the estimate?", "a": "A reviewable package: a quantity takeoff workbook, colour-coded marked-up drawings, a material list by system, a NECA labour-hour summary with the labour-unit basis and assumptions, inclusions and exclusions, an RFI / scope-gap log, addenda review, and a bid summary."},
+  {"q": "Do you provide stamped engineering?", "a": "No. MeTiger provides estimating and bid-support services — not sealed engineering, stamped drawings, or engineer-of-record services."},
+  {"q": "Do you sign NDAs?", "a": "Yes. An NDA is available on request — note it on the form and we will send one before you share drawings."},
+  {"q": "How is pricing structured?", "a": "A fixed estimating quote per project, confirmed after we review the drawing set, scope, and bid schedule — before any work begins. No subscription and no long-term contract. Takeoffs run $400 to $1,400 CAD and takeoff plus NECA labour $600 to $1,900 CAD by bid size, plus applicable GST/HST; bids over $3M are quoted hourly after drawing review. Electrical contractors: your first quantity takeoff is free (one per company)."},
+  {"q": "How fast is turnaround?", "a": "Typical 24–48 hour target, confirmed per project after drawing review. Larger or incomplete sets may take longer."},
+  {"q": "How do I request a quote?", "a": "Send your bid set (or a plan link) and the bid due date through the quote form. We confirm scope, fee, and delivery window before any work begins."}
 ] %}
-
 {% block head_schema %}
     {{ breadcrumb_schema(crumbs) }}
-    {{ service_schema('Canadian Electrical Estimating Services', 'Electrical takeoffs, labour summaries, marked-up drawings, scope notes, and bid review for Canadian commercial, industrial, municipal, retail, and restaurant projects.', '/canada-electrical-estimating-services/', 'Canada') }}
+    {{ service_schema("Canadian Electrical Estimating Services", "Electrical estimating, takeoffs, and NECA labour-hour summaries for electrical contractors and general contractors across Canada, delivered remotely from your PDF or DWG set.", "/canada-electrical-estimating-services/", "Canada") }}
     {{ faq_schema(page_faqs) }}
 {% endblock %}
-
-{% block breadcrumb %}{{ breadcrumb(crumbs) }}{% endblock %}
-
 {% block content %}
-<!-- HERO / INTRO -->
-<section class="page-hero">
-  <div class="container">
-    <div class="eyebrow">Canadian Electrical Estimating</div>
-    <h1 class="h1">Canadian Electrical Estimating Services for Contractors and GCs</h1>
-    <p class="lead">MeTiger helps Canadian contractors turn tender drawings, specifications, and addenda into clean electrical takeoffs, material lists, labour summaries, marked-up drawings, and scope notes. Our work is built for review: clear quantities, clear assumptions, and clear exclusions before bid day.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="/contact/">Request a Fixed Quote</a>
-      <a class="btn btn-ghost" href="/samples/">See a sample package</a>
-    </div>
-    {{ trust_bar(['Canada-focused estimating','CEC-aware scope review','Marked-up plans','Labour & material summaries','NDA on request']) }}
-  </div>
+<section class="premium-hero">
+<div>
+<p class="service-eyebrow">Electrical Estimating · Canada-wide</p>
+<h1>Electrical Estimating Services Across Canada</h1>
+<p class="service-lead">MeTiger produces detailed, code-aware electrical estimating, takeoffs, and NECA labour-hour summaries for electrical contractors and GCs across Canada, in every province and territory — and you work directly with your estimator, not a ticket queue.</p>
+<div class="service-hero-actions">
+<a class="cta" href="#quote">Get a Fixed Quote</a>
+<a class="service-ghost-link" href="#process">See how it works</a>
+</div>
+<ul class="service-hero-bullets" aria-label="Electrical estimating value propositions">
+<li>Typical 24–48 hr target</li>
+<li>NECA labour-unit basis</li>
+<li>Marked-up plans + NECA labour hours</li>
+<li>Work directly with your estimator</li>
+</ul>
+<p class="hero-response-line">Fixed quote within 1 business day — often same day — of drawing review.</p>
+<p class="free-offer">Electrical contractors: your first quantity takeoff is free (one per company).</p>
+</div>
+{% set qf_class = "service-quote-card" %}{% set qf_card = true %}{% include "partials/quote_form.html" %}</section>
+<section class="service-strip" aria-label="Service summary">
+<article>
+<span>Coverage</span>
+<strong>All provinces and territories</strong>
+</article>
+<article>
+<span>Turnaround</span>
+<strong>Typical 24–48 hr target</strong>
+</article>
+<article>
+<span>Labour basis</span>
+<strong>NECA units</strong>
+</article>
+<article>
+<span>Your contact</span>
+<strong>Estimator you can reach</strong>
+</article>
 </section>
-
-<!-- 1. WHO WE HELP -->
-<section>
-  <div class="container">
-    <div class="eyebrow section-head">Who we help</div>
-    <h2 class="h2">Built for the people who own the electrical bid</h2>
-    <p class="lead">We work behind the scenes for the teams responsible for pricing and delivering electrical scope in Canada.</p>
-    <div class="pills">
-      <span class="pill">Electrical contractors</span>
-      <span class="pill">General contractors</span>
-      <span class="pill">Developers</span>
-      <span class="pill">Project managers</span>
-      <span class="pill">Estimators</span>
-      <span class="pill">Construction managers</span>
-      <span class="pill">Design-build teams</span>
-      <span class="pill">Facility teams</span>
-    </div>
-  </div>
+{% include "partials/credentials.html" %}
+<section class="premium-section" aria-labelledby="apart-heading">
+<p class="service-eyebrow">Why MeTiger</p>
+<h2 id="apart-heading">What sets MeTiger apart</h2>
+<p>The estimating market is full of anonymous, high-volume shops. MeTiger works the opposite way: clear scope, direct communication, and reviewable estimating assumptions.</p>
+<div class="apart-grid premium-apart-grid">
+<article>
+<b>◎</b>
+<h3>Talk to your estimator</h3>
+<p>You deal with the person building your estimate, so questions do not disappear into an anonymous queue.</p>
+</article>
+<article>
+<b>✓</b>
+<h3>Defensible numbers</h3>
+<p>Takeoffs and pricing are built from drawing review, NECA labour-unit references, and clearly marked national/regional assumptions.</p>
+</article>
+<article>
+<b>◧</b>
+<h3>Transparent scope</h3>
+<p>Deliverables spell out inclusions, exclusions, allowances, alternates, and bid assumptions.</p>
+</article>
+<article>
+<b>⚡</b>
+<h3>Committed turnaround</h3>
+<p>The turnaround target is confirmed with the fixed quote before estimating starts.</p>
+</article>
+</div>
 </section>
-
-<!-- 2. WHY BIDS GET MISSED -->
-<section>
-  <div class="container narrow">
-    <div class="eyebrow section-head">The problem</div>
-    <h2 class="h2">Why electrical bids get missed</h2>
-    <p class="lead">Electrical scope hides in the gaps between documents. The most common places margin leaks out before the bid even goes in:</p>
-    <ul class="checks" style="margin-top:18px;">
-      <li>Missed items between drawings, specifications, and schedules</li>
-      <li>Equipment power requirements buried in the mechanical and other trades’ documents</li>
-      <li>Addenda that change scope late and never make it into the count</li>
-      <li>Incomplete or conflicting drawings with no documented assumptions</li>
-      <li>Weak takeoffs that can’t be checked line by line</li>
-      <li>Tight deadlines that force a rushed, incomplete count</li>
-    </ul>
-  </div>
+<section id="services" class="premium-section premium-paper">
+<p class="service-eyebrow">Services</p>
+<h2>Electrical estimating services</h2>
+<p>Commercial-forward and electrical-only — from tenant fit-outs to distribution and low-voltage systems.</p>
+<div class="premium-service-grid">
+<article>
+<span>// 01</span>
+<h3>Commercial Tenant Improvement</h3>
+<p>Branch wiring, devices, panel tie-ins, lighting, controls, and existing-condition assumptions organized for tenant fit-out bids.</p>
+</article>
+<article>
+<span>// 02</span>
+<h3>Retail &amp; Restaurant</h3>
+<p>Storefront and kitchen scopes with equipment-heavy loads, dedicated circuits, GFCI assumptions, signage, and tenant coordination notes.</p>
+</article>
+<article>
+<span>// 03</span>
+<h3>Warehouse &amp; Light-Industrial</h3>
+<p>High-bay lighting, receptacles, distribution, equipment feeds, and clear separation of large-footprint material quantities.</p>
+</article>
+<article>
+<span>// 04</span>
+<h3>Power Distribution</h3>
+<p>Feeders, panels, switchboards, transformers, disconnects, breakers, and one-line-driven assumptions built into a reviewable estimate.</p>
+</article>
+<article>
+<span>// 05</span>
+<h3>Lighting &amp; Controls</h3>
+<p>Fixture counts, emergency lighting, controls, relay panels, exterior assumptions, and alternates presented clearly for bid review.</p>
+</article>
+<article>
+<span>// 06</span>
+<h3>Low-Voltage / Fire Alarm / Data</h3>
+<p>Fire alarm, structured cabling, access, AV rough-in, and low-voltage allowances separated from the power scope.</p>
+</article>
+</div>
 </section>
-
-<!-- 3. WHAT YOUR ESTIMATE INCLUDES -->
-<section>
-  <div class="container">
-    <div class="eyebrow section-head">Deliverables</div>
-    <h2 class="h2">What your estimate includes</h2>
-    <ul class="checks cols" style="margin-top:18px;">
-      <li>Quantity takeoff workbook</li>
-      <li>Colour-coded marked-up drawings</li>
-      <li>Material list by system</li>
-      <li>Labour-hour summary</li>
-      <li>Labour-unit basis and assumptions</li>
-      <li>Inclusions and exclusions</li>
-      <li>Drawing and specification assumptions</li>
-      <li>RFI and scope-gap log</li>
-      <li>Addenda review</li>
-      <li>Bid summary</li>
-      <li>Alternates and value-engineering notes where applicable</li>
-      <li>Gear and long-lead item notes where applicable</li>
-      <li>Optional final review call</li>
-    </ul>
-  </div>
+<section id="scope" class="premium-section premium-scope">
+<p class="service-eyebrow">Scope</p>
+<h2>What we take off.</h2>
+<p>Every line item counted from your drawings and organized the way an estimate reads.</p>
+<div class="premium-scope-grid">
+<article>
+<h3>
+<span>A.</span>
+<!-- -->Conduit &amp; Raceway</h3>
+<ul>
+<li>EMT, IMC, and rigid runs</li>
+<li>PVC and underground duct</li>
+<li>Cable tray and wireway</li>
+<li>Fittings and supports</li>
+</ul>
+</article>
+<article>
+<h3>
+<span>B.</span>
+<!-- -->Conductors &amp; Wiring</h3>
+<ul>
+<li>Branch and feeder conductors</li>
+<li>MC / AC cable</li>
+<li>Terminations</li>
+<li>Homerun makeup</li>
+</ul>
+</article>
+<article>
+<h3>
+<span>C.</span>
+<!-- -->Switchgear &amp; Distribution</h3>
+<ul>
+<li>Panels and switchboards</li>
+<li>Transformers</li>
+<li>Disconnects and breakers</li>
+<li>Metering assumptions</li>
+</ul>
+</article>
+<article>
+<h3>
+<span>D.</span>
+<!-- -->Branch Devices</h3>
+<ul>
+<li>Receptacles and switches</li>
+<li>Device boxes</li>
+<li>Plates and covers</li>
+<li>Dedicated equipment circuits</li>
+</ul>
+</article>
+<article>
+<h3>
+<span>E.</span>
+<!-- -->Lighting &amp; Controls</h3>
+<ul>
+<li>Fixtures by type</li>
+<li>Occupancy and daylight controls</li>
+<li>Dimming and relay panels</li>
+<li>Emergency and exit lighting</li>
+</ul>
+</article>
+<article>
+<h3>
+<span>F.</span>
+<!-- -->Grounding &amp; Low-Voltage</h3>
+<ul>
+<li>Grounding and bonding</li>
+<li>Fire alarm devices</li>
+<li>Structured cabling</li>
+<li>Access / AV rough-in</li>
+</ul>
+</article>
+</div>
 </section>
-
-<!-- 4. SYSTEMS WE QUANTIFY -->
-<section>
-  <div class="container">
-    <div class="eyebrow section-head">Coverage</div>
-    <h2 class="h2">Electrical systems we quantify</h2>
-    {{ systems([
-      {'title':'Service & distribution','items':['Service entrance and distribution','Switchgear, switchboards, panels','Transformers','Metering']},
-      {'title':'Power & feeders','items':['Feeders and branch power','Raceways and conductors','Cable tray and supports','Mechanical equipment power']},
-      {'title':'Motors & controls','items':['Pumps, motors, VFDs','Starters and MCCs','Generators, ATS, UPS','Battery systems']},
-      {'title':'Lighting','items':['Interior lighting and controls','Emergency lighting and life safety','Site lighting','Underground electrical']},
-      {'title':'Grounding & safety','items':['Grounding and bonding','Fire alarm coordination','Life-safety coordination']},
-      {'title':'Low voltage & special systems','items':['Low-voltage rough-in','Data / communications rough-in','Access control / security rough-in where included','EV charger rough-in where included','Utility coordination notes']}
-    ]) }}
-  </div>
+<section class="premium-section">
+<p class="service-eyebrow">Deliverables</p>
+<h2>What your estimate includes</h2>
+<p>A reviewable estimate package your team can price, check, and submit with more confidence.</p>
+<div class="premium-deliverables">
+<article>
+<span>01</span>
+<div>
+<h3>Quantity takeoff workbook</h3>
+<p>Material, devices, conduit, conductors, and gear counted by system in an Excel workbook.</p>
+</div>
+</article>
+<article>
+<span>02</span>
+<div>
+<h3>CEC-aware scope organization</h3>
+<p>Electrical scope organized against the Canadian Electrical Code (CSA C22.1), project specifications, and the bid documents.</p>
+</div>
+</article>
+<article>
+<span>03</span>
+<div>
+<h3>NECA labour-hour summary</h3>
+<p>Labour hours on a NECA labour-unit basis, with the assumptions stated.</p>
+</div>
+</article>
+<article>
+<span>04</span>
+<div>
+<h3>Colour-coded marked-up drawings</h3>
+<p>PDF markups so every quantity traces back to your drawings, line by line.</p>
+</div>
+</article>
+<article>
+<span>05</span>
+<div>
+<h3>Material list by system</h3>
+<p>A clean material list separated by electrical system.</p>
+</div>
+</article>
+<article>
+<span>06</span>
+<div>
+<h3>Inclusions and exclusions</h3>
+<p>Written clarity on what is carried, what is excluded, and what is an allowance.</p>
+</div>
+</article>
+<article>
+<span>07</span>
+<div>
+<h3>RFI / scope-gap log</h3>
+<p>Missing or conflicting information flagged before it erodes margin after award.</p>
+</div>
+</article>
+<article>
+<span>08</span>
+<div>
+<h3>Addenda review</h3>
+<p>Addenda and revisions folded into the estimate or tracked separately.</p>
+</div>
+</article>
+<article>
+<span>09</span>
+<div>
+<h3>Bid summary</h3>
+<p>A concise rollup for bid review, handoff, or internal pricing.</p>
+</div>
+</article>
+<article>
+<span>10</span>
+<div>
+<h3>Alternates &amp; value-engineering notes</h3>
+<p>Alternate pricing and value-engineering options presented clearly.</p>
+</div>
+</article>
+<article>
+<span>11</span>
+<div>
+<h3>Long-lead equipment notes</h3>
+<p>Long-lead gear flagged so procurement is not a surprise.</p>
+</div>
+</article>
+<article>
+<span>12</span>
+<div>
+<h3>Assumptions and clarifications</h3>
+<p>The basis of the numbers documented so your team can check them.</p>
+</div>
+</article>
+<article>
+<span>13</span>
+<div>
+<h3>Optional pre-bid review call</h3>
+<p>A walkthrough of the assumptions before you submit, on request.</p>
+</div>
+</article>
+</div>
 </section>
-
-<!-- 5. CANADIAN PROJECT TYPES -->
-<section>
-  <div class="container">
-    <div class="eyebrow section-head">Project types</div>
-    <h2 class="h2">Canadian project types we estimate</h2>
-    <div class="grid grid-3" style="margin-top:22px;">
-      <div class="card"><h3 class="h3">Commercial &amp; retail</h3><p>Commercial tenant improvements, retail fit-outs, offices, and mixed-use projects.</p></div>
-      <div class="card"><h3 class="h3">Hospitality</h3><p>Restaurants and hospitality build-outs with kitchen power and interlock coordination.</p></div>
-      <div class="card"><h3 class="h3">Industrial</h3><p>Warehouses and light industrial through heavier plant and process electrical.</p></div>
-      <div class="card"><h3 class="h3">Multi-family residential</h3><p>Multi-family and residential developments, suites, and common-area power and lighting.</p></div>
-      <div class="card"><h3 class="h3">Municipal &amp; utility</h3><p>Municipal facilities, pump stations, and utility infrastructure with controls and site electrical.</p></div>
-      <div class="card"><h3 class="h3">Institutional &amp; upgrades</h3><p>Schools and institutional projects where appropriate, plus service upgrades and distribution work.</p></div>
-    </div>
-  </div>
+<section id="pricing" class="premium-section premium-paper">
+<p class="service-eyebrow">Pricing</p>
+<h2>Takeoff and NECA labour fees</h2>
+<p>Fixed fees in Canadian dollars by the size of the electrical bid, confirmed with your quote before any work begins.</p>
+{% include "partials/fee_table.html" %}
 </section>
-
-<!-- 6. CEC-AWARE APPROACH -->
-<section>
-  <div class="container narrow">
-    <div class="eyebrow section-head">Approach</div>
-    <h2 class="h2">CEC-aware estimating approach</h2>
-    <p class="lead">Canadian electrical estimating support informed by CSA C22.1 / the Canadian Electrical Code requirements, provincial practices, project specifications, local utility requirements, and bid documents. We estimate what the documents call for and flag where they don’t agree.</p>
-    <div class="note" style="margin-top:18px;">Final compliance remains subject to the project engineer, the local authority having jurisdiction, and applicable provincial/territorial requirements. MeTiger provides estimating and design coordination support — not a replacement for stamped engineering or authority-having-jurisdiction review — and works alongside the engineer of record where required.</div>
-  </div>
+<section class="premium-section premium-software">
+<p class="service-eyebrow">Software &amp; method</p>
+<h2>Tools and method</h2>
+<p>Commercial-grade takeoff and estimating tooling, with a person accountable for the numbers.</p>
+<div class="software-row">
+<article>
+<h3>Bluebeam Revu</h3>
+<p>On-screen quantity takeoff and colour-coded plan markups traceable back to your drawings.</p>
+</article>
+<article>
+<h3>Excel estimate workbooks</h3>
+<p>Structured material and labour workbooks on a NECA labour-unit basis, built for review.</p>
+</article>
+<article>
+<h3>AI-accelerated takeoffs with engineer quality control</h3>
+<p>AI speeds the count; a person reviews scope, assumptions, and exclusions before anything is delivered.</p>
+</article>
+</div>
 </section>
-
-<!-- 7. SCOPE-GAP REVIEW -->
-<section>
-  <div class="container narrow">
-    <div class="eyebrow section-head">Scope-gap review</div>
-    <h2 class="h2">We flag what’s missing before you price it</h2>
-    <p class="lead">Every package includes a scope-gap and RFI log: items that appear in one document but not another, equipment with no clear power source, details that conflict, and assumptions we had to make to complete the count. You see the gaps instead of inheriting them after award.</p>
-    <ul class="checks" style="margin-top:18px;">
-      <li>Cross-checks between drawings, specifications, schedules, and addenda</li>
-      <li>Other-trade equipment connections reconciled against the electrical scope</li>
-      <li>Documented assumptions and exclusions, not silent guesses</li>
-      <li>An RFI list you can send straight to the design team</li>
-    </ul>
-  </div>
+<section id="process" class="premium-section premium-paper">
+<p class="service-eyebrow">Process</p>
+<h2>From bid set to reviewable estimate</h2>
+<div class="premium-process">
+<article>
+<small>Send</small>
+<h3>Send your bid set</h3>
+<p>Drawings, specs, addenda, and the bid date — or just a plan link. Tell us takeoff-only or full pricing.</p>
+</article>
+<article>
+<small>Fixed quote</small>
+<h3>Fixed quote after drawing review</h3>
+<p>A flat per-project estimating quote, confirmed after we review the set — before any work begins.</p>
+</article>
+<article>
+<small>Takeoff</small>
+<h3>Takeoff &amp; scope review</h3>
+<p>Quantities counted by system on a NECA labour-unit basis, with gaps and assumptions flagged.</p>
+</article>
+<article>
+<small>Deliver</small>
+<h3>Reviewable package delivered</h3>
+<p>Your takeoff workbook, labour summary, marked-up plans, and scope notes arrive in Excel and PDF.</p>
+</article>
+<article>
+<small>Review call</small>
+<h3>Optional pre-bid review call</h3>
+<p>Walk the assumptions and exclusions with your estimator before you submit.</p>
+</article>
+</div>
 </section>
-
-<!-- 8. HOW IT WORKS -->
-<section>
-  <div class="container narrow">
-    <div class="eyebrow section-head">Process</div>
-    <h2 class="h2">How it works</h2>
-    {{ process_steps([
-      {'title':'Upload drawings or send a plan link','body':'Send your PDF or DWG set, specifications, and addenda — or a Dropbox / Drive / Procore link.'},
-      {'title':'Confirm scope and deadline','body':'We confirm project location, project type, scope, and bid due date.'},
-      {'title':'Receive a fixed quote','body':'A fee and delivery window, quoted after drawing review, before work begins.'},
-      {'title':'Takeoff and scope review','body':'We perform the takeoff and organize the electrical scope by system.'},
-      {'title':'Document assumptions and gaps','body':'Assumptions, exclusions, and scope gaps are logged clearly.'},
-      {'title':'Deliver the package','body':'You receive the reviewable estimate package on the agreed window.'},
-      {'title':'Optional review call','body':'A short walkthrough before bid submission, if you want one.'}
-    ]) }}
-  </div>
+<section class="premium-section premium-map-section" id="coverage">
+<p class="service-eyebrow">Coverage</p>
+<h2>Estimating for electrical contractors, coast to coast to coast.</h2>
+<p>Plans move over the wire, so where you build doesn't limit who estimates it. One quote form covers every province and territory.</p>
+<div class="cov reveal">
+<div class="cov-map">
+<svg viewBox="0 0 793 1032" role="img" aria-label="Map of Canada. MeTiger covers all 10 provinces and 3 territories.">
+<!-- Canada map: @svg-maps/canada, CC-BY-4.0, (c) Victor Cazanave. Vertices rounded. -->
+<path class="st-path" id="ca-BC" d="m154 767 5 0 4 0 4 0 4 0 5 0 4 0 4 0 5 0 0 7 0 7 0 6 0 7 0 7 0 6 0 7 0 6 0 6 0 6 0 7 0 6 0 6 0 6 0 6 0 5 0 1 0 1 0 0 1 0 0 1 1 1 0 0-1 0-1 0 0 0 0 1 1 0 0 0 0 1 1 1 0 1 1 0 0 0 2 0 0 0 1 1 0 1 2 1 0 0 0-1 1 0 0 0 1 1 1 0 0 1 0 0 0 1 0 1 1 0 0 1 1 0 0 0 1 1 0 0 0 1 1 0 0 1-1 1 1 1 0 0 0 1 0 0 0 1 1 0 0 0 1 0 0 0 0-1 0 0 2 1 1 0 0 0 0 1-1 1 0 0 1 1 1 1 2 0 0-1 1 1 0 1 2 2 0 0 1 3 0 0 1 0 0 0 0-1 0 0 1 0 0 0 0 0 1 0 0 2 1 0 0 1 1 0 0 1 1 1 0 1 0 1 1 0 0 0 1 1 0 0 0 0 0 1 0 0 1 1 1 0 2 2 0 0 0 0 0 1 0 0 1 2 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 0 0 0 1 2 2 1 3 0 1 0 1 0 0 0 1 0 0 1 2 0 1-1 1 0 1 0 0 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 1 1 0 0 1 1 1 0 0 0 0 2 1 0 0 0 1 1 0 0 1 0 0-1 0-4 0-4 0-4 0-3 0-2 0-2 0-4 0-3 0-1 0-4 0-4 0-3 0-4 0-4 0-4 0-4 0-3 0-4 0-4 0-4 0-4 0-4 0 0 0-1 0-1-1 0 0 0 0-1 0 0 1 0 0 0-1 0 0 0-1 0 0-1 0 0 0 0 0 0-1 0-1 0 0 1 0 1 0 0 0 1-1-1 1 0 0-2-1-1 0 0 0 0 0 0 0 0-1 1-2 0-1 0 0 0 0-1 1 0 1 0 0 0 1-1 0 0 0-1 1 0 0-3-2 0 0-1 0-1-1 0-1 0-1 1 0 0 0 0 0 1 1 0 1 1 0 1-1 0 0-1 0 0 0-1 0 0-1 0-1 0-2 0-1 0 0 1-1 0 0-1-1 0 0-1 0 0 0 1 1 0 0-1 1 0 1 0 1 0 0-1 0-1 1-1 0-1 0-1 0-2-2 0-1 0-1-2-2 0-1 0-1-1 0 0-1 1-1 1-2 0 0 0-1 0-1 0-1-1 1 0 1 0 0 0 1 0 1-1 1-1 1-3-1 0 0 0 0 0-2 0 0-1 1 0 1 0 1-1 0 0 0 0-1-1 0-1 0 0 0-1 0-1 0-2 0 0 0 0-1 0 0 2 0 1-1 2 0 0-1-1 0-4 1-1 0 0 0 0-1 1-1 0 0 0 0 0-1-1 0 0 0 0-1 0-2 0 2-1 0-3 1 0 0-1 0-2-1 0 0-1-1-2-1-1-1 0-2 1-1 0-1 2-3 1 0 0 0 3 0 2-1 1 0-4 0-2 0-1 0-1 2-1 1 0 0 0 0-1 0 0 0 0-1-1 0 0-1 0-2 0-1 0 0 1-2-1 0 0-1 1-2 1-1 1-1 1 0 2-1 0 1 2 1 0 0 1 1 0 1 1 1 0 0 0-1-1-1 0-1-1-1-1-1-1 0 0-1 0 0 0-1 2-2 0-1 0 0 0-1 0-1 0 0 0 2 0 0-1 1 0 0 0 1-4 4 0 0-2 0 0 1-1 0 0 2-1 3-1 2-1-3-1-3 2-2 1 0-1-1 0-1 1 0 0-1 0 0-1 0-1 2 0 0-1 0 0-1 1-2 1-3 0-1 0-1 0 0-2 2-1-1-1-4-1-2-2-1-2 0 0-1-1-2 1-1 1-1 0-1 1 1 0 0 0 2 0 0 3 2 1 0 1-1 0 0 2 1 0 1 1 1 0-1-1-2-1 0-1 0-1 0-1 0-1 0 0-1-1-2 0-1 0 0 0-1 0 0 1 0 1-1 0 0-1-1 0 0-2 2 0 0-1 0 0-1 0 1-1 0-1 3 0 1 0 1 0 1-1 0-1 1-1 1-1-1-2-1 0-2-2 0-1-2-1-1 1-2 1-2 0-2 0 0 3 0 1-1-1-1-1 1-2 0-2-1-1-1 0-1 0-1 0-1 1-1 0-1 0-1 1 0 1-2 0-1 1-3 1-1 1-2 2-3-1 1 0 0 0 0-1 0 0-1 0-1 0 0 0 2-1 2 0 1-1 2-1 1 0-1 0-1 1-1 0-2-1-2 0-1 0-1 0-1 0-1 0-1 1-1 0 0 0-1 0-1-1-1 0-1-1 1-2-1 0-2-2 0-1-2-1 0-2-1-1 0-1-1-1-1-1-1-1 0-1 0-1-1 0-1 0-1-1 0-1-1 0-2 1-1-1 0-2-1 0-1 1-1-1-1-1-2-1-2-1-2-1-2-1-2-1-1-1-2-1-3-2-2 0-1-1-1-1-2-1-2-2-1-1-1-1 0-1-1 0-1 0-1-1 0 0-1 0-1-2-1 0-1-1 0-1-1 0 0-2-3 1-1 0-1 0 0-2-2-1-1-1-1-2 1-2 1-2 1-2 0 1 2 0 1-1 0-1 0 0 3-1 2-2 0-1 1-2 1-1 1-2 2-1-1 1-1-1-2 0-2-1-1-2-2-1-1-2-2-1-1-1-1-2-2 0-2-2-1-1-1 0 0 8 0 9 0 8 0 9 0 8 0 9 0 8 0 9 0 9 0 8 0 9 0 8 0 9 0 8 0 9 0 8 0zm-57 83 0 0 0-2 2-2 0-1-1-1 0-2 0-1 0-1 0-1 0-1 0-1 1 0-1 1 0 2 0 1 0 2 1 1 0 1 0 0 0 1-1 1-1 3zm-3 4 0-1 2-2 1-1 0 1-1 3-2 1 0-1zm-3 5-1 0 0-1 0 0 1-1 0-1 1 1 0 0 0 0 0 0 0 1-1 1zm-16 5 1 1 2-1 0 1 1 0 0 1 0 1 1 1-1 0 0 1-3 2 0 0 0 0 0 0 1 0 2 0 0-1 1-1 0-1 0-1 0-1 0-1 1 0 2 0 1-1 0 0 0 2 0 0-1 2-1 2 0 2 0 3-1 1 0 1-3 1-2 0-1-1-1-1 1 0 0-1 1 1 1 0 0 0 0 0-2-2-2-1 0 0 0-1 0 0-1-3-1-1 0-1 0-1 0-2 1 0 0 0 1 0 2 0zm22 3-1 0 0 1-1 0 0 0 0 0-1-1 0 0-1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0-1 0 0 0-1 1-1 1 0 0 0 1 0 0 0 1 2zm3 12 0 0-1-1-1-2-2-1-1-1-1-1 1-1 0 0 2 1 2 1 0 1 2 2 0 1-1 1zm6 0 0 0-1 0 0 0 0 0 0-1 0 0 1-1 0-1 0 0 0 1 0 0 0 2zm6 3 0 5 0 1 0 1-1 2 0 1-1-1 0-2 0-1 0-1 0-2 0 0-1 1 0 0-1-1-1-1 0-1-1-1 0-1 0 0 1-1 0-1 0-2 1 0 0 0 1 1 1 0 1 1 1 3zm-29-4 1 2 0 1 0 1-1 1-1-1 0 0-1 1 1 0 1 1 0 1 1 0 2 0-1 2 0 0 1 2 0 1 0 0 1 0 1 0 0 0-1 1 0 0 1 0 1 0 0 2-1 0-2-1-1-1 0-1-1-1-1-1-3-3-1-1 0-1 0-1 0 0 0 0 1 0 0-1-3-1-1 0 0-1 0 0 2 0 2 0 1-1 0 0 1 0 0 0 1 0zm22 3 0 0 0 0-1 0 0-1-1-1 0-1 0 0 1 0 0 0 1 2 0 1zm3 7 0 1-1-2-1 0 0-2-1-1 0 0 1 0 0 0 0 0 2 2 0 1 0 1zm5 2 0 0 0-1 0 0 0-1 0 0 0-2 1-2 1 0 0 1-1 3 0 1 0 1-1 0zm-23 6-1 0 0 0 0 0 0-2 0 0 0 0 1 0 0 2zm27 7 0 1 0 0-1-1 0 0-1-2 1 0 0 0 1-1 0 0 0 0 0 1 1 1 0 1-1 0zm7 12 4 2 5 1 3 1 2 0 1 0 0 1 1 1 1 2 1 1 1 2 1 2 1 1-1 0 0 0 1 2 2 1 1 1 3 1 2 1 0 1 1 0 0 1 1 2 1 1 1 4 0-1 1-1 0 0 0 0 0 0 0 1 1 2 0 1 0 0-1 0-1 0 0 1-1 0 0 0-3-1-1 0-3-1-3-2-1 0-1-1-1-1-1 0 0-1 2-1 1-1 0-1 0-1 0-1 0 0 0 1 0 1 0 1-1 0-2 0-2 0 0 1-1 0 0 0-1-1-2-1 0 0 1-1 1-1 0 0-1 0 0 0 0-1-1 0-1 1 0 0 0-1 0-1 0-1 0 1-1 0 0-1 0 0-1 0 0 0-1 0 0 1 0 0-1-1 0 0-1 0 0 1 0-1 0-1 0-1 0 0 1-1 2 0 1 0-2 0-1 0 0-1-1 0 0 0-1-1 0-1-1 0-1-1 0 0-1 0 0 1 0 0-1 0 0 0-1-1 0 0 0-1 0 0 0-1 0 0 0 0 0-1-1 0 0 1 0 0 0 0-1 0 0-1 0 0-2 0-1 1-1 0 0-1 0 0 0-1 0-1 0 0-1 0 0-1 1-1 0 0 0 0 2 0 1 0 0 1 0-1 0-1 0 0 1-1-1 0-2 0 0 0 0 1-1 0-1 0-1 0 0 0-2-1 0-2 0 0 0-1 1 0 1-1 2 0 1 1 5 2zm18 8 0 1-1-2-1-2 1-1 0-1 0 0 1 1 0 0 1 1 0 0 0 1 0 1-1 1zm2 1 0 0-1-2 1 0 0-1 0 0 0 1 0 0 1 1 0 0-1 1zm-15 6 0 0-1 0-1-1-1-1 0 0 0 0 1-1 0 0-1-1 1 0 1 0 0 1 1 1 0 1 0 0 0 1zm22 1 0 0-2-1 0-1-1 0 0 0-1-1 0 0 0-1 1 0 1 1 1 1 1 2zm-17 2 0 1-1 0 0 0 0-1 0 0 1 0 0 0zm24 6 0 1-1-1-1-2-1 0 2 2 1 0 0 0zm0 2-1 1 0 0 0-1-1-2 1 0 0 1 0 0 1 1 0 0 0 0z"><title>British Columbia</title></path>
+<path class="st-path" id="ca-AB" d="m278 938-3 0-4 0-3 0-4 0-4 0-4 0-4 0-3 0-4 0-3 0 0 0 0-1-1 0 0-1 0 0-2-1 0 0 0-1-1 0 0-1-1 0 0-1 0 0 0-1 0-1 0 0-1 0 0 0 0 0 0 0 0-1 1-1 0-1-1-2 0 0 0-1 0 0 0-1 0-1-1-3-2-2 0-1 0 0-1 0 0 0 0 0-1 0 0 0 0-1 0 0 0 0 0 0 0-1-1 0 0 0 0 0 0 0 0 0 0 0-1 0-1-2 0 0 0-1 0 0 0 0-2-2-1 0-1-1 0 0 0-1 0 0 0 0-1-1 0 0-1 0 0-1 0-1-1-1 0-1-1 0 0-1-1 0 0-2-1 0 0 0 0 0-1 0 0 0 0 1 0 0-1 0 0 0-1-3 0 0-2-2 0-2-1 0 0 1-2 0-1-1-1-1 0 0 1-1 0-1 0 0-1-1-2 0 0 0 0 1 0 0-1 0-1 0 0 0 0-1 0 0 0-1 0 0-1-1 1-1-1-1 0 0 0-1 0-1-1 0 0 0-1 0 0-1-1-1 0 0 0-1 0 0 0-1-1 0-1-1 0 0-1 0 0 1 0 0-2-1 0-1-1-1 0 0-2-1 0 1-1 0 0-1-1-1 0-1-1 0 0 0 0-1 0 0 1 0 1 0 0 0-1-1 0-1-1 0 0 0 0-1 0-1 0-5 0-6 0-6 0-6 0-6 0-7 0-6 0-6 0-6 0-7 0-6 0-7 0-7 0-6 0-7 0-7 5 0 6 0 5 0 6 0 6 0 5 0 6 0 5 0 6 0 6 0 5 0 6 0 5 0 6 0 6 0 5 0 0 6 0 6 0 6 0 6 0 6 0 6 0 6 0 6 0 5 0 6 0 5 0 6 0 5 0 6 0 5 0 5 0 6 0 5 0 5 0 5 0 5 0 5 0 5 0 5 0 5 0 5 0 5 0 5 0 5 0 5 0 4z"><title>Alberta</title></path>
+<path class="st-path" id="ca-SK" d="m356 938-4 0-4 0-4 0-4 0-4 0-3 0-1 0-3 0-4 0-4 0-4 0-3 0-4 0-4 0-4 0-4 0-4 0-3 0-4 0-4 0-4 0-1 0 0-5 0-4 0-5 0-5 0-5 0-5 0-5 0-5 0-5 0-5 0-5 0-5 0-5 0-5 0-5 0-6 0-5 0-5 0-6 0-5 0-6 0-5 0-6 0-5 0-6 0-6 0-6 0-6 0-6 0-6 0-6 0-6 5 0 4 0 5 0 4 0 5 0 4 0 5 0 4 0 5 0 4 0 4 0 5 0 4 0 5 0 4 0 5 0 0 5 0 4 0 5 0 5 0 4 0 5 0 4 0 4 0 5 0 4 0 5 0 4 0 4 0 4 0 5 0 4 0 6 1 7 0 7 0 6 1 7 0 6 0 7 1 6 0 6 0 6 1 6 0 6 1 6 0 6 0 6z"><title>Saskatchewan</title></path>
+<path class="st-path" id="ca-MB" d="m467 821-2 3-3 2-2 3-2 2-4 4-3 4-3 3-3 4-3 3-2 3-3 3-3 4-2 2-2 3-3 3-2 3-3 3-4 4-3 3-4 4 0 6 0 6 0 7 0 6 0 6 0 6 0 6 0 6 0 2 0 3-2 0-4 0-4 0-3 0-4 0-1 0-3 0-4 0-4 0-4 0-3 0-4 0-4 0-4 0-4 0-3 0-1-6 0-6 0-6-1-6 0-6-1-6 0-6 0-6-1-6 0-7 0-6-1-7 0-6 0-7-1-7 0-6 0-4 0-5 0-4 0-4 0-4 0-5 0-4 0-5 0-4 0-4 0-5 0-4 0-5 0-5 0-4 0-5 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 4 0 5 0 0 1 0 8 0 4-1 2 0 1-1 1 1 0 1 0 0 1 0 2 1 0 0 0 0 0 1 0 1 2 1 1 0 1 0 5 0 1 0-1 1-5 0-2 1 0 3 0 2 0 1 0 1 0 1 1 0 0 0 2 1 2 1 4 1 3 1 4 0 1 2 5 0 1 1 1 0 1-1 1 0 2-1 1-1 1 0 0-1 1 0 0 1 0 1-1 1-1 0 0 2 0 0 0-1 1 0 0 1-1 2 0 8-3 2-1 3 1 2 1 3 2 2 1 4 1 2 1z"><title>Manitoba</title></path>
+<path class="st-path" id="ca-ON" d="m551 911 0 3 0 3 0 4 0 3 0 3 0 4 0 3 0 3 0 4 0 3 0 3 0 3 0 4 0 3 0 0 0 1 0 1 1 1 0 2 0 1 1 1 2 3 1 3 1 1 1 2 3 1 7 1 3 2 0 0 0 1 0 0 1 1 0 0 1 1 1 0 0 0 0 0 1 0 0-1 0 0 0 0 1 0 0 1 1 2 1 1 1 1 1 0 2 0 1 0 1 1 2 0 4-2 3-1 1 0 2 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0-4 2 0 0-1 0-1 1-2 1-2 1-3 4 0 0 0 0-1 0-1 1-1 0-2 1-1 1 0 0-1 0-1 0-1 1-2 1 0 0-1 0 0 0 1-1 1 0 0-1-1 1 0 0 0 0 0-1-1 0 0 1-1 0 0 0 0 0-1 0 0 0-1 0-1 0 0 1 0 0 1-1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0-1 0 0 1 0 1 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 0 0 0 0-1 1 0 0 0 1 0-1 1 0 0 0 0 1 0 0-2 0 0 1-1-1 0 0 0 0 0 0 0 0-1 0 0 0 0-1 0 0 1 0-1 0-1 0-1 0 0 0 0 0 0 0 0 0 0-1-1 0 0 0-1 1-1 0 0 0-1 0-2 0-1 1-1 0-1 0 0 0-1 0-1 0-2 1-1 0 0 1-2 1-1 0 0 0 0 0 0 1-1 0 0 0 0 1-1 1-1 1 0 1 0 0 1 0 1 1 1 0 1 0 0 0 1-1 1 0 0 0 0 2 0 0 1 0 0 1 0 0 0 0 0 1 1 0 0 0-2 1 0 0-1 0 0 0-1 0-2 0-1 0 0 0-1 0-1 0-2 1-1 0-1 0 0 1 0 0-1 0 0 1 0 0 1 0 0 0 2 0 0 1 0 0-3-1 0 0-1 0-2 0-2-1-2 0-2 1 0 0-2 2-1 1 0 1-1 0 0 0 0 0 0 0 0 0 0 0 0 0-1 0-1 1-2 0-1 1 0 1 0 0 0 1 0 0-1-1 0 0-1 0 0 0-1 0-1 0-1 0-1 0 0-1 0-1 0-1 0 0 0 0 1-1 1 0 1-2 1 0 1-1 1-2 0-3 1 0 1-1 1 0 1-1 0 0 1-1 0 0 1-1 0-1 1-1 0-1 0-1 0-4-1-1 1-1 0 0 1-1 0-1 0-1 0 0 1 0 0 0 0-1 1 0 0-1 0 0 1-1 0-1 0-1-1 0 0-1 0 0 0-1 0 0-1 0 0-1 0-1-1 0 0 0 0-1-1 0 0 0 0 0 0-1 1 0 1 0 1 0 0 0 0 1 0 0 1 1 0 0 0 1 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 1-1 0 0 0 0 0 0 0 0 0 1 0 0 0 0-1 1 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 1 0 1 0 0 0 0 1-1 1 0 0 0 1 1 1 1 2 1 1 0 1 0 0-1 0-1 0-1-1 0 0-1 0 0 0 0 1-1 1 0 0 0 0 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0-1 0 0-1 0 0 1 0 0 0 0 0-1 0 0 0-1-1 0 0 0 0-1-1 0 0 0 0 0-1-1 0 0 1 0 0 0 0-1 0 0-1 0 0 0 0 0 0 0 0-1 1 0 0-1-1 0 0-1 0 0-1 0 0 1 1 0-1 0 0 0-1 0 0-1 0 0-1-1 1-1-1 0 0-1 0 1 0 0 0 0-1 0 0 0 0-1 0 0-1-1 0 0 0 0 0-1 0 0 0-1-1 0 0 0 0-1 0 0-1 0-1 0-1 0 0 0 0 0 0 0-1-1 0 1 0 0 0 0-1 0-1 0 0 0-1 0-1 0 1 0 0 0-1-1 0 0 0 0 1 0 0 0 0-1-1 0 0 0 0 1 0 0-1 0 0 0 0 0 0-1 0 0-2 0-1 0-1 0-1 0 0-1-2 0-1 0 0 0 0 0-2 0-1 0-4 0-1-1 0 0-1 0-1 0-1 0 0-1 0 0-1 0-1 0 0 0 0-1 0 0 0-1 0 0 0-1-1 0-1 1-1 0 0 0 0 0 0 0-1 0 0-1 0 0 1-1 0-1 0 0 0 0 0 0-1 1 0 0 0-1 0-1 0 0 1 0 0 0 1 0 0-1 0 0-1 0 0-1-1 0 0 1 0 0 0 0-1-1-1 0 0 0 0-1 1-1 0 0 0-1 1-1 0-1 0 0-1 0 0 0 0 0 0-1-1 0-1-1 0 0-1-1 0-1 0 0 0-1 0 0 0 0 1-1 0 0 0-1 0 0 1-1-1 0-1 0-1 0-2 0-1 0-1 0-2 0-1-1-1-1-1-1 0-2 0-1-1 0 0 0 0-1 0-1 0-1-1 0 0 0 0-1 0 0 0 0-1-1 0 0-1 0 0 0-1 0 0 0-1 0 0 0-1 0-1 0-1 0-1 0-1 0 0-1-1 0 0 0-1 0 0 0 0 0-1-1-1 0-1 0-1-1 0 0-1 0 0 0-1 0 0 0 0 0 0 1 0 0 0 1 1 0 0 1 0 1 0 0-1 1 0 0-1 1 0 0 0 0-1 0 0 0 0 0 0 1 0 0 0 0-1 1 0-1 0 0 0 0 0-1 2-1 0-1 0 0 0-1 0-1 0 0-1 0 0 0-1 1 0 0 0 1 0 1 0 0 0 0 0 0 0 1-1 1 0 0 0 0 0 1 0 0-1 1-1 0 0 0 0 0 0-1 0 0 1-1 0-1 0 0-3 1-1 0 0 1 0 0 0 1 0 0 0 1 0 1-1 0 0 1-1 0 0 0-1 1 0 0-2 0-1 1-1-1 0-1-1 0-2 0-2 0-1 0-1 0 0-1-1 0-1 0-2 1-1 1-1 0-1-1-2-1-2-2-1 0-1 0-1 1 0 0-1-1 0-1-1-1-1-1-1 0-2-1 0 0-1 0-1 0-1 0 0 0 0 0 0 0-1 1-1 0-1 0-1 0 0-1-2 0-3-1-2-1-1 0 0 0 0-1 0 0-1-2 0-2 0-2 0 0 0 0-1-1-2 0 0-6 0-6 0-6 0-6 0-6 0-7 0-6 0-6 4-4 3-3 3-4 4-3 2-3 2-3 3-2 2-3 3-4 2-3 3-3 3-3 3-4 3-3 3-4 3-4 3-2 2-3 2-2 3-3 1 1 1 1 2 2 2 1 2 1 1 2 3 5 1 1 2 0 3 1 5 3 2 0 1 1 2 0 1 1 1 1 1 1 0 1 2 1 0 0 0 1-1 3 0 0 1-2 1 0 1-1 1 0 2 1 1 0 2-1 1 0 1 0 1 0 0 0 1 0 2 1 1 0 3 0 2 0 1 0 0 1 1 0 1 0 1 0 1 2 1 1 1 2 0 1-1 5-1 2 0 1 0 1 2 2 0 0 1 3 0 1 0 1-1 2 0 1 1 3 0 1-1 1 0 1-1 1 0 1 1 1 0 0 1 1 1 1 1 2 1 2 2 1 0 1-1 1 0 1-1 0 0 1 0 0 1-1 1 0 1 1 0 1 1 1 2 0 1 1 3 3 0 0 1 2 0 2 1 1 0 1-1 0-1 1-2 2 1 0 1-1 2-1 1-1 1 1 1 0 1 1 1 1 2 2 1 1zm0 0-1-2 0-1 0 0-1-1 1 0 0-2 0-1 1 0 0-1 0-1 0 0 0 5 0 4zm-76 31 0 0 0-1 0 0 0-1 0 0 1 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0-1 0-1 0 0 1zm4-1-1 0 0 0 0 0 0 0 0 0 0-1 0 0 0 0 0 0 0 0 1 1 0 0zm17 14-1 0-1 0 0 0 0 0 0-1 1 0 0 0 2 0 0 1 0 0-1 0zm17 20 0 1 0 0-1 0 0 0 0 0 0 0-1 0 0-1 0 0-1-1 1 0 1 0 0 0 1 0 0 1 0 0zm4 4 0 0-1 0 0 0 0-1 0 0 1 0 0 0 1 0 0 0 0 0-1 1zm5-1 0 0 0 1 0 0 0 0 0 0 1 1 0-1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 1 0-1 0 0-1 0 0 0 0 0 0 0-1 1 0 0 1 0-1 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 1-1 0 0 1 0 0 0 0 0 0 1 0 0 1 0 0 0 0 1 0 0 0 1 0 0 0-1 0-1 1 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0-1 2-1 1 0 0-1 1 0-1 0 0-1 0 0 0 1 0 0 0 0 0 1-1 0 0 0 0-2 1 0 0-1 0 0 0-1-1 0 0-1 0-1 0 0-1-1 0-1-1-2 0-1 0-1-1-1 0 0 0 0-1 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0zm9 6 0 1 0-1 0 0 0 0 1 0 0 0 0 0-1 0zm15 9 0 0-1 0 0-1 0 0 0 0 1 0 0 0 0 1zm34 8-1 0 0 0 0 0 0 0 0 0 0 0 0 0 0-1 0 0 1 0 0 0 1 0 0 0-1 0 0 1 0 0zm-3 0-1 0 0 0 0 0 0 0 0 0 1-1 0 1 0 0zm-54 29 0 1 0-1 0 0 0-1 0 1 1 0-1 0z"><title>Ontario</title></path>
+<path class="st-path" id="ca-QC" d="m685 762-2 0 0 1 0 0 0 1 2 0 0 1 0 0-1 1 0 0-1 0 0 1 0 0 0 0 1 1 1 0 0 1 0 0-1 1-1 1 0 4 1 1 0 1 3-1 0 0 0 1 0 0-1 1 0 1 0 2 0 1 0 1 1 0 1 1 0 0-1 1 0 0-3-1-1 0 0 0 0 1 0 1 0 0 2 0 3 1 0 2 1 0 0 0 2-1 2-1 1 0 0 1 1 0 0 1 0 0 0 0 0 0-4 1-1 1 0 0 0 0 0 1 0 1 0 0 2-1 0 1 0 1 0 0-2 1 0 1-3 3 0 1 0 0 0 0 1 2 1 2 1 1 0 1 1-1 0 0 0 1 1 0 0 1 0 0 1 0 1 0 0 0 0 0 0 1-1 1 0 0 0 1 0 2-1 1 0 1 1 1 0 0-1 1 0 1 0 1-1 2 0 1-1 1 0 0 0 1-1 0 1 1 1 2 0 1 0 1-1 0-1 0 0 1 0 1 0 0 1 0 1 1 0 0 0 2-1 0 1 0 1 0 0 1 2 0 0 1 0 0 0 1-1 0 0 1 0 0 2 3 1 1 0 1 1 0 1 1 0 0 0 1 0 0 0 1 0 1-2 1-1 1 0 0 0 1 0 2 0 0 0 1-1 2 0 2-1 1 0 0-2-1-4-1-4 0-3 0-4 0-1-1-1 0 0-2 0 0-2 0-1-1-1 0-3-4-1-1 0-1-1 1 0 0 1 1 0 1 0 1 0 2 0 0 1 2 0 1-1 1-1-1-3-2-1-2 0-1-1 1 0 0 0 0 0 1 0 1 1 1 1 2 0 1 0 0 0 1 0 0-1 1 0 0-2-1-1 0 0 1 0 0 0 1 0 1 1 2 0 0 0 0-1 2-1 1 0 0 0 1 2 2 0 1 1 1-1 2 0 0 1 0 2 1 0 1 1 1 0 0 1 0 0 1 0 0 0 2 0 2-1 1 0 1 0 2 0 1 0 0 1 1 1 0 0 0 0 0 1-1 1 0 0-3 0 0 1 0 0-1 0 0 1 0 0 0 1 1 0 1 0 0 0 0-1 1 0 1 0 1 0 0 0 4 0 0-1 1 0 0 1 1 0 1 0 0 0 1 1-1 0-2 0 0 1 1 1 1 0 1 1 1 1 0 0 0 0 0 1-1 0 0 1 1 0 0 1-1 0-1 1 0 0 0 1 0 1 1 1 0 1 1 2 2 1 1 0 0 0 1-1 0 0 0 0 1 1 2 1-1 2-1 0-1 0 0 0-1 0-1 0-2 0-1 1 0 0-1 1-3-1-2 0-1 0-3 0-1 1 0 1 0 0-3 0 0 1 0 1-1 0 1 1 1 1 1 0 0-1 2 0 0 1 0 1 2 0 0-1 0-3 1-1 0 0 1-1 0 0 1 0 0 0 0 1 1 0 0 0 0 1 1 1 0 0 3 0 0 1 1-1 0-1 0 0 0 0 0 1 1 1 0 4 0 3 0 4 0 4 0 3 0 4 0 4 0 3 0 4 0 3 0 4 0 4 0 3 0 4 0 4 0 3 0 0 4 0 4-1-1-2 0-3 1 0 0-2 2-1 0-1 0-2 0 0 0-1 0 0 1 0 1-4 4-1 1-2 2-2 2-2 1-1 2-1 1-4 0-1 0-2 0-1 0-2 1-1-1-4 2-1-2-1 0-2 0-2-1-1 0-2 0-1 0-1 0-2 0-1 1-3 0-1-1-1 0-2 0-1 0-3 0-3 0-3 0-1 0-4 1-2-1-2 1-1 0-1 0 0 0-1 0 0 1-1 0-1 1-2 1-3 6 0 2-1 1-1 0 0 0-5 1-2 1 1 1-1 0-1 1-1 0-1 1 0 1-3 1-2 4-2 2-1 2-1 1-1 0-1 0-1-1-1 0-3-1-5-2 0 1 1 1 2 0 1 0 3 1 2 1 1 0 1 1-1 2 0 2-1 1-3 3-1 1-3 4-2 2-1 1-2 1-3 2-1 0-1 0-1 1-2 0-1 1-3 3-2 0-1 1 0 1-1 1-1 0-1 2-1 2-3 0 0 1-1 1-1 1-3 0 1 0 2 1 0 1-1 0-2 2-1-1 0-1 0-1 0-1 0-1-1-1-2 0-1 0-3 1-4 2-2 0-1-1-1 0-2 0-1 0-1 0-1-2-1-2 0-1-1 0 0 0 0 0 0 1-1 0 0 0 0 0-1 0-1-1 0 0-1-1 0 0 0-1 0 0-3-2 0 0 0 0 0 0-7-1-3-1-1-2-1-1-1-3-2-3-1-1 0-1 0-1-1-2 0-1 0-1 0 0 0-3 0-4 0-3 0-3 0-3 0-4 0-3 0-3 0-4 0-3 0-3 0-4 0-3 0-3 1 1 1 2 0-2-1-1-1 0 0-4 0-5 1 0 1-1 0 0 1 1 0 0 1 1 0 0 1 1 0 0 0 1 1 1 0 1 0-1 0-1 1-1 0-1 0 0 0-1-2-2 0-1 1 0 0-1 0-1 1-1 1-1 1-1 0-1 1-1 0 0-1 0 0-1 0-1 0-1 0-1-1-1-1-1 0-1 0-1 1-1-1 0-1-2 0-1 0-2-1-3 0-2-1-2 0-1 0 0 1-1 0 0 1 0 0-1-1 0-1-1 0 0 1-1 0 0-1-1-1 0 0-1 1 0 0-1-1 0-1 0 0-1-1-1 0-1-1-1 0-2-1-1 0 0 0 0 0 0 0-1 7-2 0-1 4-2 1 0 2-2 2-1 1-1 1-1 3-3 1-2 1-1 2-2 1-2 1-2 1-1 0-3 0-2 0-4 0-3 0-4 0-2-1-2-1-3 0-1-1-2-2-4-3-3-1-1-1-1-2-1-1-1-3-3-1 0-1-1 0-1 1-1 0-1 0-1 0 0 2-3 1-2 0-1 1 0 1-1 1-2 0 0-1-1 0 0 1-2 0 0 0-2 0 0 2 0 1 2 1 0-1-1 0-1 0-1 1-1 0-1 0-1 0 0 0-2 0 0-2-1 0 0 0-1 1 0 0 0-2-4 0-1 1-2 0 0 0-1-1 0 0 0-1-1 0-1 0 0 1-2 1 0 0-1-3 1-1-1-1 1-1-1 1 0 2-3 1-1 0-2 0-1 0 0 0-3 0-1 1-1 1-1-1-2-1-1-1 0 0-1-1-1-1-2 0-4 0-2 0-1 0-1 0 0 2-2 3-2 2-1 1 1 3 0 2 1 8 3 1 2-1 1 0 0 3-2 0 0 1-1 2 1 1 0 1 1 2 2 0 0 0-1 0-1 2-1 2-1 1-1 2-1 1-1 1 0 0 1 2 1 1 1 1 1 1 2 1 0 1 1 1 0 1 0 0 0 0 1 0 0 0 1 0 1-1 2 0 0 1 0 1-1 0 0 2 1 1 1 0 0 1 1 0 1 0 0 0 1 0 0-1 1 0 0 2 0 0-1 1 0 0-1 2 2 0 0 0 0 0 1-1 0-1 1 0 1 1 0 1 0 0 1-1 0 0 1 2 2 1 1 1 0 1 0 2 1 2 1 2 0 1 0 1 0 1 0 0 1 1 0-1 2 1 0 1 1 1 0 1-1 0 0 1-1 0-1 0-1 1 0 0 0 1 1 0 2 0 0 0 1 0 1-1 0 0 1-1 1-1 2 0 2 0 0 0 1 0 1 0 1 1 1 0 1 0 1 0 0 0 1-1 1-2 0-5 0-1 0 0 1 2 0 1 0 5 0 0 1 1 1 0 1 0 1 1 1-1 1 0 1 0 1-1 2 1 1 2 0 1 1 0 0-1 2 0 0 0 1 0 1 0 0-1 1 0 1 0 1-1 1 0 0 0 0-1-2 0 0-1 0 0 0 0 1 0 0 0 0-1 1-2 1 0 0 1 0 2 1 1 0 1 0 2-2 1-1 1 0 1 0 1 0 2 0 1 0 1 0 0 1 1 1 0 0 1 3 0 1 1 0 0 1 0 1-1 3-1 1-1 2-1 0-2 1-1 1-1 0 0 1 3-1 2-1 1-1 1 0 0-2 1-4 1-1 0 0 1 0 1 3 0 0-1 1-1 2 1 0 1-3 0 0 0-1 1-1 0 1 0 2 0 2 1 0-1 2 1 0 0-1 0-1 0-1 1-1 1-1 2-1 1-1 2-1 1 0 1-1 1-2 0-1 0 0 1-1 1 0 0 0 1 1 1 1 0 1 0 0 0 3 1 0 0-2 0-1 0 0 0-1-1-1 0-1 0-1 1 0 1 0 0-1-1 0 0-1 1-1 0 0 1 0 0 0 0 0 0-1 2 1 0-1 1 0 0 0-1-1-1 0 0 0 0-1-1-1 0 0 1 0 0 0 0 0 1-2 0 0 1 0 0 0-1-2 0 0 1 0 1 0 2 1 0 0 0 0-1-1-1-1-1 0 0 0-1-2 0 0 0-1 1-2 0 0 0 0 1 0 1 0 1 1 0-1 0 0-1-1 0 0 0-1 1-2 0-1 1-3 1-1 0 0 0-1 1 0 1 1zm25 175-4 0-2-1-3 0-2-1-5-3 0 0-1-1 0-1-1-1-5-2-1-1 1-1 1 0 1 0 4 1 4 1 2 0 2 1 2 1 4 3 1 1 2 1 1 1 0 1 0 1-1 0zm-44 14-1 0-1 1 0 1-1 0-1 0-1 0-1 0-2-1 0 0 0-1-1 0-2 0-1 0 0 0 0 1-2 0-1 0 0 2 0 1 0 1 0 1 0 0 0 1-1 0-1 1-4 2 0-1 0-1-1 0 0 0-1 0 0 1-1 2-2 2-1 1-1 2-1 1-1 2 0 2-1 1 0 1-1 2 0 1 0 1 0 0 0 1 0 0-1 1 0 1 0 0-2 1-1 1 0 1 1 1 0 0-1 0 0 0 0 0-1 1 0 0 0 1 0 0-1 0 0-1 0 0-1 0 0 1 0 0-1 0-1 0-1 1-1 2-4 0-3 0-4 0-4 0-1 0-3 0-3 0-4 0-2 0 0 0 1 0 2-2 2-1 3-2 2 0 0 0 1-2 0-1 1-1 1-2 0-2 2-1 2-1 2-2 2-1 1 0 0-1 1 0 2-2 2 0 2-1 1 0 1-1 2 0 4-3 1-1 2-2 1-1 1-2 2-2 2-2 1-2 1-1 3-3 1-1 1-1 2-1 1-1 2-1 3-1 3-2 4-2 4-2 4-1 3 0 3-1 1 0 5 1 2 2 3 2 1 1 0 1-2-1-1 0 1 1 1 1 0 2-1 2-2 1-1 0 0 1-1 1-1 0-1 1-2 1-1 0-1 0-2-1-2-1 0 0-1 1-2 0 0 0-1 0-3 1zm43 10 1 0 0 0 1 0-1 1-1 0-1 0 1-3 1-1 2-1 1-1 0 0 1 0-1 1-1 0-1 1 0 1-1 0-1 1 0 1zm-81 5-1 0 0 0 1-1 1 0 0 0 0 1-1 0zm-23 18-1 1-1-1-1 1-1 0 1-1 2-1 1-2 1 0-1 2 0 1 0 0zm-1-1-1 0-1 0 1-1 2 0-1 1z"><title>Quebec</title></path>
+<path class="st-path" id="ca-NB" d="m690 977 0 1-1 0 0 1-1 1 0 0-1 0-1 0 0-1-1-1 0 1 0 1-1 2-2 0-1 1-2 1-2 2-3 2-1 0-1-2 0 0 0-1 0 0 0 1-1 0 1 1-1 0-1 1-1 1 0 0-1 0-2 0-1 1-1-1 0 0 0-1-1 1 0-1-1 0 0 0-1 0 0 0 0 0 0 0-1 0 0 0 0-1-1 0 1-1 0 0 0 0 0-1-1 0 0-1 0 0 1 0 0 0 0-1 0 0-1 0 0 0-1-1 0 0-1 0 0 0 0 0 0-1-1 0 0 0 1-1 0 0 0 0 0-1 0 0 0 0 0 0 0-1 0-1 0-2 0-2-1-2 0-1 0-3 0-2 0-1-1-2-1-1-1-1-1 0-1 0 0 0-1 1-1 0-2 1 0 0-1 0 0 0-1-1 0 0 4-2 1-1 1 0 0-1 0 0 0-2 0 0 0-1 0-2 1 0 2 0 0-1 0 0 1 0 2 0 1 0 0 1 0 0 2 1 1 0 1 0 1-1 1 1 0-1 1-1 1 0 1 0 2 0 0 0 2 1 3 1 1 0 1 2 0 1 1 0 1-2 1 0 3-1-1 1 2 0 1 1 0 1-1 1-1 3-1 2-2 1 0 1 1 0 1-1 1 0 1 1 0 1-1 1 1 1 0 2 1 0 0 2 1 1 0 1 0 1 1 1 3 0 0 0 2 0 1 1 0 0-2 1 0 0zm-4-25-1 1 1-1 0-1 0 0 0 0 0 1zm0 1 0 1-1 1 0 0-1 0 1-1 0-1 0 0 0 0 1 0zm-20 41-1 1 0-2 0 0 1 0 0 1 0 0z"><title>New Brunswick</title></path>
+<path class="st-path" id="ca-NS" d="m716 978 1 0 1 0 1 0 0 0-1 1-1 0 1 1 0 0-1 0 0 1 0 0 1 0 1 0 0 0 1 0 0 0 2-3 0 0-2 1 0-1 1-1 0-1 1-1 1-1 0 0 1 0 0 0 0 1 2 0 1 0 1 1 0 0 0 0-1 1 0 0 1 1 0 0-2 1-1 1 0 1-2 1-3 1 0 0-1 0-1 0-1 0-1 0-1 0 0 0 0 0-1-1-1-1 0-3 0-1 1-2 1 0 0-1 3-5 0-1 1-1 1-1 1-1 0 0 1 0 1 0-1 0 1 1 0 2 0 0 0 2-1 2 0 2 0 0 0 1-1 0-1 1-1 1-1 0-2 1zm-28 2 0 0 1-1 0-1 1 0 0-1 2 1 1 1 1 0 1 0 1 1 1 0 0 1 1 0 1-1 1 1 2 0 0 1 0 0 1 0 1 0 0 0 1 0 2-1 2-2 0 1 0 0 1 1 0 1 2 0 1 0 1 0 0 1 1 1 0 1-1 0-1 1 3 0 1 0 0 1 0 0 0 0-1 0-1 0-1 1-1 0-1 0 0 1-1 0-1 0-2 1-2 1-2 1-2 1-3 1 0 0-1 0-1 1-1 0-1 0 0 0-1-1 1 1 0 1-1 1 0 0-1 0-1 0 0-1-1-1 0 0-1 1 0 0 0 1-1-1-1 0 0 1 0 1 0 1 0 0-1 0-1 2-1 0-1 2-1 1 0 1-2 1-1 0 0 0-1 1 0 2-1-1 0 0 0 1-1 0 0 0-1 0-1-1-1-2 0 0-1-1 0 1-1 0 0-1-1-3 0-1 1-3 2-2-1 0-2 2 1-1 0 0 0-1 1-1 2 0 1 0 0-1 1 0 0-1-1 1-1 0 0 0 1-1 7-4 1-1 3-1 0 0 0-1 1 1 0 0-1 0 0 1 0 1 2 0 0 1 0-1 1-1 3-1 2-1 1 0-2-1-3 1-1-1-2 1-3-1 0 1-1 0-1 0 0 0-1 0 1-2 3-1 1-2 0-1 1 0zm30 4-1 0 0 0 0 0 0-1 0 0 1 0 0 1 0 0zm-48 15 0 1 0-1 0-1 1 0-1 1zm58 5-1 0-1 0-1 0 0-1 2 1 1 0 1-1-1 1z"><title>Nova Scotia</title></path>
+<path class="st-path" id="ca-PE" d="m692 972 0 0 1-1 0-1 2 1 0 0 1 0 0 0 1 1 1 0 2 0 2 0 0 0 3-1 2 0 1 1 0 0 0 0-1 1-1 1-2 1 0 0 0 1 0 1 0 0 0 1 0 0-2 0-1 0 0 0-1-1 0 0-1 0 1-1 0-1-1 0 0 0 0-1 1 0 0 0-1 0-1 0 0 1-1 0 1 0 0 1-1 0-3-1 0 0-1-1-1-1 1 0 0 0 0-1-1 0-2 0 0 0 0-2-1 0-1-1-1 0 0 0 0-1 1-1 1-1 0-1 2-1 0 1 0 1-1 2 1 1 1 1 0 0 0 1-1 0 1 0z"><title>Prince Edward Island</title></path>
+<path class="st-path" id="ca-NL" d="m752 904 0-4 0-4-3 0-4 0-4 0-3 0-4 0-3 0-4 0-4 0-3 0-4 0-4 0-3 0-4 0-4 0-3 0-4 0-1 0-1-1 0 0 0 0 1 0 1 0 0-1-1 0 0-3-1 0-1-1 0 0 0-1-1 0 0 0 0 0 0-1 1-1 0 0 1 0 3-1 1 0 0 0-1-2-1 0 0 0 1-2 0 0-1-1-1-1 0-1-1 1-1 0 0 0 0 3-1 0-1 0 0 1 0 3 0 1 1 2-1 3 0 1-1 0 0 1 0 2 0 1 0 0 0 1 0 1-2 1-1 1-1-2 0-1 0 0 1 0 0-1 0 0-1-1-2-2-1-1-1 0-1-1-1 0 0 0-1 0 0 1-1 1 0 0-1-1 0 0-1 1 0 0 0 0-1 0-1-1 0-1-1-1-1-1 0 0 0 2 0 0-1 0 0 0 0-1-1-1 0 0 1-1 0 0 0-4 0 0 0-1 0-1 1-1 0 0 0 0 0-1-1-1 0 0-1 0 0 0 0 1-1 0 0 0 0 3-1 0-1 1 0 0 0 0-1 0-1-1 0 0 0-1 0-2 0-1 1-1 0-2 0-2 0 0 0-1-1 0 0 0 0-1-1-1-2-1-1 0 0 0 1-2-1-1 0-1-2-3 0 0 0-1 1 0 1-2 0 0 0 0-1-2 0-1 0-1 0 0 0-1 1 0 2 1 0 0 1-1 0 0 0-1 0 0 0-1-1-2-1-1 0-1 0-1 0 0 0-1 1 0 0 1 1 2 3 2 1 1 1-1 0-1-1-2 0 0 0-2 0-1 0-1-1-1 0 0 1-1 0 1 1 1 3 3 1 1 1 1 2 0 0 0 0 2 1 0 1 1 5 0 2 0 5 0 3 1 2 1 0 0 1-1 0-2 1-2 0-1 0 0 0-2 0-1 0 0 1-1 2-1 1-1-1-1 0 0 0-1 0 0-1-1-1 0 0-1-1-2-2-2 0 0 0-1 1 0 0-1 1 0-1-1-2 0 0-1-1 0 0 0 0-1 0-1 0 0-1-1 0 0-1 0 0-1 0-1 1 0 1 0 0-1 0-1-1-2 0-1 0 0 0-1 1 0 0-1 0-1 1-2 0-1 0-1 1-1 0 0-1-1 0-1 1-1 0-2 0-1 0 0 1-2 0 0 0 0 0 0-1 0-1 0 0 0 0-1-1 0 0-1 0 0-1 1 0-1-1-1 0-2-2-2 0 0 0-1 0 0 3-3 0-1 2-1 0 0 0-1 0-1-2 1 0-1 0 0 0-1 0 0 0 0 1-1 4-1 0 0 0 0 0 0 0-1-1 0 0-1-1 0-2 1-2 1 0 0-1 0 0-2-3-1-2 0 0 0 0-1 0-1 0 0 1 0 3 1 0 0 1-1 0 0-1-1-1 0 0-1 0-1 0-2 0-1 1-1 0-1 0 0 0 0-3 1 0-1-1-1 0-5 1 0 1-1 0 0 0-1-1 0-1-1 0 0 0 0 0-1 1 0 0 0 1-1 0 0 0-1-2 0 0-1 0 0 0-1 2 0 1 0 1 1 0 1-1 1-2 1 0 1 0 0 2-1 1 0 1 0 1 2 0 2-1 2 1-1 1-1 1 2 0 1 0 0 1 2 1 1-1 1-1 1 0 0 1 1 1 0 0 1 0 0 1-1 1 0 1 2-1 2-1 0-1 1-2 0 0 0 0 0 1 0 2 0 2-1 1 0 0 1 0 0 0 0 0 0 0 1 1 1 0 0-1 1 1 0 1 0 0 0 1 2 1 1-2 3-1 0-2 1 0 1-1 1 0 0 2-2 1 0 0 0 0 0 0 1 1 0 2-1 1 0 1 0 0 0-1 3-1 2-2 1-1 1-1 1 1 0 2-2 1 0 2-1 1 0 2 3 1 1 0 0 2 0 0 1 0 1 0 0 0 1 0 2 0 0-1 1-1 1-1 0-1 1 0 0-1-1 0 1 1 0 1 0 1 0 1 0 1 1 1 0 0 0 0 1-1 1 0 0 0 1 1 0 0 1 1-1 1 1 2 2 0 2 0 1 0 1 0 2-1 0-5 0-3-2 0 0 1-1-1 0-1 1 0 0 1 1 2 1 2 1 1 0 0 1 1 0 0 1-2 0-1 0 1 1 2 0 2 1 1 0-1 1-2 0 0 1 1 0 2 0 0 0 1 3 0 0-2 0 0 1 1 0 2 1 0 0 0 1 1 0 0 0 1-1 1-1 1 1 0 1 1 1 0 0 0 1 1-1 1 0 0 0 0 1 0 1 0 1 1 1 1 1-1 1-1 1-1 2 0 0 0 2-1 1 0 0 2-2 1-1 3 0 1-1 1 0 0 0 0 2 1 0 1-1 0 1 0 1-2 2-1 2 0 0 1-1 3-2 0-1 0-1 1-1 2 1 0 0 1 2 0 1 1 2 3 1 1 0 1 0 1-1 1-1 1 1 0 1 1 1 1 1 1 0 1 0 1 1 0 0-1 1-1 1-1 1-2 0-2 1 0 0-1 1-1 0-1 1-1 1 0 1-1 0-1 0-1 1 0 0-1 0 0 1-1 0-3 2-1 0-1-1-1 1 0 0-2 1 0 0 0 1-1 1 0 0 0 0-1 0-1-1 0 1 2 1 1 1-1 0-1 1 0 1 0 0 0 0-1 1 0 0 0 0 2-1 2-1 0-1 1 0 2-1 1-1 1-1 2-1 2-2 2-2 3-1 3 0 1 0 0-1-1 0-1 0-2 0 0 0 0-1 1 0 1 0 5 0 2 1 2 3 0 1 0 1 0 1-1 0-2 2 0 0 0 0 1 0 0 1 0 1 1-1 2-2 2-1 1 0 2 0 0 0 0 0 1 2 1 0 1 0 2 2 0 1 1 1-1 0 1 1 0 0 0 1 0 1-1 2 1 2 0 1-1 1 1 1 0 0 0 1-3 0-1 0-1 1 1 0 2 0 2 0 1 1 0 0 0 1-1 0-1 0-1 0 0 0 2 1 0 1 1 0 0 1 0 1-3 3-2 2-3 1-3 4-1 0-1 0 0 0zm-41-95 1 1 0 2-2 0-1-2-1 0 0-1 1 0 0 0 0 0 1 0 1 0zm6 25 1 1-2-1 0 0 0 0 0-1 0 0 1 0 0 0 1 0 0 1-1 0zm51 63 0 0-1 0 1 0 0-1 1 0 0 1-1 0zm-1 5-1 2 0 1 0 0-1 0-2 0-1 0 0 1 0 1 0 0 1 0 0 0 1 0 0 0 0 1 0 0 0 1 0 1-1 1 0 1-1 1-1 1 0 0 0 1-1 1-1 2-1 1 0 0 0 1-1 1-1 2 0 1 0 1 0 0 0 1-1 0 0 1 0 0 0 1 0 0 0 1 0 1 0-1 2-2 1-1 0 0 1-1 0-1 1-1 1 0 0 0 0 0 0 1 0 1 0 0 1-1 1 0 0 0 1 1 1 0 1-1 1 0-1 1 0 1-1 1-3 1-1 1 0 0 1 0 0 0 1 0 0 0 0 0 0 1-2 2 1 0 2-1 1 1 2 0 1-1 0 0 0 1 0 1 0 0 1 0 0-1 0-1 0 0 0 0 0 0 0 1 0 1 0 1-1 2 0 0 0 1 0 0 1-1 0 0 0-1 0 0 1 0 1-1 0 0 0 0 0 0 0 0 1 0 1-1 0 0 1 0 0-1 1-1 1 0 0 0 0 0 0 1 0 1 0 0 1 0 0-1 0 0 1 0 3 0 0 0 1 1 2 1 0 0 0 1 0 1-1 1-1 0 0 1 0 1 0 0-1 0-2 2 0 0 2 0 0-1 1 1-1 0-1 0 0 1 0 0 1 0 1 0 1 0 0 1-1 1 0 0-1 1-1 1-1 0 0 0 2 0 0-1 1 0 1 0 0 0 1 0 1-1 1 0 1 0 0 0 1-1 1 0 0 0 0 0 0 1 0 0 0 1-1 1-1 0 0 1-1-1 0 1-1 0-1 1 0 1 0 0 0 1 0 0-1 0 0 1-1 0-1 0 1 0 1 0 0 0 0 1 0 0-2 2 0 0 1 1 0 1 0 0 1 0 1 0 1-1 2-4 1-1 2-1 0 1 0 0 0 0 0 1-1 1-1 2 0 1 0 1 0 2 0 0 0 1 1-1 1-1 0-1 1-1 0-1 0 0 1 1 0 0 0 1 0 1 0 1 0 1-2 4 0 1 0 0 0 1-1 2 0 1 0 1-1 0 0 0-1 0 0 0 0-1-1 0 0 0-2 1 0 0 0 0 0 0 0-3 0-1 0-1 0-1 0 0 0 0-1 0 0 0-1 1-1 1-1 2-1 0 0 0 0 0 0-1 0 0 0-1 0-2 1-2 1-2 0 0 0-1 0 0 0-2-1-1 0-1-2-1 0 0 0 1-1 3-1 1 0 1 0 0-1 1 0-1 1-1 0-1-1 2-1 0-1 0 0 0-1 1-2 2 0 1 0 1-1 1-1 1 0 0-1 0-1 0-1 0-1 0 0 0-1 0 0 0 0-1 0 0 0-1 1 0 0-1 2 0 1-1 1 0 0-1 1-2 2-1 1-1 1-1 0 0-1 0 0 0-1 0 0 0-2 0-1 0 0 0-1 1 0 1 0 0 0 0-1 0-2 0 0 0-1 0-2 0 0 0 0 0 2-1 1-3-1 0 0 0-1 0-1 0 0 0 0 0-1 2 0 0-1 0-1 0-2 1-1 0-1 0-5-1-2 0-2 0 0 0-3 0-1 0 0-1 0 0-1 1 0 0-1 0-3 1-2 0-1 0 0-1-1-1 0-2 0 0 0-1 1-1 3-2 2-2 1-1 1-1 1-1 0 0-1 0-1 0-1 0-2 0-2 0 0 0 1-1 2-2 0 0-1 1 0 1 0 0 1 0 1 0 0 0 1-2 0-2 1-1 1-1 0 0 0 0 2 0 1 1 0 0 0 0 0 0 0-1-1 0 1-2 0 0 1 0-2 0 0-1-1 0 0-1 1-1 0-1 1-1 1 1 1 0 0 0 0 0-1-1 0-1 0-1 2-4 1-3 1-3 0-1 1-1 0 0 1 0 1-1-1 0 0 0 0-1 0 0 0 0 1-1 1-1 0-1 0-1 0 0 0 0 1 0 1-2 0 0 1-2 0-1 1 0 1-1 2-1 2-1 1 0 1 1 1 0 0 0 0-1 0 0 2-1 0 1 0 0 0 0zm-1 12 0 0 0 0 0 0 0 0 0-1 0 0 1 0 0 0 0 1-1 0zm13 14 1 1 0 0-2 1 0 0 0 0 0-1 0-1 0 0 0 0 1 0 0 0zm-4 2-1 1 0 0-1 0 0 0-1-1 1 0 0 0 0 0 0 0 0 0 1 0 1-1 0 0 0 0 0 1zm3 29 0 0-1 0 0 0 1-1 0 0 0-1 0 0 1 0 0-1 0 1-1 2z"><title>Newfoundland and Labrador</title></path>
+<path class="st-path" id="ca-YT" d="m41 581 0 7 0 7 0 7 0 7 0 1 1 0 1 2 0 0 0 1 1 1 0 2 0 0 0 1 0 0 0 1 0 1 0 0 0 2-1 1 0 0 0 1 0 1 0 1 1 1 0 0 3 0 2 0 3 0 2 0 3 0 2 0 3 0 1 0 0 1 0 0 1 1 0 1 1 1 0 1 0 1 0 0 0 1 0 0 0 0 0 1 0 0 1 1 0 1 0 0 0 1 0 1 0 0 0 1 0 0-1 0 0 0 0 2 0 0 0 1 0 0 1 0 1 0 0 0 0 1 0 1 0 1 0 0-1 1 0 0 0 1 0 0 0 1 0 1 1 0 1 0 0 0 2-1 2 0 1 0 0 0 0 0 0 1-1 1 0 0 1 0 1 0 0-1 1-1 0 0 1 0 1 1 1 0 0 0 0 0-2 2 0 1 0 0 1 0 1 2 0 1 1 2 0 0 0 2-1 2-2 2 0 1 0 0-2 1 0 1 0 0 0 0 1 0 0 0 1 0 0 0 0 2 0 0 2 0 0 1 0 0 0 1-1 1 0 0 0 1-1 1 0 0 0 1 0 0 0 0 0 1 1 0 1 0 2 1 0 1 2 2 1 1 0 0 1 0-1 1 0 1 0 0 0 1 0 0 2 0 0 0 1-1 0 0 1-1 1 1 1 1 1 1 0 1 0 0 0 1 1 0 0 1 0 0-1 1 1 0 0 1 0 1 1 0 0 1 1 1 1 0 2 2 0 0 2 1 0 0 0 0 0 1-1 0-1 1 0 0 0 0 1 0 1 0 0 0 0 0 0 1 0 0 1 1 0 0 1 1 0 1 0 0 0 2-1 0-1 2 0 0 0 0 0 1 1 1 1 0 0 1 0 1 1 1 1 0 0 0 0 0-1 2 0 1 0 1 0 0 1 1 0 1 0 0 0 1 1 0 0 0 0 1 0 1 1 0 2 1 0 1 0 0-1 1 0 0 0 0 1 1 0 0-1 1 0 1 1 1 0 0 0 0 0 1-1 0 1 0 0 1 1 0 1 0 1 0 0 0 0 1 1 0 0 0 1-1 0 0 1 0 1 2 1 0 0 2 1 0 0 1 1 0 0 1 1 0 0 2 2 1 0 1 1 1 0 0 2 1 1-1 1 1 0 0 1 2 0 0 1 3 0 0 0 2-1 0 0 1 0 0 0 0 1 0 0 0 1 2-1 1 1 1 0 0 0 1 0 0 0 0 1 0 1 0 1 0 2 0 0 0 0 0 1 0 0-1 0 0 0-1 1 1 0 0 0 0 1 1 0-2 0 0 1 0 0 0 1 1 3 1 1 0 1-1 0 0 3 0 0-2 0 0 0 0 2 0 0 0 1 2 0 1-1 2 0 0 0 0 1 2 1 1 1 1 1 0 0 2 0 0 1 2 1 2 0 0 0 1 0 0 0 0 1 0 0 1 0 0-8 0-9 0-8 0-9 0-8 0-9 0-8 0-9 0-8 0-9 0-9 0-8 0-9 0-8 0-9 0-8 0-1-1 0-2 1-2 0-1-2 0-2 0-2 0-1 2-2 1-2-1-2-1 0 1-3 0-2-1 0-5 0-6 0-5 0-6 0-5 0-6 0-5 0-6 0-6 0-6 0-5 0-6 0-6 0-6 0-6 0-6 0-7 0-6 0-6 0-7 0-6 0-7 0-7 0-6 0-7 0-7 0-7 0-7 0-7 0-8 0-7 0-7 2 0 4 1 3-1 8 3 4 5 4 3 1 1 2 2 6 3 2 0 3 2 2 0 0 0zm-23-18-1 1-1-1 0 0 1-1 1 0 1 0 0 1-1 0z"><title>Yukon</title></path>
+<path class="st-path" id="ca-NT" d="m278 256 0 17 0 0-2 1-2 0-3-1 0 0-2-2-1-1-1 0 0 2-2 2 0 1-3 0-3-4-4 1-4 2-1 1-1-1 0-2 0-1 1-2 3-3 2-1 3-2 5-1 2-2 1-2 3-3 1-1 3-1 2 0 2 3 1 0zm0 27 0 7-2 1-5 2-1 1 0 1 1 0 1 1 4 0 0 0 1 1 0 1 0 1 0 4 0 2-1 2-1 1-3 2-2 1-1 0-2 0-6 3-2 0-2 0-3-4-2-1-1-1-1-1 0-1-1-1 1-1 0-1 0-1 0-1 0-2-1-3 0-1 0-1 0-1 0-2 1 0 1-1 2-1 5-2 9-4 3 0 2 0 2-1 4 1zm-34 14-3 2-1 0-3-2-3-6-1-3 1 0 1-1 1-1 1-1 2-1 1 0 0 2 0 1 1 0 1 1 1 3 1 0 1 1 0 1 1 1 0 1-1 1-1 1zm-16 17 1 1 0 1 0 1-1 1-6 3-1 2 1 1 2 3 2 3 0 1-1 1-2 0 0 0-1 0 0 1 2 4 1 2 0 1 0 1-1 1-2 2-2 1-5 2 0 1 0 1 0 3 0 1-1 2 0 1-1 0-1 1-1 0-2-2-1-1-2-3 0-1 0-2 1-3 0-3 1-3 0-2 0-1-1 0-1 1-1 1-1 1-1 1 0 2 0 2-1 2-1 1-1 0-1 0 0 1 0 1 2 2 0 2 0 1-2 2 0 1-1 3 0 1-1 1-1 0-1-1-1-3-1-2 0-1 0-1-1 1 0 1 0 2 0 2 0 1-1 1 0 1 2 2 0 1 0 1 0 0-1 0-1 2 0 1-2 2-2 0-2 1 0 0-1-1 0-4-1-2 0-1-1-3 0-1-1-1 0 0-1 1-1 5-1 1-1 1-1-1-3-1-2-1-1 1-2 2-1 1-1 0-1-1 0-2 0 0 0-1 1-1 0-1-1-1 0-1 0 0 0 0 0-1-1 1-2 1 1-1 1-3 2-5 1-1 0 0 7-2 1 0 3-7 1-1 1-2 4-4 1 0 0-3 1-1 1-1 3-6 3-4 2-2 2-3 2-1 7-2 6 3 1 0 1-1 0-1 1 0 2 1 0-1 1-1-1-1-2-1 0-1 0-1 1-1 1-1 3-1 1 0 1 1 2 3 4 4zm18 24-1 2-9-2-1-1 0-1 2-2 2-1 4 0 2 0 1 1 1 1 0 2-1 1zm32 46 0 3 0 19 0 2-1 0-2 1-2 1 0 1-2 2-1 2-3 2-4 3-7 2-5 1-4-1-2-1-1-1-3-3-1-1-1-2 0-2 2-1 3-2 4-2 5-4 1 0 5-1 2 1 1-1 1 0 2-1 2-3 1-2 1-1-1-1 0-1-3 3-1 1-2 0-2 1-2 0 0 0-2-2-1-1-1 0 0 1-1 2 0 0-1 1-4 0-3 1-1 0 0-1 0-1 0-2-1-1 1-1 0-2 0-1 3-2 0-1-1 0-3 1 0 0-1-2 0 0 0 1 0 1-1 3 0 2-1 0-2-1 0 0 0 0 0 1 1 3 0 1-1 2-3 3-2 0 0 0-1-1 0-1-1-2-1 0 0 0-1 0 0 1-1 1 0 1-1 1 0 1-4-3-3-4-3 0-2 0-4-2-1-1 0-1 0-1 0 0 1-2 1-2 0-1 1-1 1 0 2 0 6 0 2-1 6-4 1-1 1-1 0-1 0 0-8 3-3 1-6-1-1 0 0-1 1-3 1-1 1-1 4-1 5-1 3 0 3-1 1-1-5 0-7 0-1 0-1-2-1-1 1-1 0-1 0-2 0-1 1-2 3-1 1-1 2 1 8 1 1-1-1 0-1-1-6-1-1-1 0 0 0-1 0-2 0-1 2-3 5-2 2 0 3 0 2 1 1 1 0 1 0 1 0 2 0 0 1 2 1 2 1 1 4-2 2 0 1 1 3 1 3 5 4 5 0 1-1 2 0 0 0 1 1 0 2 0 1 0 1 1 0 2 1 3 1 2 1 1 1 1 1 0 2 0 2 0 4 1 0 0zm0-26-2-2 0-1 0-1-1-1 0-1 1-1 2-2 0 9zm-74 24-3 2-2 0-2-2-2 0-1-1 0 0 1-2 0-1 2-3 4-5 2-2 2-1 2-3 2-1 1-1 1 1 0 1-1 4-1 2-2 4-3 7 0 1zm-25-6-1 0-1 0 1-1 1-3 0 0 0-1 0-1 1-1 0 0 1 0 0 1-1 2 0 2 0 1 0 0-1 1zm12 56 0 1 2-3 2-1 1 1 0 0 0 1 0 1 0 3 0 1 1-1 0 0 3-5 1-2 1 0 3-1 2 0 2 1 2 0 3 2 2 3 2 2 7 9 3 3 1 1 0 1 1 2 0 1 0 1-1 1 0 1-5 3-2 1-2 1-5 4-4 2-4 5-9 6-1 2-1 0-2 8-1 2-2 1-3 1-1 0 0 3-1 4-1 3 0 7-1 1 0 1-1 2-3 1-2 1-3 1 0-1-1-1-1 0 0 0-4 5-3 2-2 2-1 1-1 0-1 0-1-1-1-1-1-1-2-6 0-2-1-1-2-4 0 0-7-5-3-2-1-1-1-1-4 1-1-1 0 0 1-1 0-1 0-1 0-1 0-1 1-1 0 0 0-1 0-1 0 0 0 0 1-2 1-2 0-1 1-1 1-2 1-1 1-1 0 0-1-1 0-1 1-2 0-2 0-1 0-1 0 0 3-2 1-1 0 0 0-1-1-1 0 0-1 0-1-1 0-1 0-1 2-3 0-1 2-5 3-4 0-4 2-4 0 0 0-1-2-1-1-2-1-1-3-10 0-1 0-1-1-1 0 0 11-3 8-1 8-3 2 0 2 0 1 2 3 2 3 2 5 4 3 0-1 3 0 1 0 0zm87 36 0 8 0 16 0 16 0 15 0 15 0 14-3 0-2 0-3 0-3 0-3 0-3 0-2 0-3 0 0 3-2 2-1 0-1 0 0-2 0-3-5 0-4 0-5 0-5 0-4 0-5 0-5 0-4 0 0 3 1 2 1 2 1 1 1 2-2 0-2-2-1-2 0-1 0-2 0-2 0-2 0-1 0 0 5-2 10-2 8-2 4 0 2 1 2 0 4 1 6 1 1 0 2-1 1-1 3 0 1 0 1-1-1-1-4-2-9-5-2-1-4-1-1 0-3 1-1 0-2 0-2 1-4 1-7 0 0 0-2-1-1 0-5 0-6 0-6-7-1-2 0-1 1-1 3-3 1-1 5-1 4-2 4-2 1 0 2 0 1-1 0 0-1-1 0-1 1 0 2-1 2 1 1 0 1-1-1-1-2-1-11 3-5 1-3 1-2 0-2-1 0-1-1 0 1-2 3-1 1-3-1 0-5 1-2 0-2-2-1-1 0-1 0-1 0-3 0-2 0 0 3-5 2-2 2-1 0-1-1-1-1-1-1-1 0-1 0-1 1-2 2-3 6-6 2-3 3-1 3-3 9-5 9-5 3 1 0 1 1 1 0 2 0 1 1 3 0 2 0 2 0 1-1 2 0 2-1 2-2 3 0 1 0 0 1 0 2-1 2-1 2 0 1 0 0 0 1-1 0-1 0-1 0-2 0-1 2-3 0-1 2 0 3 0 2 2 4 1 5 4 2 1 0 2-1 3-2 4-2 1-1 1 1 1 1 1 1-2 1-1 1-2 1 0 0 0 0 1 0 1 0 0 0 1 1 0 0 0 2-2 1-3 3-2 0-1 2-1 0-1 0-2 0-1-3-2-1-3 0-2 2 1 3 0 1 0 0 0zm-96 96 0 8 0 5 0 5 0 6 0 5 0 5 0 4 3 2 2 2 2 2 3 2 2 2 2 2 2 1 3 2 2 2 2 2 3 2 2 1 2 2 2 2 3 2 2 2 2 1 3 2 2 2 2 2 3 1 2 2 2 2 2 2 3 1 2 2 2 2 3 1 2 2 2 2 2 2 3 1 4 0 4 0 4 0 4 0 3 4 2 3 3 3 2 3 3 2 2 1 4 0 4 1 4 1 4 1 4 0 4 1 4 1 4 0 4 1 3 1 4 1 4 0 4 1 4 1 4 0 4 1 0 3 0 5 0 5 0 5 0 4 0 5 0 5 0 4 0 5 0 5 0 4 0 5 0 4 0 5 0 4 0 5 0 4 0 4-5 0-4 0-5 0-4 0-5 0-4 0-5 0-4 0-4 0-5 0-4 0-5 0-4 0-5 0-4 0-5 0-5 0-6 0-6 0-5 0-6 0-5 0-6 0-6 0-5 0-6 0-5 0-6 0-6 0-5 0-6 0-5 0-5 0-4 0-4 0-5 0-4 0-4 0-4 0-5 0 0 0 0-1-1 0 0 0 0 0 0-1 0 0-1-2-1-2 0 0 0-2-1 0-1-1-1-1-1-2 0 0 0 0 1-2 0-1-1-2 0 0-2 0 0 0 0 0 0 2-3 0 0 0-1 1-1 0-3-1-1-1 0 0-1 0 0 0 0 2-1-1 0 0 0 0-1-1 0 1 0 0 0 1-1 0 0 0 0 0-2 0-1 0-1 0-1 0 0 0 0 0 0-1 0 0 0-1 0-1-1-2 0 0-1 0 0 0 0 0 0-1 1 0 0-2 0 0-1-3 0 0-1-2 0 0-1-1-1 1-2-1 0 0-1-1 0-1-2-1 0-2-1 0 0-1-1 0 0-1 0 0-1-2-1 0-1-2-1 0 0 0-1 1 0 0-1 0 0-1 0 0-1 0-1 0-1 0 0-1-1 0 1 0 0-1 0 0 0 0-1-1 0-1 1-1 0 0-1-1 0 0 0 0 1-1 0 0 0-1-2-1 0 0-1-1 0-1 0 0-1 0 0-1 0 0 0-1-1-1 0 0 0-1 0-1 1-2 0 0 0 0-1 0-1-1 0-1 0-1-1 0-1-1 0-1 0 0 0 0 1-2 1 0 0-2 0 0 0-1-1-1 0 0-1-1 0 0 0-1 0 0 0 0-1 0-1 0 0 0 0 0 1-1 1 0 0-1 0 0 0 0-2-1 0 0-2-2-1 0-1-1 0-1-1 0 0-1 0-1 0 0 0-1 0 0 0-1-1 0 0-1 0 0 0-1-1-1-1-1-1-1-1 1 0 0-1 1 0 0-2 0 0 0 0-1 0 0 0-1 1-1-1 0 0 0-1-1-1-2-1-1-2-1-1 0-1 0 0-1 0 0 0 0 0-1 0 0 1-1 0-1 0 0 1-1 0-1 0 0 0-1-2 0 0 0 0-2 0 0 0 0-1 0-1 0 0 0 0 0 0-1 2-1 0 0 0-1 2-2 1-2 0-2 0 0-1-2 0-1-1-2-1 0 0 0 0-1 2-2 0 0 0 0-1 0-1-1-1 0 0 0-1 1 0 1-1 0-1 0 0 0 1-1 0-1 0 0 0 0-1 0-2 0-2 1 0 0-1 0-1 0 0-1 0-1 0 0 0-1 0 0 1-1 0-1 0 0 0-1 0-1 0 0-1 0-1 0 0 0 0-1 0 0 0-2 0 0 1 0 0-1 0 0 0 0 0-1 0-1 0 0 0-1 0-1-1 0 0-1 0 0 0 0 0-1 0 0 0-1 0-1-1-1 0-1-1-1 0 0 0-1-1 0-3 0-2 0-3 0-2 0-3 0-2 0-3 0 0 0-1-1 0-1 0-1 0-1 0 0 1-1 0-2 0 0 0-1 0-1 0 0-1-1 0 0 1-2-1-1 0-1 0 0-2-2 0 0 0-1 0-7 0-7 0-7 0-7 3 0 2 1 5 4 1 0 0 0-2-4 0 0-2-1-2-1 0 0 0-1 0-1 0 0 2 0 1 0 0-1-1 0-1 0-1-1 0-1 2-5 1 1 1-1 1 0 1 0 0-3 0 0 1-1 2 0 4 0 0 0 0-2 0 0 0-2 0-1 0 0 2 0 0 1 1 1 0 1 2 1 0 0-1 2 0 1-1 3-1 1 2-1 3-2 2-1 1 0 2-1 0-1 1-1 1-3 0 0 3 0 1 0 0-1 0 0 0 0-1-1 0 0 0 0 1-1 1 0 1 1 0 0 3-1 3-3 1-1 1 0 1 0 1 0 1-2 0-1 1-1 2-2 1 0 1 0 1 1 1 0 1 0 1 0 1 0 1-3 1 0 0 1 1 2 0 1-1 2-7 5-2 3-2 1-1 0-2 0-1 1-1 0-4 1 0 1-1 0-1 3-1 1-1 1-1 1-2 1-1 1-2 3-1 1-1 2-1 2-1 1 1 1 0 1 1 1 1-1-1 0-1-1 0-1 0 0 6 1 1-1 0-1 0 0-1 0-1-1 0-1 0-1 0-1 1-1 1-1 2-1 1-1 1-1 2-1 0-1 1-1 0-1 0 0 0-1 1 0 1-1 2 1 0 1 0 1 0 0 1-2 0 0 1-1 0 1 1 0 0 2 0 3 0 1 1-2 0-1 2-4 1-2 2-3 2-1 5-3 2-1 2 0 1-1 0-1 1-1 0 0 0 2-1 1-1 1-1 1 1 1 0 1 0 0 1 0 1-1 1-2 3-3 1-1 0-3 2-2 3-1 1-1-3-1-1-1 0 0 1-1-1-1-1-1 0-1 1-1 0-2 1 0 1 1 1 1 3 4 2 2 1 1 1 5 1 3 1 2 1 2 0 2 3 4 2 2 2 2 1 1 2 0 1 0 2-2 0-1-1-2-1-2 1-1 1-2 0 0 0-2 1 0 0 0 0 0 1-2 1-1 1-1 0 0-1-1-1 0 0 0 0 0 0-1 2-1 0-1 1 0 1 0 0 0 1 1 0 1-1 2 0 2 1 4 1 0 2 2-1 1-2 4 0 1-1 0 0 1 1 1 1 0 2 0 0 0 4 0 1-1 0 0 1-2 1-1 1-1 0-2 1-3 0-1 0-1 1 0 2 1 0-1 3 1 3-1 3 1 2 0 2 1 3 2 1 1 1 2z"><title>Northwest Territories</title></path>
+<path class="st-path" id="ca-NU" d="m641 8 8 1 2-1 3 4 1 0 3-1 2 1 7 1 2 1 0 2-2 3-2 3-14 10-1 2 3 0 4 0 3-1 4-4 1 0 2-1 5-5 3-3 2 1 1 2 1 0 0-1 1-4 1-1 1-1 0 0 2 2 1 4 1 3 1 0 2-3 2-1 3 2 1 1 0 1-1 2 0 1 0 2 0 1 2 3 3 6 0 2-2 5 0 1 7-5 7 2 2 2 1 1 1 3 1 4-1 4-3 7-3 5-2 4-3 2-10 11-5 3-2 3-2 1-5-1-2 2-1 3-2 1-2 1-6 1-1 3-1 2 0 2-1 1-15 11-1 2 2 1 2-1 23-14 4-1 5 1-1 4-6 9-7 8-4 6-9 10-8 10-3 6-4 8-1 3-2 0-2 0-2-1-2-4-2-3-1-1 1 2 4 12-1 3-7 2-3 2-2 1-1-1-2 0-1 1 0 1 1 1 3 1 7-3 1 1 2 1 0 1-2 4-5 4 0 1 2 1 0 2-2 3-1 1-5 3-2 1-2-1-9-6-3-1-3-2-3 0-2 2 1 1 4 2 4 0 2 1 0 1 2 5 0 2 0 2-1 2 0 1-1 0-4 0-1 0-2 2-2 0-3 0-4 2-3 0-2-1-3-2-2-1-5-1 0 1 2 1 3 3 2 4 1 1 4 4 2 0 2 1 3-1 3 0-1 8-1 1-5 0-3-1-1-1-2-2-2 1-2 0-2 1-2 0-6 1-3 0-2-1-2 0-3 0 0 1 1 1 2 1 2 3 1 1 2-1 1-1 7-2 2 0 3 1 1 1 1 1 2 3 3 0 3 2 4 4 2 1 0 1-1 3 0 1-3 4-5 1-5 0-3 0-1 0 3 1 6 4 2 2 0 2-3 4-3 9-1 1-1 0-2 0-3 3-3 0-4-1-5 0 0 2-1 3 0 4 1 5-1 4 0 3-1 2-2 1-2 2-2 0-2 0-7 1-3 0-3 0-3-2-4-5-1-1-2-1 0 1 2 3 1 2 1 1-1 0-2 2-2 0-2 0 0 1 0 1 2 2 0 0 2 0 3-2 1-1 3 1 1 1 4 3 0 0 3-1 4-1 1 2 1 3 0 2-1 2 1 2 2 2 2 0 1-1 2-2 1-1 0 0 2 2 1 3 0 4-1 4-1 3-6 5-2 2-1 1-2 2-4 2-3 1-4 2-1 0-1 0-1-1 1-2 0-2 1-2 0-2-2-2 0-1-1-1-2 1-1 0-1 0-1 0-1-1-2-4-1-1-1 1-1-1 0-1-1-2 0 1 1 3 1 2 0 2 0 2-10 1-5 0-1-2-2-7 0 12-8 2-2 0-3-1-4-4-1-2-1-2 0-1-1 0-1 2-1 6-2-2-4-1-1-5 0 7-5-1-3 1-1-7 0-8-1 5 0 4 1 5-3-1-5-1-2-1 1-6 0-7 7-6 1-4 2-1 2-1 3 0 2 0 2 0 3-1 2-1 0 0 0-1-2-4-1-1-1 0-1-1-2-2-1-1-1-3-1-4-1-5 0-3 3-2 2-2 2 0 2 0 3 1 3 2 2 3 2 5 2 5 1 2 6 3 2 1 2-1 5 0 2-1 1-2 0-1 1-2 2-3 3-6 2-5 0-1 1-2 0-3-1 2-5 12-2 2-3 4-1 0-2 0-3-2-3 3-2-1-2-1 0-9-3-7 3-4 2-2 4-6 1 0 2 1-1-1-2-2-3 0 1-12-2 9-2 5-1 3-2 1-6 1 2-4 1-7-1 2-3 4-3 2-2 1-4 0-1-2 0-4 0-6 1-3 2-4 2-5 1-5 5-2 5-1 4-2 2-1 2 1 8 2 3 2 2 1 1 1 1-2 1-2 5 0 2 0 1-1 1-1 2-3 1-1-2 0-1 1-2 1-2 1-1 0-4-1-7 0-3-1-1-1-1-1-1-1-1-2 1-2 1-1 1 0 2 1 2 2 2 0-1-1-2-4-2-3-2-3-1-4-3-6-2-6-2-2-2-1-5-2-1-1-2-5-1-9-1-6 1-7 2-3 10 3 4-1 6 1 3 2 3 4 3 5 3 3 3 4 3 7 2 3 1 2 2 1 4 2 3 1 2 0 2-2 1-1-1-1-4 0-3-1-1-2-2-2-3-6-1-3-5-6-3-5-2-6-1-2 2-2 2-1 14-4 9-4 3-6 1-1 11-7 8-3 3-1 2-1 0-1-2-1-2 0-6 0-5-1-1-2 0-3 1-2 1-4 2-3 6-9 5-4 1-3-10 6-3 4-3 7-2 1-1 0-2 1-1 1 0 3-1 5-1 3 0 1-2 2-3 5-8 6-2 1-3 1-7 3-2 0-3-1 1-3 4-5 1-3-2 1-3 1-5 1-2 3-3 4-1 2-2 1-1 1-7 0-1 0-4-3-3 1-2 0-2-2-1-2 0-2 2-3 1-4 6-7 3-4 5-3 12-4 1-2-12 3-11 3-1 2-3 3-7 13-2 3-4 1-3-1-2-2-3-4-3-2-1-1-1-1 0-2-1-2 1-1 7-4 9 1 4-1 4-2 6-5 7-7 1-2-2-1-2 1-4 2-7 7-6 3-14 1-5 2-2 0-2-2-1-4 0-3 3-3 3 0 1-1-4-3-1-2 3-3 4-6 3-1 4-1 5 0 0-1-4-2-4 0-4 1-12 9-1 0-2-2 1-2 6-9 0-1-4 0-2-1-1-1-2 1-2 3-2 2-1-1-3-3 1-3 2-4 2-3 2-2 4-4 3-1 5 0 2-1 2-2 3-5 2-2 5-3 4 1 2 2 1 4 2 2 0-2 2-3 2-1 2 1 2 1 3 3 2 2 1 0 1-2 3 0 0-1-1-2-1-1-12-10 0-2 4-2 2-2 1 0 3-6 2-2 3-3 2 1 1 2 2 2 5 2 2 1 4 9 1 3 2 3 2 2 2 0 0-1-3-5 0-2 0-2 1-1 0-1 3 2 6 7 9 7 4 2 2 3 2 3 2 2 0 0-1-5-5-6-12-11-5-6-2-4-2-3 0-3 2-2 2-2 3-1 0-1-2-3-2-3 0-2 3-1 2 0 4 4 2 1 1-1-3-9 0-2 0-1 1-1 3 1 5 4 10 2 2 0 0-1-4-3-4-4-1-2-2-3-1-2 0-2 2-2 7 1 5 3 5-1 4 0 1 1 2 4 7 12 1 1 1 3 1 4 1 1 2-3 2-2-1-3-4-5-1-3-2-4-4-7-1-4-1-3 12-3 12 3 2 2 1 2 2 4 2 4 3 5 6 4-1-2-4-7-2-4 0-3 0-2 1-2 5-6 6-2 1 0 5 10 3 4 1 1 0-1-2-4-2-2 0-2 3-4 2-1 8-2 1 1 1 1 2 5 0 1zm-200 123 1 5 4 11 2 4 3 5 1 2 0 0 0 3 1 1 3 2 3 2 0 0 1-1 2-1 1 1 1 1 1 1 0 2 0 0 0 2 0 1 0 1 0 1 0 4 0 1 1 3 2 2 3 2 1 0 2 1 0-1-1-2-1-3-2-2 0-1 0-4 0-2 1-1 1-1 2 0 2 1 2 2 1 1 0 3 0 5 0 1-2 3-1 2 1 0 2 1 2 1 2 0 1 4 1 4-1 5-1 7-1 1 0 3 0 0 3-1 1 0 2-2 2 0 1 1 1 1 1 2 0 4 1 0 1-5 1-1 0-1 1 0 1 4 3 7 1 3 0 2-1 3-1 1-7 5-4 3-1 2-1 1-2 0 0 0-1 4 0 1-2 3-2 4-1 2-2-1-1-2 0-5 0-2 0-1 0-2 1-4 0 0 0 0-2 2 0 1-1 2 0 3 0 6 0 2-1 1 0 1 2 1 0 1 1 1 0 1 0 1-1 2-1 1-1-1-3-5-1 1 0 0 0 2 1 4 0 3 0 2-1 4-1 3 0 0-1 0-1-1-4-7-1-3-3-6 0-2-1 0 0 3 0 2 3 6 1 4 1 3 0 1 0 1-1 0 0-1-2-2-1-2-1-1-1-1-1 0-2-1-1 1 0 1 1 1 1 1 0 1 1 2-1 1-2 0-3 0-4-1-5-2-4-4-2-3-2-2 0-1 1-1 4-2 4-1-1-1-7-2-2 0-1 0-2 0-1-1-1-3-1-2 0-1 1-1 3 1 0-1-1-1-5-3-2-3-1-1 0-1 0-1 2-2 6-5 2 0 2 0 1-2 2-4 6-2 4-2 1-1-4 1-5-1-2-3-1-1-2 0-2 1-3 3-1 1-4 3-1 0 0 0 0-1 0-2 1-1 0-1-1 0-2 0-1 0-4 3-2 2 0 0-2-3-3-2-1-1 1-5 1-1 2-1 7-5 0-1 1-3-2 1-3 2-3 1-2 0-2 0-1-1-1-1-4-7-2-4 0-3 0-2-1-6 9 3 3 1 7 0 0 0 0-1 0-2 0-1 0-1 3-2 0 0-3-1-5 4-2 0-2-5-2 1-1-1-2-1-1-1-1-2 0-1 0-1 1-1 2-1 1 0 2 1 2 0-1-2-2-4-3-5 1-7 1-2 2 0 2 2 3 0 1 2 2 4 1 0 2 1 5 0-1-1-1-2-4-1-1-6-4-4-3-1 0-2 2-8 3-2 4 1 3-2 3-3 4 2 1 0 0-1 1-2 0-2-1-1-1-2-4 0-2-1-1-1 0-1 0-1 0-2 0-1 0 0 1-1 4 0 3-1 2 1 6 4 2 2 2 4 1 3zm-62 63 0 6 0 4-1 2 0 1-1 0-2-2-1-1 0-1 0-2-2-2-3 0-1 0-1-1 0-1 0-4 0-2 0-2 0-1 3-3 0 0 3 1 2 0 2 1 1 1 0 3 1 3zm-42 33 2 1 3 3 2 6 0 1 0 1 0 2 0 1-1 1 2 2 0 0 0 2 0 1 0-1 1-2 0-1 0-3 2-1 2-2 1 0 2 0 3 5 2 0 0 1 1 1 0 1-1 3 0 1 0 1 2 1 4-2 4 4 2 5 1 2 1 1-1 1 0 2-2 2 0 1 1 2 0 1 0 2 0 1 2 1 4 7 0 2 1 2 0 1-1 1 0 4-1 1-1 1-3 0-3 2-3-2-2-2-1-2-1-2 0-1 0-3-1-1-1-2-1-3-2 0-5-3-2 0-2 0-3 1 0 0-1-1 0-2 0-1 0-1-8 2-3 3-3-1-2-1-2-3-1-2-1-3 0-2 1-2 1 0 0-1 5 2 4 1 2-1 1-2-1-2-4 0 1-2 3-1 2-2-1-1-1 0-4 0-2-1 0-1 1 0 2-5 0 0-1-2-1-1 0-1-3 2-3 6 0 1-1 0-1-1 0-1 1-2 1-5 0-1-1-2-4 1-2 0 0-1 0-3 0-2 0-4 1-3 1-1 4 1 8-2 3 0 2 2zm65 36 2 2 4-1 1 1 3 3 1 2 1 1 0 1-1 1-3 2 0 2 2 2 1 2 0 1 0 2-1 3-1 1-2 0 0 0-2 2-3 2-5 0-1 1-2 2-1 0-1-1 0-1 0-1 1-1-1-1-3-2-2-3 0-1 0-1 4-1 1 0 1-1 0-1-1 0-2-2-5-1 0-2-2-2 0-3 0-1-2-1 0 0 0-2 0-1 0-1 2-2 0-1-2-5 0-3 0-1 1-1 1 0 4 0 2 1 2 1 2 2 3 1 1 1 2 4 0 1 0 1 1 0zm-124 10 0-17 1 1 1 1 1 3 1 0 1 0 0 1 1 3 0 2 0 2 0 2 0 1-1 1-2 1-3-1zm63 8-1 0-1 0-1-1 0 0 1-1 1-3 1-1 1 0 0 1 1 1-2 4zm-63 9 0-7 3 0 1 1 0 0-1 3-1 2-2 1zm75 10-2 0-2 0-2-1-1-2 0-3 0-2 0 0 2 0 3-1 2 1 3 1 1 1 1 1 0 1 1 1 0 1-4 0-1 1-1 1zm55-4 3 1 2 0 3-1 5 1 4 0 1 0 2 1 1 1 0 2-1 2-2 6 0 0-2 1-1 0-5-1-14 0-1-1-2-4 0-1 1-2 0-1 0-1 5-3 1 0zm-81 27-1 0-3-1-2-1-1-3-2-4-1-4-1-3-1-2 0-2-2-4 1-1 1-1 3 1 1 2 1 2 2 4 1 2 0 2 0 1 2 1 2 3 0 1 1 2 0 1 0 3-1 1zm132-5-2 2-2 0-6-5-2-2 0-2 0-2 0-3 0-2 1-1 0-1 2 0 1 0 3 1 2 1 3 4 1 2 0 3 0 2 0 1 0 1-1 1zm-40 14 2 0 1 0 1 0 2 1 2 3 1 1 1 0 0 1 0 2 0 1 0 0-1 2 0 2-1 2-1 1 0 2 1-1 4-6 2 1 4-1 4-2 3 0 2 0 1 1 4 3 1 1 0 1 1 1-1 1-2 0-4-1-1-1 0 1 0 0 0 2 0 0 5 0 14 5 0 2 0 1 0 1-1 1-8 1-5-1-4-2-1 1 1 2 2 0 2 2 1 1 4 1 1 1 1 2 1 0 1 2 1 2 1 0 1 0 2 2 1 1 0 1-1 2-1 2-2 2 0 1 2-1 1 1 3 4 1 0 0-1 0-1 0-1 0-2 0-2 0 0 1-1 1 0 0 1 4 5 4-3 1 1 0 2 1 1 1-4 1-1 4 4 2 1 1 1 2 1 3 1 0-2-1-2 1-1 3-2 2 0 3-2 3-1 1 0 4-4 1 0 1-2 2 1 4 2 1 0 5-3 2 0 2 0 4 1 4 2 1 0-1 2 1 1 0 0 1 1 4 0 2 0 2 2 0 1 0 0-1 2 0 1 1 0 3 0 1 1 1 2 1 3-1 1-1 3-3 2-3 3 0 0 1 1 1 1 1 0 2-1 1 0 1 1 1 1 0 1 0 2-4 1-3-2 0 0-1 0 0 1 1 1 1 2-1 0 0 1 0 2 0 1 0 3 0 0-9 0-1 1-2 2-2 0-1 0-1 0-4-2-2 1 0 0-2-2-1 0 0-2-1-2 0-1 0-2 0-1 0 0-1-1-1-1-1-1-1 0 1 2 0 0 1 1 0 2 0 3 0 0-2 3 0 0-3 0-3 2-2 0-2 0-1-1-1-1-1-1 0 0 0 3-1 0-1 0-1-1-1-2 0 0 0 1 0 1-1 0-2 2-1 0-2-2-1 0-1 1-3-1 0 0 0 2-1 0-2 0-3-1-2 2-4-1-3 0-1-1-1-1 0-1 1-1 0-2 1-3 0-1 0-1-1-1 0 0-2 1-1 3 0 1-1-1 0-1 0-1 0 0-1 0 0 1-1 1 0-1-1 1 1 1 0 1 0 1-1 1-2 1-1 1-2 0-2 0-3-2-1 0-3-3-1-1 0-1 1-2 0 0-3 3 0 0 0 3 0 0-2-1-1 0 0 0-1-1-2-2-1-1-1-6-1-3 0-1 1-1 0-1-1-2-2-1 0-2 0-1 0-2 0-1 0-1 1-2 2-5 0-1 0-1 0-2-1-3 0-2-1-2-2-3-2-5-1-3-2-6-1 0-1 0-2 2-1 1 0 0-2 1-5-1-2 0-1 0-2 1-3 0-1-4-4-2-1-1-1-2 1-1 2-1 0-1 1 0-2 0-1 0-6-5-2-1 0 0 0-1 0-1 0-1 2 2 0 0 2-1 0-1 0 0-2-2-1-1-1-1 1-2 0-1 1 0 1 0 1-1 3-2 2 0 2 0 5 2 4 2 3 2zm41 16-1 0-1 0 0 0-1 0-1-1-1-2-2-3-1-3 0-1 1-1 1-1 2-1 2 0 1 2 1 1 0 1 0 0 0 1-1 2 0 1 0 1 0 2 0 1 1 0 0 1zm-182 60 0-2 0-19 0-3 8 1 1-1 1-1 0-1 0-1 0-2 0-1-8-6-1-3 4-3 0-1 0-1 0-1 0-2-2-2-2-1-1 0 0-9 0-1 1-1 4-6 1-3 1-1 1-1 3-1 2 3 1 0 0 1 0 1 0 1-1 2-1 1 0 1 1 2 0 1 0 2 1 0 1 2 1 2 1 4 0 1-2 2 0 1-1 2 1 0 1 1 1 0 1-1 1 1 1 0 1 2 0 1 0 0-1 1-2 4 0 1 1 0 0 0 2-3 1-1 1 0 2 1 1 0 0 1 1 0 0 3 1 3 0 0 0-2 0-1 2-1 0-1-1 0 0-2-1-2 0 0 1-1 1-2 1-1 1 0 5 1 2 2 0 1 1 0 0 2 1 5 0 2-1 2-1 5 0 3-2 8-1 2-1 1-4 3-4 3 0 0-1 0-3-1-3-1-2 0-2 1-1 1-1-1-1 0-2-1 1-1 0 0 0-1-1-1-2 2-4 5-5 1zm79-63-3 0-1 0 0-1 1-1 3-1 2-3 1-1 2 0 2 0 1 1-4 3-4 3zm31 4 1 2-1 1 0 1 0 1 0 1 2 3 0 2 0 2 0 1-1 2 0 3 0 1 0 2 0 1-1 2-1 2 0 0 4 2 0 1 0 4 1 5-1 0 0-2-2-1-2 3 0 5 1 3 1 1 0 1-1 0-1 0-1-1-1-1 0 0 0 0 0 1 1 2 0 1 0 1-1 0-2 0-2 1-2 0-1 0-1 0-2 0 0 0-1-1-1 0-2 2-3-1-2 0-1 0 0-2-2-4 1-1 2-1 0 0-1-2-3-1-1-1 0-1 0-1 4-2 3-4 2-1 0-1 1-1 4 0 0-1-6 0-9 3-3 1-2-1-10 3 0 0-1-1-1-2 0-1 3-3 2-2-1-1 2-3 1 0 3 2 2 2 1 1 2-1 1-1 0 0-3 1 0-1-1-2 0-1-1-1 0-1 1-2-3-1-1-1 0-1 0-1 1-2 2-2 0-1-3 0-1 0-1-2 0-2 1-2 1-2 1 0 1 0 2 1 1 0 2 3 0 1 0 2 0 1 2 1 6 7 1 2 1 1 1 1 1-1 0 0 1-1-3-2-1-2 0-2 0 0 1 0 2 0 2-1-3 0-1-2-2 0-2-1 0-1 1 0 2-1 1 0 0-1-1-1-1-1-4-1-2-2 0 0 0-1 0-2 3-2 1-1 3-1 2 0 2 0 3 4 1 3 3-1-1-3 0-3 0-1 2-2 2 1 2 3 1 1 2 2 1 0 1 1 0 1zm-56-4 0 0 2-1 0 0 1 1 1 1 3 3 1 1 1 1-1 1-1 1-1 1-1 0-7 1-1-1-1-1-1-4 0-3 0-1 0-1 0-1 3-2 1 0 1 1 0 1 0 1 0 1zm16 21 2 2 0 1-1 0-2 2-1 1-1 2 0 1-4 0-3 0 1-2 2-3-2-2-5 3-2-2 2-4-2 0-2 0-2-2 1-3 3-2 4-1 4-2 3 0 2 1 0 3 1 4 0 1 2 2zm208 3 0 3-1 0-2 1-2 0-1 0 0-2 1-3 2-2 1-3 2-2 1 1 0 1 0 3-1 1 0 2zm-139 7-1 0-1-1 0-1-1-1 0-1 0-1 0-1 0-1 0 0 0-1 1 0 2-1 0 0 0 1 1 2 0 1 1 2 0 2 0 0 0 0-2 1zm-14 9-1 1 0 0-1-1-1 0-2 2 0 2-1 0-1 1-1-1 0-1 0-2 0-1 1-1 3-2 1-1 0-1 0 0 0-1 2 2 1 1 1 1 0 0-1 2zm23 17 0 2 0 1 0 2 0 3 0 1 0 0 0 1 0 1-1 1 0 0-3 1-2 0-3 0-2 0-1-1-1-1-3-3-1 0-4-2-2-3-1-1-1 1 0 0 0-1 0-1-1 0-1 0-1-1 0-1 0 0 1-2 1-4 1 0 1-1 1-2 0-2 1-3 1-1 2-2 5-3 2-1 2 1 2 1 1 1 3 5 2 2 1 3 0 2 1 3 0 1 0 2 0 1zm-95-1-2 0-3-1-1-2-1-1 0 0 0 0 1-2 1-4 0-1 2-2 1-1 2 1 2 1 0 1 1 0 0 2 0 2 1 1 0 1 0 1 0 1 0 1-1 1-3 1zm79 18-1 1 0-1-3-1-1-1 0 0 1-1 0 0 1-1 1 0 1 2 1 1 0 1 0 0zm-18 0-3 2-1-1 0-1 2-3 1-1 1 1 0 1 0 1 0 1zm37 12 4 1 1 1 1 1 2 2 1 1 3-1 2-1 5 1 4 2 1 1 1 1 0 2-1 2-1 2-1 4-2 1 0 1-1 1 0 2-2 3 0 1-2 1 0 1 1 1-1 1-1 4-2 3-1 2-2 3-1 1-1 0-9-2-2 0-5 1 0 1 2 1 2 1 1 3 1 1 0 1 0 2 0 0-3 5-1 4-1 3-1 0-3-1-1 0-3 1-2 0 0-5 0-5-1-4-2-9-1-1 0-2 0-2 0-1 0-4 0-2 0-4 0-8 0-2 0-1 0-1 1-1 1-1 0 0 4 2 1 1 1 0 0 0-1-1 0-1-2-3-1-2 0-1 0-1 0-1 1 0 0-2 1 0 2-2 2-1 5 0 2 0 2-1 1-1 2 1zm-46 9-2 1-1 0-1 1-1 0-1 0-3-1-1-1 0-1 0 0 1-1 2 0 1-1 0-1 1 0 0-1 2 0 5-2 3-1 0 1 1 0 0 1 0 0-1 2-1 1-3 3-1 0zm-15-2 7 7 1-1 3 0 2-1 3-1 2-2 1 0 2 0 1 0 2 1 1 0 0 1 1 1 1 3 0 1 0 0-1 1-1 1-1 1-1 0-1 1-1 0 0 1 0 1 0 0 1 0 1-1 1 1 0 0 1 2-1 1-2 1-2 2-4 5-2 2 0 1 0 1 0 1 0 0 0 1 2-2 1-1 1 0 2 0 1 0 1 1 2 2 0 0 0 1-1 0 0 1 2 1 1 2 0 1-1 2 0 0 1 1 0 0 2-2 2-1 0 0 1 1 0 2 1 2 0 2-1 2 0 1-1 1-1 1-1 0 1 0 1 1 0 1 0 1 0 1 0 1-1 3 0 0 0 1 1 1 0 4-3 1-1 1 0 2-1 1-2 1-2 0-5-1 0 0-1-1 0-2 0-1 0-1 0 0 0 0-1 0 0 2 0 2 2 4 0 2 0 1 0 0-2 3-1 1-1 0-1 0-1-1-1-1-2 0 0 0-1-1-1-4-1-3-2-3-3-4-2-3-3-4-1-1 0 0-2-1 0 0-1-2-1-1 0 0-1 0-2 1-2-1 0-1 0-1-1-1 0 0-1-2-4-3-2-4 0-1-1-1 1-2 0-2 1-2 0-1 2-1 1-1 2 0 1 1 0 1 1 1 0 1 1 1 1 1 1 2 1 2 0 1 2 0 2 0 3-1 1-1 0 0 0-6 0 0 2 3 0 0 1-1 0-1 0 0-1-3 0-1-1-1 0 0-1 0-1-1 0 0 0-1 0-2 1 0 1-1 1 1 1 1 1 0 1 0-1-1-3-3-1-1-1 2 0 0-2 1-1 0-5-5-1 0 0-2 0 0 1-1 1-1 2-1 1 0 1 1 2 2 1 2 0-1 0-1-1-2 0-1-1-1-1-1-1-1 0-1 0-1 0-1 1-1 3-1 3 1 2 1 1-2-1 0-1 0-1 0 0-1 0 0 1-2 1 0zm120 87 0 1 2-1 2-1 3-2 2-1 4 0 1 1 0 1 0 1 0 0 0 1 1 1 1-1 0-2 1-7 0-3 0-2 0-2 0-1-1-1-2 0-1 0-1 0-1-1 0-1-1-2-1-2-2-2-1-1 1-1 1-1 1-2 2-3 0 0 3 0 4 3 2 2 1 0 0 0-1-1-2-3-2-2 0-2 0 0 1-1 1-1-2 0-1 0-1 0-1 0-2-1 0-1-1-2-1-1 0-1 0-1-1-3 1-1 0-2 0-1 1-2 1-1 1 0 2 1 7 4 0-1-8-5-2-2-1-2 4-7 4-1 2-3 2 0 3 2 0-1-1-2 0-1 2-1 3-2 3-1 1-1 1-1 1 0 4 0 3 0 3 1 2 2 0 1 1 4 1 5 1 2 2 1 1 2 1 1 0 2 0 2 0 2 1 2 0 1 2 2 0 0-1 1-1 1-2 4-3 4-2 3 0 1 4-5 2 0 0 1-1 3-1 2-1 1 0 1 2 2 0 1-1 0-1 0 0 0 0 1 0 1 0 1 0 1 0 1 0 0 0 0 1 0 1-2 3-5 1-2 1 0 2 1 0 0-2-3 0-1 1-2 0 0 1-1 1-1 0 1 1 1 0 2 1 0 1 0 1-2 1 1 2 3 0 2 0 2 0 2 2 3 2 2 0 0 0-1-1-1 0-1-1-1-1-2 1-5 1-3 1 1 1 1 1 0 2 0 4 3 1 0 0-1-1 0-2-2-4-2-1-2 0-1 0-1 0-1 0-1 1-1 3-3 2-1 2 0 3 0 3 0 2 1 2 2 2 2 1 0 1 0 1 0 2 0 3 2 1 2 1 1 0 2 1 2-1 1-3 5-1 1-1 2-1 4-1 2 0 1 0 0 1-1 1-3 1-2 1-2 3-2 2-1 2 0 1 0 2 1 0 0 1 0 0 2 0 1 0 2-1 1-3 2-1 1-1 0-3 1 0 0 2 1 3 0 0 1-1 2-1 2 0 1 0 1 0 3-1 2 0 1 2-4 1-3 1-4 1-1 0-1 3 0 1-2 1-1 1 0 1 1 0 1-2 3-3 6 1-1 1-1 1-2 2-2 0 2 2 1 0 3 2 2 0 1 0-2-1-4 0-1 1-1 3-3 2 1 1 1 0 0 2 0 2 0 2 1 2 1 2 2 1 2 1 1 0 0 0 2 0 1-2 3-1 1 0 0-3 0-1 0 0 1-3 3-1 2-1 1-1 0 3 0 1-1 1-2 1-2 2-1 4 2 1 0 1-2 2-1 0 0 1 0 1 1 0 2 0 2 0 1-1 2-2 4-2 1-2 0-1 2-1 0-1 2 0 0-1 1 1 1 0 0 1 0 1-3 1-1 0 0 0 0 1 0 0 1 0 2-1 8 0 0 1-2 2-8 1-2 1-2 3-2 2-1 2-2 1 0 2 0 1 2 1 0 1 0 1 0 1 0 1 1 2 1 3 2 1 1 0 1 1 1-1 1 0 1-1 1 0 0-1 0-1 2-1 0-2 1-2 0-1 1-3 2-3 3 0 0 2 1 1-1 1-2 1-1 3 0 2-1 2 0 0 0 0 1 0 1 0 1-1 0-1 3 1 1 1 0 1-1 1-1 0-1 1 0 1-1 1 0 0-1-1-1 0 0 0-1 1-2 1-1 0 0 2 1 1 2 3 5 1 1 1 3 0 2 0 1 0 1-1 0 0 0-5-2-1 1-1 0-1 1-1 0 0 1-1 1-2 0-2 0-2 2-1 0-1 1 2 0 3-1 2 0 4 2 2 1 0-1 1 0 3 0 2 1 1 1 3 2 0 0 1 1 0 1 0 1-1 1-1 0-3 0-1 0-2 0-1 0-1-1-2-1-2 1-2-1-2 1-4 3 1 0 5-2 1 0 2 1 2 1 1 1 0 3 0 2-1 2-1-1-3-1-1 0-1 0-1 1-1 0-4-2-1 0 0 0 0 1 4 2 3 0 2 1 1 1 0 0 0 2 1 1 1 1 1 0 1-1 1 0 1 1 1 1 1 0 1 0 1 0 2 0 1 1 0 0 0 0-2 2-1 1 2 1 0 1 0 1 0 2-1 1 1 0 1-1 0 0 1 2 0 0 0-2 0-2 1-1 3-1-1 4 0 2-1 3-1 1 0 0 1 1 0 0 1-1 1-2 2-3 0 0 0 1 0 2 1 0 1 0 0-1 2 0 0 0 0 1 0 3 0 1 1 2 0 0 0-1 0-2 0-2 1-1 2-2 1 0 0 0 1 1 0 0-1 1-1 1 0 2 0 1 2 0 2-2 1 1 1 2 2 3 1-1 2 2-2 2 1 3-3 0-2 0-1 0-1 0 1 1 2 0 0 1 2 0 1 0 2 0 0-1 1-1 1-1 1 1 2 0 2 3-1 1 0 1-1 1 0 1 0 1-4 4 1 0 1-1 3-1 2-1 1 1 1 0 0-1 1 1 2 0 2-3 2 1 1 2 3 3 1 2 1 1 0 1-2 1 0 0-2-2-2-1-1 0-1 1 1 1 4 2 0 2 0 1-2 2-1 0-2-1-1-1-1-1-1 0 0 0 1 2 0 1-1 0 0 1 2 2 2 2 1 1-2 0-1 0-2 0-1 0 0 0 1 1 0 1 1 1 0 0 0 1-1 1-1 2 0 1-1 0-1 0-1 1-2-1-1-1-2-3 0 0 1 2 0 1-2 1 0 0 1 0 1 1 0 1 0 7 0 3-1 2-1 2-1-2-1-1 0-1-1 0 0-1-1 0-1 2-1-1-1-2 1-3 0-1 0 0 0 0-2 3 0 3-1-2-1-1-1-1-1-2-1-2-1-2 0-1-1-1 0-1 0 0-1-1 0-2 1-1 1-1 1-1 2-1 1-1 1-3 1-2 1-1-1 0-1 1-1 1-1 2-1 2-3 1-1 1-1 0-3 0 0-1 0-1 2-3-1 0 0 1-1 0-1 1-1 0-1-2-1-1-1 0-1-1-2-4 0-1 0-1-1-1-1-1 0 1 0 0 0 1-1 1-1 0-1-1 0 1 1 2 0 2 0 1-1 0-1-1-1-1-2-2-1 0 0 0 1 2 0 3 2 1 2 2 1 2-1 1 0 1-1 0-1 0-3-1-1-1-2-2-2-3-1 0-2 1 0 0 2 0 1 1 2 2 0 1-1 1 0 1 1 1 1 1 1 1 1 0 0 0-1 4 0 1 0 0 1 0 1-1 1-1 1 0 0 1 1 0 1 1 0 1 0 1 2 1-1 0-1 1 0 1 0 0 1 1 1 1 1 1 0 1 0 1 0 0 0 0 1 0 0 0 0 0 0 2 1 3 0 1 1 0 0-3 0-1 1 1 2 1 1 1 0 1-1 1 0 0 1 1 0 0 1-2 0-1 1-1 2 1 1 2 0 1 1 0 1 0 1 2 0 1-2 1 0 0 0 0 3 0 1 1 0 1-1 3-1-1-2 0-1 0 0 1 3 1 0 1 1 1 0 1 0 0 0 1 0 0 2 1 0-1 2 0 1 0 0 1-1 1-1 1 1 0 1 0 0 0 1 2 1 2-1 0 0 0 0 3 0 2 0 2 0 2-1 0 0 0-1 0-1-6-1-1 0-1-2-2 0 0 0 1 1 2 0 3 1 2-1 1 0 0 0 1 0 0 2 2 0 2 1 1 0 1 1 0-1 1 0 0-1 0-1 0-2-1 0 0 1 5 0 1 0 0-1 0-1-1-1-2-2-1-1-2 0 0-1 1 0 0 0-1-1 0 0-1-2-2-1 0 1 0 0 2 0 0-1 0-1-1-1-1-1-2 0-1 0 0 0 3 0 0-1 1 0-1 0 0 0-1-1-1-1-1 0 0 0-1-1 0-1 0-1-1-2-3-2-3-1-1 0-1 0 2 1 3 0 1 0 1-1-1-4-4-2-2-1 0-2 0-1 1 2 2 1 2 1 1 1 2 2 3 0 0 2 2 1 0 2 0 0 0-1 1 0 1 2 1 1 1 1 1 1 0 2 3 0 0 2 1 1 1 1 1 0 1 1 3 1 0 2 2 0 0 1 0 0 1-1 1-1 0 1 1 0 2 0 1-1 0-1 1 0 0-1-1-1 0-3-2-3-1-1-1-1 0 0-1-9-1-1-1-1 0-1-1-3-2 0 0-3-3-1-3-1-1-1 0-2 0-1 1-1 0-1-1-2-2-2 0-2-2-1 0 0-1 1-2 0 1-3 1 0 0-2-2-1-1-2-3-1-1 0-1 1 0 2 0 0 0 2-1 0-1 0-1-1 0 0 0 0-1-1 0-1-1-1-1-3 1-1-1 0 0 1-2 0-1 0 0 0 0 0 0-2 1-1 0 0-1-1-2 0-1-1 0-1-2-3-3-1-1-1-1 0 0 0-1 1-3 0 0-1 0-2-1-1 1 0 0-1 0 0 0-1 2 0 1 0 0-1 0 0 0 0-1 0-3-1 0-2 0 0-1-1 0 0-1 0-2-1 0 0 0-1 0 0 0 0 0-1 0 0 1 0 1 1 1 1 2 0 2-2 0-2 0-1 0-1 0-1-1-3 0 0 3 0 0-2 0-1 0-3 2-1 0 0 0-1 0-1 1-1 0-1-1-2 0-1 0-1 0-1-1-1-1-1 0 0 0-2-2 0-1-2-2 0-1 0-1 0-1 1-1 0-3 0-1 1 0 1-2 4-1 1-1 0-1-1-2 0-1 0 0 1-1 0-1 1 0 1 1 1 0 2 0 3 1 3 2 2 1 2 2 1 2 0 1 0 1 0 1 0 0 0 1 1 0 0 0 0-1 0-1 1 0 0-1-1-1 0-1-1-1-2-2 0-1 1-1 3 1 1 0 1-1 0-1 1 0 1 0 2 0 1 0 0 0 1-1 2-1 1-1 1 0 1 0 2 1 1 0 0-2-1-2-1-2-1-1-1-2-3-3-1-2 0-1 0 0 0-1 4-4 4-3 1-2 1-1 0-1 1 0 1-1 1-1 0-1 0-1 2-4 1-1 1 0 1-1 2-3 0-1-1 0 0-1-2-7-2-4-1-3-2-4-2-4 0-1 0-1 0 0-2 1-1 0-1 0-1-1 0-2 0-1 0 0 1-2 0-1 0-1-1-1 0 0-1-1-1 0 0 1 1 3 0 0-2 1-1-1 0 0-1 0-2-4 0-1 0-1 0 0-1 0 0 0-1 0 0 0 1-2 0-1 0 0-1 0-1-1 1 0 1-1 0-1 0-1-1 0-1 1-1 3-1 0-1-1-1 0-1 0-1 2-2 1-3 3-2 1-1 0-1-1 0-1 0-1 1 0 0-1 0-3 0-1 0-1 1 0 3 0 1 0 1 0 1-1 1-2 0-1-1-2 0-1-3-2-1 0-1-1-1 0 0-1-1-1 0-1 0-1 1-1 2 0 0-1-2 0-1 0 0 0-1 2-1 1-1-1-1-1-1 0 0 0 0-1 1 0 1-2 0-1-1-1 0 0-2-1-3 1 0 0-1-2 0-2 0-2-1-3 0-2-1 0-2 1-1 0-1 0-1-3-1-1-1 0-1-2 0-1-1-1-1-2-1 0 0 0-1 1-1 2-1 1 0 1 1 1 3 1 1 1 0 1 1 2 0 2 0 1 0 1-1 1-2 2-2 0-2 1-1-1-4-2-1 0-1-1-3-1-1 0-3-1-4 0-1 0 1 1 1 1 1 0 1 1 2 2 1 1 0 2 0 1 0 1-6-6-4 2-1 1-2 0-1-1-4-3-2-1 0 0-4 2-3 0-5-2-3 0 0-1-1 0-1 0-4-1-3 2-4-2-1-1 0-1-1-3 0-2 0-1 0-1 1-1-2 2-1 0-1 0-3 0 0 0 0 1 1 0 0 1-2 0-2 0-1 0-1 0-1 2 0 0-1 0-2-3-2-2-3-1-1-1 0 0-4-7 0-1-1-5 0-1-1-1 1 0 3 1 3-1 2 1 2 1 2 1 2 0 2 0 4-1 0-1-2-1-2-1-2-2-1-1-1-1-5 0-4-1-3-2-3-2-1-1 0-1-1-3 0-4 0-3-1-2 0-1 1-3 2-3 0-1 0 0-1-1 0-1 0-2 0-1 0-2 0-1 1-3 2-4 1-3 0-1 1-4 0-2 0-1 0-2 1-2 2-2 1-2 1-1 0-1 0 0 0-1 5-6 2-2 2-2 2-1 6-2 4-1 4 0 7 1 1 1 0 1 1 1-1 1-2 3-2 2-2 2-3 5-1 2-3 9-1 1 0 2-1 3 0 1 1 2 2 4 0 2 0 2 0 4 0 2 0 2 1 3 0 3 2 4 2 4 2 2 2 2 2 3 1 1-1 1-2 2-4 1-1 1-2 2-3 2-1 0zm63-78 2 1 9-1 2 0 7 4 1 1 1 2 1 2 0 1 2 1 1 2 0 1 1 2 1 1 1 1 0 0 0 3 1 1 1 1 0 1-1 1-2 1-5-1-8-1-4 0-2 1-5 3-2 0-1 0-3-2-1-1-1-1 0-3-1-3 0-2-1-2-1-1-2-1-1-1-1-1 0-1 0-2 0-1 0 0 0 0 0-2-1-2 0-2 0-2 1-1 0 0 2 0 1 0 3 2 2 0 3 1zm-231 23 0 0-1 0-1-2-2-3-3-3 0-2-1-2-3-3-2-2-1 0 0-1 1-3 1-2 1-1 2-1 7-1 2 0 2 0 2 3 2 1 0 0 1 2 0 1 0 2 0 4-1 1-1 4-2 3 0 1-1 2-1 1-1 1zm-103 92 2 0-1-2-1-1-1-2-1-2 0-3 4 0 5 0 5 0 4 0 5 0 5 0 4 0 5 0 0 3 0 2 1 0 1 0 2-2 0-3 3 0 2 0 3 0 3 0 3 0 3 0 2 0 3 0 0-14 0-15 0-15 0-16 0-16 0-8 4 3 1 2 1 1 2 2 1 1 0 1 0 0 0 1 0 1 1 0 1 1 0 0 1 2 0 2 1 3 1 5 2 7 0 5 0 0 1 1 1 1 1 1 1 0 0 0 0-1 1-1 3-3 0-1 0-1 0 0 0 0 0-1-2-3-1-4-1-4 0-2 0-3-1 0 0-1 0-1 0-1 0-1-1-2-2-14 0-1 0-1 1-1 1 0 1 0-1-1-1-1 0-1 1-1 3 0 2 2 3 3 0 0 1-2 0-1 2 0 3 3 3 3 3 2 1 3 2 2 0 2 0 1 0 1 0 0 1 2 0 1 0 2 1 3 0 1 3 13 1 2 0 1 2 5 1 4 1 2 0 1 0 1 0 1-1 1 0 1 0 2-1 3 0 1 0 1 3 4 2 4 1 1 3 3 2 1 1 1 1 1 0 0 1 0 0 0 0-1-1-2 0-1 0 0 3 4 2 1 2 2 3 3 0 0 2 0 1 0 0 1 0 0 0 2 1 1 3 0 0 0 1 0 0 1 1 2 1 4 0 1-1 3 0 1-1 0-1 0-1-1-1-1 0-2-1-1 0 1 0 2-1 1 0 0-1 0-1-1-2-2-1 0 0 0-1 0-2 2 0 1 0 1 0 0 0 1 0 1 0 1-1 0-1 0-1 0-2-1-2-2 0 0-1 0 0 1 0 1 1 1 2 2 0 0 0 0 0 0 1 1 0 2-1 3 0 1 0 0 2-3 1-1 2-2 1-1 3 0 0 0 1 1 0 1-1 1 0 1 0 0 0 1 0 1 1 0 1 0 0 0 0 1 1 1 0 1-1 3-1 0-3 2-2 1-2 0-1 1 0 0-3 0-2 1-3-1-3-1-2-1-1 0-1 1-5-1-1-1 1 0 1-2 0-1 0 0-2 0-3-1-2-1-2 0-1 0-1-1-1-1 0 0 0-1 0-1 0-2-1 0-1-1-1 0-1 1-1 1-1 5-1 0-2 3-1 1-4 1-4 1-2 1-1 1-2 2-5 2-4 1-5 1-3 1-1-1-2 0-2 1-1 1-8 0-3 1-2 0-1 0-1 0-1-1-1-2-2-4 0-2 0-3 0-2-1-3 0-1-3-1-3-1-3 0-4 0-4 0-2-1-3 0-3-3 0 0-1-1 0-1-1-1-1-2zm180-92-2 0-1-2 0-2 0-1 0-1 1-1 1-1 1 1 0 0 0 1 1 0 0 1 0 1 0 2 0 1-1 0 0 1zm18 297-5 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0-4 0 0-4 0-4 0-5 0-4 0-5 0-4 0-5 0-4 0-5 0-5 0-4 0-5 0-5 0-4 0-5 0-5 0-5 0-3-4-1-4 0-4-1-4-1-4 0-3-1-4-1-4-1-4 0-4-1-4-1-4 0-4-1-4-1-4-1-4 0-2-1-2-2-3-3-3-3-2-3-3-4-4 0-4 0-4 0-4 0-3-1-2-2-2-2-2-2-3-1-2-2-2-2-3-1-2-2-2-2-2-2-3-1-2-2-2-2-3-2-2-1-2-2-2-2-3-2-2-2-2-1-3-2-2-2-2-2-2-2-3-1-2-2-2-2-3-2-2-2-2-2-2-2 0-4 0-5 0-5 0-6 0-5 0-5-1-8 4 3 1 2 3 0 9 3 1 0 2 2 2 2 2 1 2 1 5 2 0 0 1 0 1 0 5 1 1 0 0 0 1 1 2 0 0 0-2-3 0 0 1 0 2 0 0-1 1 0 2 1 1 1 2 1 2 1 4 2 2 3 1 2 1 2 1 1 0 1 0 0 1 0-1 2 0 1 0 0-2 1-4-1-1 2-3 1 0 1 0 1 0 1 0 1-2 1 0 1 1 1 1 1 1 0 2 0 1 0 3 1 1 1 1 0 1 0 1 1 2 0 4 0 2 0 1 0 4 0 0 0 1-1 1 0 1 0 4-1 1 0 1 0 2-1 1 0 0 0 0 1 1 0 2-1 4-3 1 0 1-1 1 0 0 0 1 2 0 1 1 0 0 1 1 1 1 1 3 0 1 0 1 1 0 1 0 3 1 1 0 1 0 0 1 0 1-4 0 0 1 0 0 0 1 3 1 2 3 3 1 1 0 1 0 1-1 1-1 0-1 1-1 0-1-1 0 0 0 1 2 2 1 1 0 1 1 1 0 0 0 1 2 2 1 1 2 3 1 2 0 1 1 0 0-1-3-4-1-3 0-1-1-1 0-3 1-1 0 0 2 1 0 1 0 0 0-1 1 1 1 1 1 0-1-3-1-1 0 0 1-1-1-1-1-2-1-1-1-3 0-1 0-1 0-1-1-2-1-1 0-1-1-1 1-2 0-1 1-1 1-1-1-2 0 0 0 0 3-1 0 0 1 0 1-1 1 0 1 0 1 0 1-1 0 0 1-1 0-1 1 1 1 0 0 0 0-2 0-1 2-2 1 0 1 0 1-1 0-1 1-1 0-2 0 0-1-1-1 0-2 2-2 1-1 1 0 2 0 1-2-1-1 0 0 1-1 0-1 1-2 0-1 0-1 0-2 1 1 0 0 2 0 0-3 1-1-1-1 1-1 0 0-1-3-2 0-1 0-2 3-5 0 0 5-1 3-1 6-3 1 0 3-2 2-1 1 0 2 1 1 1 1 2 0 1 1 4 0 2 1 2 1 2 1 0 1 1 0-1 0 0 1 0 0 2 0 0 1-1 1 1 0 0 0 2 0 1 2 1 1 1 1 0 3 0 2-1 2-1 1 1 3 3 1 2 2 1 2 1 1 1 1 0 1-1 2 1 2 0 1 1 4-2 1 0 1-1 1 0 1 0 1 0 1-1 2 0 4 1 3 1 1 1 2 0 1 0 1 0 1 0 1-1 2-1 0 0 0 0 0-1-2-1-1-2 0 0 0-1 1-1 0 0 1 0 1 2 3 5 1 1 0 0 3 2 2 1 1-2 1 0 0-1 0-1 1-1-1 0 0-1-1-1-2-2-2 0-1 1-2 1-1-1-2-3-1-1 0-1 1 1 0-1 0-1-1-1-1-2 0-1 1 0 0-1 1 0 2 2 1-1 3-1-1-1-1-2 0 0 1 0 2 1 1 0 0 0 1 0 1 0 0 1 2 1 0 2 1 1 0 0 3 1 2-2 0 1-1 1-2 4 0 1 1-1 1 0 0 0 1-2 0 0 3-2 1 0-1 2-1 8 0 2 0 1-2 3 0 1 2 3 0 0 0 2 0 1 2 0 1-1 1 0 0 0 0 3 0 0 1-1 1 0 0 0 1 1 0 1 0 2 0 1 0 0-1 0 0 1-1 0-1 0-1-1-1 0 0 0-1 0-1 0-1-2-1 1 0 0 0 0 0 1 5 6 0 1 0 2 1 0 0-2 0-1-2-3-1-1 0-1 1 0 3 1 1 0 1-1 0-1 1-4 0-2 0-2-1-4-1-2-1-2 0-1 2-7 0-1 0 0 2 0 1 0 1 0 1 1 1-1 2-3 1-1 1-2 2-2 1-2 3-2 1-1 1 0-2-1 0 0 0-1 0-3 0-1-1-1 0-1 0-1-1-1 0 0 0 0 0 1-1 2 0 2-1 0-1 1-3 0-1 0 0-1 1-3 0-1 2-2 2-2 0 0-1 0-1-1 0-2 0-1 0-1 1-1 3 0 2-1 0 0-2 3 0 1 1 0 1-1 2-2 0 0-1-1 0 0 0-1 0-1-1-1-2 1-1 1-1 0-1 0-1 0 0-1-1-1-1-2-1-1 0-1-1 1 0 1-1 0-4-2-2-1-1-1-1-1-1 0-1 0-1-1 0-1-1-1-1-2-2-4 0-2 0-1 0-2 2-4 0-1 1-1 1 0 0-1 2 1-1-1 0-1 1-2-1 0-2 2-1-1-1-1-1-3 0-2 0-3 0-2 0-2 0 0 1-1 0 0 0-2 0-1 1-2 1-1 1-1 1 0 0 1 1 1 1 1 1 0 1-1 1-3 0-1 0 0-2 0-1-1-1 0 0-1 0-1 2-2 1-3 3-4 3-1 1-1 1 0 1 0 0 2 0 2 2 2 1 0 1 0 2 0 1 1 0 1 0 1 0 1 1 2 2 1 1 2 2 3 1 1 0 1 1 4 0 2-1 4 0 1 0 1 0 0 1 1 2 2 0 1 2 1 0 1 1 0 1 3 1 3 0 1 0 1 0 1 1 0 0 0 1-1 0 0 1 0 0 1 1 1 0 2 0 0 0 1-2 0-1 0-2-1 0-1-1-1 0 0-1 1-1 2 0 1 1 0 2 0 1 1 1 0-1 2-2 2-4 5-1 1 0 0 0 1 2-1 1 0 2 0 0 1 0 0 1 1 2 2 2-1 2-2 1 0 2 0 0 0 0 0-1 1-1 1 0 1 1-1 3 1 1 0 1 0 1 0 1 1 1 1-1 0-1 0-1 0 0 1-1 1 0 2-1 0-1 0 0 0 0-1 0 0-1 0 0 0-1 1 5 4 1 4 1 2 0 0 0 2 0 0 0 3 0 2-1 3 1 1 1 1 0 1 1 1 0 1 0 0 1 0 0 0 0-1 0-1 1-1 1-2 1-1-1-2 0-1 1-2 1-2 0-3 0-2 1-2 2-4 1 0 1-1 1 0 1 2 1 2 2 2 3 2 0 1 2 3 1 2 0 4 1 2 0 1 0 1 0 1 0 1 0 1-1 1-1 0-1 0 0-1 0-2-1 0-1 2 0 0 1 3-1 4 1 1 1 4 1 3 5 7 0 0 1 3 0 1 0 0 0 0 1 0 2-2 1-2 1-1 1 0 0-1 1 0 0-1 0-1 1-3 0-2 1-2 0 0 3-6 1 0 1-6 1-3 0-2 0-1 0-2 0-1 0 0 1-1 1-1 0 0 0 0 1 0 1 1 3-1 0-1-2-1 0-1 1-1 0-1 1 0 0-1 0 0 0-2 0 0-2-2-1 0 0 0-1-2-1-2 0-1 1-1 0-1 0 0-1-1 0-1 1-1-1-1 0-1 0 0 0-3 0-1 0-1-1 0 1 0 1-1 1 1 1 1 1 0 2-1 1-1 3 1 1 0 3 2 2 1 1 0 5 1 2-1 2 1 2 1 0 1-1 2-2 0-1 1 1 1 3 1 1 2 0 1 0 0 0 1 1 0 2-1 2 1 2 1 1 0 0 2 0 0-2 3-2 1-1 1 0 1 2 0 2 0 1 1 0 0 1 2 0 1 0 1 0 1-3 2-1 1-1 1-1 0-1 0-1 0-1-1-1 1-1 0-1 0 0 1 1 1 0 1 1 0-1 1 0 0 1 1 1 3 0 0 1 0 0-1 1 0 0 0 0 0-1 3 0 1 0 1 1 1 0 2 1 1 2 2 2 2 0 1 1 2 1 1-1 3 0 4-1 2 0 0-2 2 0 0-2 0 0 1-1 1-1 2-1 1 0 1-1 1-2 2-1 0-2 1-3 3 0 1-1 0-2 0 0 0 0-2-1 0 0-1-2-4-1-1 0 0-1 0-1 0-1-1 0-1 0 0 1 0-1-1-1-1-1-1 0 0-1-1-1-1-2 2-1 1 0 0 1 1 0 0 1-1 1-1 1 0 0 1 1 1 0 0 2 4 1 0 1 1 0 1 0 2 2 2 1 3 0 1-1 1 0 0-1-1-2-1-1 0 0 1-1 1 0 0-1 0-3-2-2-1 0-1-1-1-2-3-1 0-2 1-2 0-5 0-1 0 0 0 0 1 0 1 0 0 0 0 0 1 1 1 3 1 1 1 1 1 1 1 0 1-1 1 0 1-6 8-2 3-1 2-1 1-1 0-2 1-2 0-2 0-2-1-2-3-2-2-1 0 0-2-1 0-1 0-1-1-3-3-2-1-1 0-2 0 0 0 1 1-1 0-1 0-1 0-1-1-2 0-1 0-2-1-2 0-2 0-1 0 0 1 1 1 2 1 0-1 0 0 1-1 3 1 4 1 1 1 1 0 1 1 2 2 3 4 1 2 2 1 7 1 2 0 5 0 2 1 1 1 0 2 0 1-1 3-1 2-6 9 0 2-1 1-1 1-2 2-2 2-2 0-1 0-1-1-1-2 0 1 0 2 0 0-1 0-1-1-1 0 0 0-1 0 0 0-1-1 0 0-1-2 0 0-2 1 0 0 1 1 0 0 1 2 0 1-1 0-2-1 0 0 1 2 0 1 0 1-1 2-1 1-1 0-1 0 0 0-1 0 0 0-1 1-1 0-1 0-1 0-4-3-2 0-2 0 0-1 0 0 0 0 0 0 0-1-1 1 0 0-1 0-2 0-1-1-4-2-4-2-3-2 1 2 0 1 0 0 0 1 1 2 1 0 1 0 0 0 0-1-1 0 0-1 0 0 1 0 1 1 6 3 1 0 2 1 0 0 0 1-3 2 0 0 2 0 2-2 1-1 1 0 1 1 2 2 2 1 2 0 1 1 2 2 0 1 0 4 0 1 0 1-1 0 0 1-2 0-1 0-2 2-1 1-3-1-2 0 0 0-1 0 0 0-2 0 0 1 0 0 0 1 1 1 0 0 1 0 2 1 0 1 0 0-1 1 0 0-1-1-1 0 0 0-1 1-1-1 0 1-1 1 0 0-1 1 0 1 0 1 0 0 1 1 1 1 0 1-1 0 0-1-1-1-1-1-3-1 0 0 0 1 2 1 0 1 0 0-1 1 0 1 0 0 0 0 0 1-1 1-2 0 0 0 1 1 0 0 0 1-1 0-2-1 1 2 0 0 1 1 1 0 0 1-1 0 0 1-3 2-2 2 0 1 1 1 0 1-1 0-1 0 0 0 0 1 0 1 0 1-1 3-1 2-1 3-1 2-1 1-1 0 0 1 0 1 1 0 0 1 0 2-1 3 0 2zm-50-228 0 1-2-1-1-1 0 0 0-1 0-2 0 0 1 0 1 0 1 2 0 0 0 1 0 1 0 0zm120 11 1 0 1 0 1 0 0 1 1 0 0 1-1 1-1 0-1 0-2-1 0 1-1-1-1-1-1-1 0 0 2-1 0 0 2 1zm-94 12 0 0 1 0 0-1 0 0 1 0 1 2 1 1 1 1 1 1 4 3 1 3 1 3 1 3 1 1 1 2 1 1 2-1 0 0 1 0 0 1 0 1-1 1-1 0-1 0-1 1-1 1 0 1-2 1-2 2-1 1-2 0-3-1-3 0-2-1-2-2-1-1-3-1-1-1 0 0 0-1 0-1 0 0-1 0 0 1-1 0-2 0 0 0-1-1 0 0 0-1 0-1 0 0-1 0-1 0 0 1 0 0 0 1-1 0-1-1-1-1-1-1 0-2 0 0 0-1 1-1 3-1 2 0 1-1 2-3 1 0 0-1 0 0-1-2 0 0 0-1 1 0-1 0 0-1 0-1 0 0 0-1 1 1 2 2 0 0 1 1-1-2-1-3 0-1 0 0 0-2 1-1 0 0 1-1 2-1 1 0 1 1 0 1 2 1 0 1 0 0 0 1 0 0 0 1zm161-4 1 2 0 0-1 1-1 1-3 1-1-1 0 2 0 1 0 0 0 0-1 0-1-1 0-1 0 0-1 0 0 0 0-1-1 0-3-1 0 0 0-1 1-1 0 0 2 0 0 0 0-1 0 0 1 0 1 0 1 0 0 1 1 0 0 0 1 0 2-1 1-1 1 1zm13 2 0 1 0 1 0 1-3 1-1 1-1 1-1-1-1 1-1 0 1-1 2-3 1 0 1-1 0 0 1 0 0-1 0-1 1 0 1 1zm90 4 0 1-2-2 0-1 1-1 1 0 0 0 1 0 1 1-1 1-1 1zm-247 0 1 1 0 1 0 2 0 1-1 0-1 1-1 0 0-1 0-1 1 0 0-1 0-2-1-1 0 0-1 0 0 0 0 1 0 2 0 1 0 1-1 0 0-1 0-1 0-1 0-1 0-1 1-1 0-1 1 0 1 1 1 1zm-51 4 0 0-1 0 1 0-1-1 0 0 1-1 0 0 0 0-1-1 0-1 0 0 0 0 1 0 1 0 1 2 0 0-1 1 0 0 0 1-1 0zm217 7-1 0-1 0 0-1-1-1 0-2 0-1 0-1 0-1 0 0 1-1 1 0 1 1 2 0 1 1 0 0 0 0 0 1-1 1-1 1 0 2-1 1zm-118-7 0 1-1 2 0 1-1 0 0 0-1-2 0-1 0-1 1 0 1-1 0 1 0-1 1 1zm98 14 0 0-1 0 0-1-1-1 1 0 0-1 0-1 1-1 1-1 2-1 0 0 1-3 0 0 1 0 0-1 0 0 0-1 0-1 1 0 1-1 1 0 0 1 1 0 0 1 0 0-1 2-1 1-1 1 0 1 0 0 0 1-1 2-1 1-1 1-1 1-2 1zm-101-9-1 0 0-1-1 0 0-1 0 0 0-1 0-1 1 0 0 0 1 1 0 1 0 1 0 1zm-85 5 0 1-1 0-1-1 0-1 0 0 0-1 0-1 0 0 1 0 0 1 1 1 0 1zm-2 5 0 1-1 0 0 1-1 0 0-1 0-1-1 0 0 0 0 1-1 0 0-1 0 0 0-2 0-1 0-1 0-1 0 0 1-1 0 0 1 0 1 1 0 1 1 1 0 0 0 3zm-15 5 0 0-1 0-2-2-1 0 0-1 2 0 0-1 1-2 1 1 1 1 0 0 0 1 0 2 0 0-1 1zm242 6-1 0-1-1-2-2-1-1 0-1 0-1 1-1 0-1 1 0 1 0 1 1 1 2 1 2 0 0-1 1 0 0 1 1 0 0-1 1 0 0zm-266-1 0 0-1-1-2 0-1-1 0-1 0-1 0 0 1-1 2 1 1 0 1 1 0 1 0 1 0 0-1 1zm229 5-1 0-1-1 0-1 1-2 1 0 1 1 1 1-2 2zm30-3 5 2 0 1 0 0 0 1 0 2 0 0 0 2 0 0 0 5 0 3 0 3-1 1-1 2-1 0-3 2-2 1-3 0-3 1-2-1-1 0 0 0-1-1 0-2-1-3-1-4 0 0 1-4 1-2 1-4 2-3 1-1 1 0 2-1 1 0 1 0 1 0 1-1 2 1zm-98 14 0 0-1-1-1-1-1-1 0 0 0-1 0-1 1-2-1-1 0-1 0 0 0-1 0-1 1-1 1-2 1 1 1 1 1 1-1 1 1 2 0 2 0 1 0 1-1 2 0 1-1 0 0 1zm-204-6 0 0-1-2 0-1 1 1 0 1 0 1zm320 5-4 0-2 0-1-1-1 0-1-2-1-2 0-1 0-1 1 0 2-1 3 1 2 1 3 0 0 1 1 0 0 0 0 2 0 2 0 0-2 1zm-318-5 1 0 0 0 1 1 0 1 0 0 0 0-2-1 0 0-1-1 1 0zm11 14 0 2-1-1 0 0-1-1 0-1 0-2 0-1 0-2 1 0 0 1 0 1 0 1 1 1 0 0 0 1 0 1zm405 8-1 0 0 0 0-1 1-1 1 0 0-1 1 0 1 0 0 0-1 1-2 2zm-407 1 1 0 2 0 0 2-1 1 0 0-1 0 0-2-1-1zm224 16 1 0 1 0 0 1-1 1 0 0-1-1-1-1 0 0 0-1 0 0 1 1zm-5 11 1 1 1 0 2 0 0 1 0 0 0 1-1 0 0 1-1-1-1 0 0-1 0 0-1 0 0 0 1 1-1 0-1 0 0-1 0 0 1-1-1-1 0 0-1 1-1 0-1-1 0-2 0-1 0 0-1-1 0 0-1-1-1-1 0-1 0 0 1 0 2 1 2 1 1 1 1 1 0 1 0 0-1 1 1 1zm-9 5 0 0-1 0 0-1-1-1 0-1-1-1-1 0 0-2 0-1 0-1 0-1 0-1 1 0 1 0 0 0 0 1 0 1 1 2 1 1 1 3 0 0 0 1-1 1zm-2 6 0 1 1 0 0-1 2-4 0 0 1 0 2 2 1 1 0 2 0 0 2 1 2 0 2 1 1 1 1 3 0 0 2 1 3 3 1 0 3 1 1 1 1 0 1 2 1 3 1 4 0 1 0 1 0 0-2 2 0 0 2 0 3-1 2 1 1 0 0 0 1-1 1 0 1 1 1 1 0 1 0 1-1 0 2 1 2 1-1 1-1 1-2 2-2 2-1 1 0 0-1-1-2-1-5-2-2-1-2 0-1-1 0-4-1 0-3-1-1-1 0 0 0-2 0 0-1 0-2 0-1 1-1 1 0 1-1 1 0 1 0 2-3 3-1 1-1 0 0 0-1 1-1 3-1 1 0 1-2 1-1 1-3 1-1 1-1-1-1-2-1-8 0-1-1 0 0 0-4 1-3 0-2 1-1 1-1-1-1 0 0 0 0-1 0-1 0 0 1-3 1-1 0-1 5-2 1-1 0-1 0-1 0-1-1-3 0-3 0-1 0-2 1-5 1-2 0-9 1-2 0-3 1-1 1-3 1-1 1-1 1 0 0 1 0 1 2 1 1 1 0 1 0 2 0 0-1 1 0 1 0 0 2 2 1 3zm65 27 0 1-2 0-1-1 0 0 1 0 2-1 0 0 1 0 0 0-1 1zm9 12-1 0-1 0-2-1-2-3 2-2 3 2 1 2 0 2zm-11-1 1 0 1 0 0 1 1 2 0 1 0 0 0 1-1 1-1 0-1 1-1-1-2-2-2-2-1-2 0 0 1 0 2-1 3 0 0 1zm-37 10 1 0 0 1-1 1 0 1 0 1-1 2-2 2-1 2-1 1-4 3 0 0-1 0-1 0-1 0-3 1 0 0 0-2-1-1-1-1 0-1 0 0 0-1 2-2 3-6 1-1 1 1 1 0 1 0 2-1 2 0 2-1 1 0 1 0 0 1zm105 8-1 0-1 0-1-1-1 0-1-1 0-1-1-2-1-1-1-1 1 0 1 1 1 0 2 1 2 1 0 1 1 1 0 1 0 0 0 1zm-33-2-1 1-1-1-3-1-1 0 0-1 1 0 0 0 1 1 3 0 1 0 0 1 0 0zm82 2 2 0 1 0 0 0 1 1-1 1 0 1-1 0-2-1-1 0 0-1 0 0 1 0 0 0 0-1 0 0 0 0zm-132 2 1 1 1 2 0 1 1 1-1 1 0 2 0 1-1 1-1 2 0 2-1 1 0 1-1 0 0 0-1-1-1-1-1-1-1-1 0 0 0-1 0-3 0-1 0-1 0-1 0-1 2-2 1-1 0-1 2 1 0 0 1-1 0 0zm130 11 0 0 1 0 0 0 0 0 0 1 1 0 0 0 0 1-1 0 0 0-2-1 0-1-1-1 1 0 0-1 0 0 1 1 0 1zm-251 0 0 0-1-1 0 0 1-1 1 1 0 1-1 0zm253 9 0 0 0 0-1-1-1 0 0 0-3-2 0-1 0-1 1 0 1-1 2 0 1 1 1 0 1 1-1 1 0 1 0 1-1 0 0 1zm-123 12-1 0 0 0 1-1 1 0 2-1 0 1-1 1-2 0zm93 9-1 0-1 0 0-1 1-1 1-2 0-2 1 0 1 0 0 0 1 1 0 1 0 1-1 1 0 1-2 1zm34-2 0 1-1-1-2-1-1 0 0-1 0-1 1 0 1 0 1 1 0 0 1 2zm-140 10-1 0 0-1 0 0 1 0 0-1 1 1 0 1-1 0zm-2 3-1 0 0 0 0-1 1 0 0-1 1 0-1 1 0 1 0 0zm99 10 0 1-1 0 0 1 0 0 0-2 0 0 0-1 0-1 1 0 0 1 0 1 0 0 0 0zm-94 26 0 0-1 0 0 1 0 0 0 0 0-1 0 0 0-1 0 0 0 0 1 0 0 0 0 1zm-2 12 0 1 0-1 0-1 0 0 0 0 1 0 0 1-1 0zm3 2 0 0 0 0 0-1 0-1 0 0 0 0 0 0 0 0 1 1 0 0 0 1 0 0-1 0zm6 7-1 1-1 2-1 3 0 0 0-1 1-3 0-1 0 0-1-1 0 1-2 4 0 0 0 1-1 0 0 0-2 1 3-5 0 0-1 0 0 0-2 3-1 1-1 0 0-1 0 0 2-3 2-2 0-1 1-2 0-1 0-1 0 0 0 0 0 1 0 1 0 2-1 1 0 1 0 0 1-1 1-1 0-1 0-2 1-2 0 0 0 1 0 0 1 0 0 0 0 1 0 1 1 0 0 0 1 1 0 0 0 1 0 0 0 1zm-10 1 0 0-1-1 1-1 0 0 1-1 0 0 1 0 0 0 1-1 1-1 0 0-1 2 0 1-3 2zm11 0-1 1 0 0 0-1 0-1 1-1 0-1 0 0 0-1 1 0 0 0 0 2 0 1 0 0-1 1 0 0zm-10 45 0 0-1 0 0 0-1-1 0 0 1 0 0 0 1 1zm-7 8-1 0-2 0-1-1-2-1-4-1-2-1 0-1 1-1 0 0 1-1 4 0 2 0 2 3 1 1 1 2 0 0 0 1zm12 11-1 1-1-1 0 0-1 0 3-2 1 0 0 1-1 0 0 1 0 0 0 0z"><title>Nunavut</title></path>
+</svg>
+</div>
+<aside class="cov-panel">
+<div class="cov-eyebrow">Where we estimate</div>
+<div class="cov-state">All provinces and territories</div>
+<a class="cta cov-call" href="#quote">Get a fixed quote</a>
+<ul class="cov-provinces" aria-label="Province pages">
+{% for href, name in [
+  ('/alberta-electrical-estimating-services/','Alberta'),
+  ('/british-columbia-electrical-estimating-services/','British Columbia'),
+  ('/manitoba-electrical-estimating-services/','Manitoba'),
+  ('/new-brunswick-electrical-estimating-services/','New Brunswick'),
+  ('/newfoundland-labrador-electrical-estimating-services/','Newfoundland and Labrador'),
+  ('/nova-scotia-electrical-estimating-services/','Nova Scotia'),
+  ('/ontario-electrical-estimating-services/','Ontario'),
+  ('/prince-edward-island-electrical-estimating-services/','Prince Edward Island'),
+  ('/quebec-electrical-estimating-services/','Quebec'),
+  ('/saskatchewan-electrical-estimating-services/','Saskatchewan'),
+] %}<li><a href="{{ href }}">{{ name }}</a></li>
+{% endfor %}</ul>
+</aside>
+</div>
+<div class="map-legend">
+<span><b>10</b> provinces and <b>3</b> territories served</span>
+<span><b>Remote-first</b> delivery</span>
+<span><b>Excel + PDF</b> deliverables</span>
+</div>
+<p class="visually-hidden">MeTiger provides electrical estimating and takeoff services in Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Northwest Territories, Nova Scotia, Nunavut, Ontario, Prince Edward Island, Quebec, Saskatchewan, and Yukon.</p>
 </section>
-
-<!-- 9. PRICING & QUOTE PROCESS -->
-<section>
-  <div class="container narrow">
-    <div class="eyebrow section-head">Pricing</div>
-    <h2 class="h2">Pricing and quote process</h2>
-    <p class="lead">Every project is quoted based on drawing size, scope complexity, project type, deadline, and requested deliverables. Send the bid set and due date; MeTiger will confirm scope, fee, and delivery window before work begins. No cheap-race pricing — a clear fee for a package you can actually bid with.</p>
-    <div class="cta-row"><a class="btn btn-ghost" href="/pricing/">See how pricing works</a><a class="btn btn-primary" href="/contact/">Request a fixed quote</a></div>
-  </div>
+<section class="premium-section premium-why">
+<div>
+<p class="service-eyebrow">Who we serve</p>
+<h2>Who we serve</h2>
+<h3>An estimating desk that works like part of your team.</h3>
+<p>Contractors bring MeTiger in to bid more work without carrying a full-time estimator, or to add capacity when the pipeline spikes.</p>
+<div class="serve-row">
+<span>Electrical contractors</span>
+<span>General contractors</span>
+<span>Developers</span>
+<span>Subcontractors</span>
+<span>Design-builders</span>
+</div>
+</div>
+<aside>
+<h2>Why MeTiger</h2>
+<p>Most estimating shops hand your plans to a queue. With MeTiger, you get one estimator who knows your job, answers questions, and keeps the assumptions visible.</p>
+</aside>
 </section>
-
-<!-- 10. WHY METIGER -->
-<section>
-  <div class="container">
-    <div class="eyebrow section-head">Why MeTiger</div>
-    <h2 class="h2">Careful, technical, and built for review</h2>
-    <div class="grid grid-3" style="margin-top:22px;">
-      <div class="card"><h3 class="h3">Reviewable by design</h3><p>Clear quantities, documented assumptions, and explicit exclusions — so your team can check the number, not just trust it.</p></div>
-      <div class="card"><h3 class="h3">Canada-focused</h3><p>Estimating informed by CSA C22.1 / the Canadian Electrical Code, provincial practices, and local utility requirements.</p></div>
-      <div class="card"><h3 class="h3">Scope-gap discipline</h3><p>We surface missing and conflicting information before bid day, where it’s cheap to fix.</p></div>
-      <div class="card"><h3 class="h3">Remote across Canada</h3><p>Delivered remotely on an agreed window, with an NDA available on request.</p></div>
-      <div class="card"><h3 class="h3">Senior estimating</h3><p>Organized trade packages and labour-unit reasoning you can defend to a client or a GC.</p></div>
-      <div class="card"><h3 class="h3">Honest scope</h3><p>Estimating and coordination support — never stamped engineering claims we can’t make.</p></div>
-    </div>
-  </div>
+<section id="faq" class="premium-section premium-faq">
+<p class="service-eyebrow">FAQ</p>
+<h2>Frequently asked questions</h2>
+<details>
+<summary>Do you provide electrical estimating across Canada?</summary>
+<p>Yes. MeTiger provides electrical estimating and takeoff support remotely for contractors and general contractors in every province and territory. We work from your PDF or DWG set and deliver a reviewable estimate package on an agreed window.</p>
+</details>
+<details>
+<summary>Do you use the Canadian Electrical Code (CEC)?</summary>
+<p>Our estimating and scope review are informed by the Canadian Electrical Code (CSA C22.1), project specifications, local utility requirements, and the bid documents. Final compliance remains subject to the project engineer, the authority having jurisdiction, and applicable provincial/territorial requirements.</p>
+</details>
+<details>
+<summary>Can you estimate from PDF drawings?</summary>
+<p>Yes. PDF bid sets are the most common input. Send the drawings, specifications, and any addenda, and we confirm scope before starting.</p>
+</details>
+<details>
+<summary>Can you work from DWG / CAD files?</summary>
+<p>Yes. We work from DWG/CAD backgrounds as well as PDFs. Let us know what format you have and we will confirm what we need.</p>
+</details>
+<details>
+<summary>What do I receive with the estimate?</summary>
+<p>A reviewable package: a quantity takeoff workbook, colour-coded marked-up drawings, a material list by system, a NECA labour-hour summary with the labour-unit basis and assumptions, inclusions and exclusions, an RFI / scope-gap log, addenda review, and a bid summary.</p>
+</details>
+<details>
+<summary>Do you provide stamped engineering?</summary>
+<p>No. MeTiger provides estimating and bid-support services — not sealed engineering, stamped drawings, or engineer-of-record services.</p>
+</details>
+<details>
+<summary>Do you sign NDAs?</summary>
+<p>Yes. An NDA is available on request — note it on the form and we will send one before you share drawings.</p>
+</details>
+<details>
+<summary>How is pricing structured?</summary>
+<p>A fixed estimating quote per project, confirmed after we review the drawing set, scope, and bid schedule — before any work begins. No subscription and no long-term contract. Takeoffs run $400 to $1,400 CAD and takeoff plus NECA labour $600 to $1,900 CAD by bid size, plus applicable GST/HST; bids over $3M are quoted hourly after drawing review. Electrical contractors: your first quantity takeoff is free (one per company).</p>
+</details>
+<details>
+<summary>How fast is turnaround?</summary>
+<p>Typical 24–48 hour target, confirmed per project after drawing review. Larger or incomplete sets may take longer.</p>
+</details>
+<details>
+<summary>How do I request a quote?</summary>
+<p>Send your bid set (or a plan link) and the bid due date through the quote form. We confirm scope, fee, and delivery window before any work begins.</p>
+</details>
 </section>
-
-<!-- 11. FAQ -->
-<section>
-  <div class="container narrow">
-    <div class="eyebrow section-head">FAQ</div>
-    <h2 class="h2">Frequently asked questions</h2>
-    {{ faq_list(page_faqs) }}
-  </div>
+<section class="premium-section link-hub" aria-label="Related planning resources">
+<h2>Related planning resources</h2>
+<a class="hero-link dark-link" href="/estimate-calculator">Use the Electrical Estimate Calculator</a>
+<a class="hero-link dark-link" href="/insights/">Read electrical estimating insights</a>
+<a class="hero-link dark-link" href="/technology/">Review technology and tools</a>
 </section>
-
-<!-- 12. FINAL CTA -->
-{{ cta_band('Send your bid set and get a fixed quote',
-    'Upload your drawings or share a plan link with the bid due date. MeTiger confirms scope, fee, and delivery window before any work begins.',
-    [{'label':'Upload Drawings / Request a Quote','href':'/contact/','primary':True},{'label':'How pricing works','href':'/pricing/','primary':False}]) }}
+<section class="premium-final-quote" aria-label="Get started">
+<p class="service-eyebrow">Get started</p>
+<h2>Ready to bid your next electrical job anywhere in Canada?</h2>
+<div class="closing-actions">
+<a class="cta" href="#quote">Get a quote</a>
+</div>
+</section>
 {% endblock %}

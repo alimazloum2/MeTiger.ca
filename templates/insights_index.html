@@ -1,0 +1,32 @@
+{% extends "base_page.html" %}
+{% from "partials/ui.html" import breadcrumb_schema %}
+{% block page_title %}Commercial Electrical Estimating Insights | MeTiger{% endblock %}
+{% block meta_description %}Original MeTiger commentary on commercial electrical cost, demand drivers, tenant improvement bids, and early estimating assumptions.{% endblock %}
+{% block main_class %}insights-page{% endblock %}
+{% block head_schema %}
+    {{ breadcrumb_schema([{'name':'Home','url':'/'}, {'name':'Insights','url':'/insights/'}]) }}
+{% endblock %}
+{% block content %}
+<section class="hero insights-hero">
+<p class="kicker">MeTiger Insights</p>
+<h1>Commercial Electrical Estimating Insights</h1>
+<p>Original short-form commentary for commercial electrical estimating conversations across Canada.</p>
+<a class="hero-link" href="/estimate-calculator">Build a budget worksheet in the calculator</a>
+</section>
+<section class="post-list" aria-label="Commercial electrical insight posts">
+{% for post in posts %}
+<article class="post-card">
+<time datetime="{{ post.date }}">{{ post.date | pretty_date }}</time>
+<h2><a href="/insights/{{ post.slug }}/">{{ post.title }}</a></h2>
+{% if post.description %}<p>{{ post.description }}</p>{% endif %}
+{% if post.tags %}
+<ul class="tag-list" aria-label="{{ post.title }} tags">
+{% for tag in post.tags %}<li>{{ tag }}</li>{% endfor %}
+</ul>
+{% endif %}
+</article>
+{% else %}
+<article class="post-card"><p>New articles are on the way.</p></article>
+{% endfor %}
+</section>
+{% endblock %}
