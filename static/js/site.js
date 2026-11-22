@@ -1,7 +1,9 @@
 /* metiger.ca — small progressive-enhancement script. No framework, no build.
    1) mobile menu toggle  2) quote form submit (fetch -> /send_message)
    3) hide the mobile action bar while the quote form is on screen
-   4) reveal-on-scroll for the coverage section */
+   4) reveal-on-scroll for the coverage section
+   5) on a computer, a phone link opens a small "Call MeTiger" box instead of
+      handing the click to the operating system (same as metiger.us) */
 (function () {
   "use strict";
 
@@ -111,5 +113,43 @@
     } else {
       reveals.forEach(function (el) { el.classList.add("in"); });
     }
+  }
+
+  // 5) Call box on computers. Phones and tablets keep the normal dial link.
+  var touch = /Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent) ||
+    (window.matchMedia && window.matchMedia("(any-pointer: coarse)").matches);
+  if (!touch && typeof HTMLDialogElement !== "undefined") {
+    var NUMBER = "+1 (838) 638-4437";
+    var dialog = null;
+    var callBox = function () {
+      if (dialog) return dialog;
+      dialog = document.createElement("dialog");
+      dialog.className = "call-dialog";
+      dialog.setAttribute("aria-labelledby", "call-dialog-title");
+      dialog.innerHTML =
+        '<h2 id="call-dialog-title">Call MeTiger</h2>' +
+        '<p class="call-number"><a href="tel:+18386384437">' + NUMBER + "</a></p>" +
+        '<p class="call-note">An AI assistant answers and takes your project details and bid date. An estimator follows up by email or phone.</p>' +
+        '<div class="call-actions"><button type="button" class="cta call-copy">Copy number</button>' +
+        '<button type="button" class="cta call-close">Close</button></div>';
+      document.body.appendChild(dialog);
+      dialog.querySelector(".call-close").addEventListener("click", function () { dialog.close(); });
+      var copy = dialog.querySelector(".call-copy");
+      copy.addEventListener("click", function () {
+        if (!navigator.clipboard) return;
+        navigator.clipboard.writeText(NUMBER).then(function () {
+          copy.textContent = "Copied";
+          window.setTimeout(function () { copy.textContent = "Copy number"; }, 2000);
+        }).catch(function () {});
+      });
+      dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
+      return dialog;
+    };
+    document.addEventListener("click", function (e) {
+      var link = e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+      if (!link || link.closest("dialog")) return;
+      e.preventDefault();
+      callBox().showModal();
+    });
   }
 })();

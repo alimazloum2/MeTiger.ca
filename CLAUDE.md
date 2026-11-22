@@ -29,7 +29,7 @@ metiger.ca mirrors the look and wording of metiger.us. `static/css/site.css` is 
 
 Hard rules for client-visible content:
 - Company name is "MeTiger Inc." only. No personal names anywhere.
-- The only phone number is +1 (838) 638-4437, printed only in the top strip (`partials/site_header.html`). The mobile bar's "Call" button links to it without printing it.
+- The only phone number is +1 (838) 638-4437, printed only in the top strip (`partials/site_header.html`). The mobile bar's "Call" button links to it without printing it. On computers, clicking a phone link opens the "Call MeTiger" box (built in `site.js`, same as metiger.us), which shows that same number with a Copy button.
 - Email is info@metiger.ca. Footer cross-link reads "US projects → metiger.us".
 - Fees are published in CAD plus GST/HST in `partials/fee_table.html` (used by the estimating page and `/pricing/`).
 - Credentials wording lives only in `partials/credentials.html`.
