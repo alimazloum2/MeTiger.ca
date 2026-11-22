@@ -65,6 +65,15 @@ def _knowledge():
     return _knowledge_cache["text"]
 
 
+def _instructions():
+    """Maple's instructions live in the Hermes profile, the same way the other
+    site's bot works, so by default the website sends only the conversation.
+    Set CHAT_SEND_RULES=1 to also send the rules and fact sheet from here."""
+    if os.environ.get("CHAT_SEND_RULES", "") == "1" and _knowledge():
+        return [{"role": "system", "content": RULES + _knowledge()}]
+    return []
+
+
 def _config():
     return (os.environ.get("CHAT_API_BASE", "").strip().rstrip("/"),
             os.environ.get("CHAT_MODEL", "").strip(),
@@ -73,7 +82,7 @@ def _config():
 
 def enabled():
     base, model, _ = _config()
-    return bool(base and model and _knowledge())
+    return bool(base and model)
 
 
 # Site-wide ceiling on AI calls per day, on top of the per-visitor limits, so a
@@ -160,7 +169,7 @@ def chat():
         headers["Authorization"] = "Bearer " + key
     payload = {
         "model": model,
-        "messages": [{"role": "system", "content": RULES + _knowledge()}] + history,
+        "messages": _instructions() + history,
         "max_tokens": MAX_REPLY_TOKENS,
         "temperature": 0.2,
         "stream": False,
