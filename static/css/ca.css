@@ -233,3 +233,16 @@ main.legacy-page { color: var(--ink); max-width: 1120px; padding: 20px 20px 64px
   .mt-chat-panel { height: min(560px, calc(100vh - 24px)); }
 }
 @media print { .mt-chat { display: none; } }
+
+.mt-chat-mark { flex: none; border-radius: 50%; background: #fff; padding: 3px; object-fit: contain; }
+.mt-chat-launch { padding: 0 18px 0 7px; }
+.mt-chat-head { justify-content: flex-start; }
+.mt-chat-title { flex: 1 1 auto; min-width: 0; }
+.mt-chat-starters { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.mt-chat-starters[hidden] { display: none; }
+.mt-chat-starters button { font: inherit; font-size: .9rem; font-weight: 700; text-align: left; color: var(--navy-800); background: #fff; border: 1px solid #b7c3d0; border-radius: 999px; padding: 7px 13px; cursor: pointer; }
+.mt-chat-starters button:hover, .mt-chat-starters button:focus-visible { border-color: var(--navy-700); background: #eef3f8; }
+@media (max-width: 820px) {
+  .mt-chat-launch { width: 52px; padding: 0; }
+  .mt-chat-launch .mt-chat-mark { width: 40px; height: 40px; }
+}

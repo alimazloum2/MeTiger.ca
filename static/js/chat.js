@@ -14,6 +14,7 @@
   var input = root.querySelector("textarea");
   var trap = root.querySelector(".mt-chat-hp");
   var send = root.querySelector(".mt-chat-send");
+  var starters = root.querySelector(".mt-chat-starters");
   var KEY = "mt-chat-v1";
   var MAX_TURNS = 16;
   var history = [];
@@ -26,6 +27,7 @@
     var p = document.createElement("p");
     p.className = "mt-chat-msg " + (role === "user" ? "mt-chat-user" : "mt-chat-bot") + (extra ? " " + extra : "");
     p.textContent = text;
+    if (starters && role === "user") starters.hidden = true;
     log.appendChild(p);
     log.scrollTop = log.scrollHeight;
     return p;
@@ -47,6 +49,14 @@
     launch.setAttribute("aria-expanded", yes ? "true" : "false");
     root.classList.toggle("is-open", yes);
     if (yes) { log.scrollTop = log.scrollHeight; input.focus(); } else { launch.focus(); }
+  }
+  if (starters) {
+    starters.addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b || busy) return;
+      input.value = b.textContent;
+      form.requestSubmit ? form.requestSubmit() : send.click();
+    });
   }
   launch.addEventListener("click", function () { open(panel.hidden); });
   closeBtn.addEventListener("click", function () { open(false); });

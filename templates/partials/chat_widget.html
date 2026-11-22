@@ -1,16 +1,23 @@
 {# Corner chat assistant. Rendered only when the AI server is configured (see chat.py). #}
 <div class="mt-chat" data-chat data-endpoint="{{ url_for('chat.chat') }}">
 <button class="mt-chat-launch" type="button" aria-expanded="false" aria-controls="mt-chat-panel">
-<svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+<img class="mt-chat-mark" src="{{ url_for('static', filename='brand/metiger-mark.png') }}" alt="" width="34" height="34">
 <span>Ask a question</span>
 </button>
 <section class="mt-chat-panel" id="mt-chat-panel" aria-label="MeTiger website assistant" hidden>
 <header class="mt-chat-head">
-<div><strong>MeTiger assistant</strong><span>AI assistant · answers from this website</span></div>
+<img class="mt-chat-mark" src="{{ url_for('static', filename='brand/metiger-mark.png') }}" alt="" width="36" height="36">
+<div class="mt-chat-title"><strong>MeTiger assistant</strong><span>AI assistant · answers from this website</span></div>
 <button class="mt-chat-close" type="button" aria-label="Close chat">×</button>
 </header>
 <div class="mt-chat-log" role="log" aria-live="polite">
-<p class="mt-chat-msg mt-chat-bot">Hi, I'm MeTiger's AI assistant. Ask me about our estimating services, fees, or how to send drawings.</p>
+<p class="mt-chat-msg mt-chat-bot">Hi, I'm MeTiger's AI assistant. What would you like to know?</p>
+<div class="mt-chat-starters" aria-label="Common questions">
+<button type="button">What are your fees?</button>
+<button type="button">How do I send drawings?</button>
+<button type="button">How fast is the turnaround?</button>
+<button type="button">What do I get in a takeoff?</button>
+</div>
 </div>
 <form class="mt-chat-form" novalidate>
 <label class="visually-hidden" for="mt-chat-input">Your question</label>
