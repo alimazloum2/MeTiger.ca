@@ -18,6 +18,18 @@
   var KEY = "mt-chat-v1";
   var MAX_TURNS = 16;
   var history = [];
+  // A random id for this tab's conversation, so the questions in it can be
+  // shown together on the admin page. It says nothing about who the visitor is.
+  var cid = "";
+  try {
+    cid = sessionStorage.getItem(KEY + "-id") || "";
+    if (!/^[a-f0-9]{24}$/.test(cid)) {
+      var bytes = new Uint8Array(12);
+      (window.crypto || window.msCrypto).getRandomValues(bytes);
+      cid = Array.prototype.map.call(bytes, function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+      sessionStorage.setItem(KEY + "-id", cid);
+    }
+  } catch (_) {}
   var busy = false;
 
   function store() {
@@ -90,7 +102,7 @@
     fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history.slice(-MAX_TURNS), website: trap.value })
+      body: JSON.stringify({ messages: history.slice(-MAX_TURNS), website: trap.value, cid: cid })
     })
       .then(function (resp) {
         if (resp.status === 429) return { ok: false, message: "That's a lot of questions in a short time. Please wait a minute, or use the quote form." };

@@ -16,7 +16,9 @@ endpoint returns 404.
 The assistant may only use the facts in content/chat_knowledge.md. Conversations
 are not stored: the browser holds the history and resends it with each message.
 """
+import json
 import os
+import re
 import time
 from threading import Lock
 from urllib.parse import urlparse
@@ -144,6 +146,96 @@ def _clean_history(raw):
     return history
 
 
+# --------------------------------------------------------------------------
+# Chat log, read on the admin "Chats" page. One file per day under
+# data/chat_log/ (gitignored, like the rest of data/). Each line is one
+# question and its answer. No IP address or browser details are kept.
+# --------------------------------------------------------------------------
+LOG_DIR = os.path.join(_ROOT, "data", "chat_log")
+LOG_KEEP_DAYS = 90
+_CID_RE = re.compile(r"^[a-f0-9]{16,32}$")
+_DAY_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+_NO_ANSWER_RE = re.compile(r"don.t have that information|do not have that information|not available right now", re.I)
+_purged = {"day": None}
+
+
+def _purge_old_logs(today):
+    if _purged["day"] == today:
+        return
+    _purged["day"] = today
+    cutoff = time.strftime("%Y-%m-%d", time.gmtime(time.time() - LOG_KEEP_DAYS * 86400))
+    try:
+        for name in os.listdir(LOG_DIR):
+            if name.endswith(".jsonl") and _DAY_RE.match(name[:-6]) and name[:-6] < cutoff:
+                os.unlink(os.path.join(LOG_DIR, name))
+    except OSError:
+        pass
+
+
+def _log_exchange(cid, question, answer):
+    """Append one question/answer pair. Never lets a logging problem break the chat."""
+    try:
+        now = time.gmtime()
+        today = time.strftime("%Y-%m-%d", now)
+        os.makedirs(LOG_DIR, exist_ok=True)
+        line = json.dumps({
+            "t": time.strftime("%Y-%m-%dT%H:%M:%SZ", now),
+            "cid": cid if isinstance(cid, str) and _CID_RE.match(cid) else "",
+            "q": question, "a": answer,
+        }, ensure_ascii=False) + "\n"
+        fd = os.open(os.path.join(LOG_DIR, today + ".jsonl"),
+                     os.O_WRONLY | os.O_APPEND | os.O_CREAT, 0o600)
+        try:
+            os.write(fd, line.encode("utf-8"))   # one write, so threads/workers don't interleave
+        finally:
+            os.close(fd)
+        _purge_old_logs(today)
+    except Exception as exc:
+        print("chat log error: %s" % type(exc).__name__, flush=True)
+
+
+def log_days():
+    """[(day, number of questions)] newest first."""
+    try:
+        names = sorted((n for n in os.listdir(LOG_DIR)
+                        if n.endswith(".jsonl") and _DAY_RE.match(n[:-6])), reverse=True)
+    except OSError:
+        return []
+    days = []
+    for name in names:
+        try:
+            with open(os.path.join(LOG_DIR, name), encoding="utf-8") as fh:
+                days.append((name[:-6], sum(1 for ln in fh if ln.strip())))
+        except OSError:
+            continue
+    return days
+
+
+def log_for_day(day):
+    """Conversations for one day: list of {cid, start, turns:[{t,q,a,unanswered}]}."""
+    if not _DAY_RE.match(day or ""):
+        return []
+    convs, order = {}, []
+    try:
+        with open(os.path.join(LOG_DIR, day + ".jsonl"), encoding="utf-8") as fh:
+            for n, ln in enumerate(fh):
+                try:
+                    row = json.loads(ln)
+                except ValueError:
+                    continue
+                key = row.get("cid") or "single-%d" % n
+                if key not in convs:
+                    convs[key] = {"cid": key, "start": row.get("t", ""), "turns": []}
+                    order.append(key)
+                convs[key]["turns"].append({
+                    "t": row.get("t", ""), "q": row.get("q", ""), "a": row.get("a", ""),
+                    "unanswered": bool(_NO_ANSWER_RE.search(row.get("a", ""))),
+                })
+    except OSError:
+        return []
+    return [convs[k] for k in order]
+
+
 FALLBACK = ("The assistant is not available right now. Please use the quote form "
             "on this page or email info@metiger.ca.")
 
@@ -185,7 +277,9 @@ def chat():
         # Log the kind of failure only; never the visitor's text or the key.
         print("chat upstream error: %s" % type(exc).__name__, flush=True)
         return jsonify(ok=False, message=FALLBACK), 502
-    return jsonify(ok=True, reply=reply.strip()[:MAX_REPLY_CHARS])
+    reply = reply.strip()[:MAX_REPLY_CHARS]
+    _log_exchange(data.get("cid"), history[-1]["content"], reply)
+    return jsonify(ok=True, reply=reply)
 
 
 def init_app(app, limiter=None, visitor_key=None):

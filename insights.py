@@ -267,6 +267,21 @@ def admin_insights():
                            csrf=_csrf_token(), saved=request.args.get("saved"))
 
 
+@bp.route("/admin/chats")
+@admin_required
+def admin_chats():
+    """What visitors asked the website assistant, a day at a time."""
+    import chat
+    days = chat.log_days()
+    day = request.args.get("day") or (days[0][0] if days else "")
+    convs = chat.log_for_day(day)
+    turns = [t for c in convs for t in c["turns"]]
+    return render_template("admin/chats.html", days=days[:60], day=day, convs=convs,
+                           total_questions=len(turns),
+                           unanswered=[t for t in turns if t["unanswered"]],
+                           keep_days=chat.LOG_KEEP_DAYS, csrf=_csrf_token())
+
+
 def _slugify(text):
     slug = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
     return slug[:80].strip("-")
