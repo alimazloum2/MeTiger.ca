@@ -7,15 +7,15 @@
 {% set crumbs = [{'name':'Home','url':'/'}, {'name':'Pricing & Quote Process','url':None}] %}
 {% set page_faqs = [
     {'q':'How do you quote a project?','a':'Fees follow the published table by the size of the electrical bid and are confirmed in writing after drawing review. Send the bid set, addenda, and due date; we confirm scope, deliverables, fee, and delivery window before work begins.'},
-    {'q':'Do you have a minimum?','a':'Smaller projects are welcome and quoted the same way as larger ones — after we see the drawings. Because the fee is scoped to the actual set, a small, well-defined bid is priced accordingly.'},
-    {'q':'Do you offer rush turnarounds?','a':'When our schedule allows, yes. Rush availability depends on current workload and set size. If we can meet the deadline, the window and any adjustment are confirmed with your quote.'},
+    {'q':'Do you have a minimum?','a':'Smaller projects are welcome. The fee table above lists the fee for every bid size, starting with electrical bids under $250k. Hourly work has a 4-hour minimum.'},
+    {'q':'Do you offer rush turnarounds?','a':'Yes. Rush delivery (under 48 hours) is offered with the takeoff + NECA labour package. The rush fee for each bid size is in the fee table above.'},
     {'q':'Can you provide ongoing monthly support?','a':'Yes. For contractors bidding steadily, we can arrange recurring estimating capacity scoped around your typical volume — tell us roughly how many bids you carry in a month and we will structure something predictable.'},
     {'q':'What if the scope changes after you quote?','a':'If addenda or a revised set materially change the work, we flag the impact and reconfirm scope, fee, and window before continuing — quoted the same transparent way as the original.'}
 ] %}
 
 {% block head_schema %}
     {{ breadcrumb_schema(crumbs) }}
-    {{ service_schema('Electrical Estimating — Pricing & Quote Process', 'How MeTiger quotes Canadian electrical estimating: send the bid set and deadline, and we confirm scope, fee, and delivery window before work begins. Every project is quoted after drawing review.', '/pricing/', 'Canada') }}
+    {{ service_schema('Electrical Estimating — Pricing & Quote Process', 'How MeTiger quotes Canadian electrical estimating: send the bid set and deadline, and we confirm scope, fee, and delivery window before work begins. Fees follow the published fee table.', '/pricing/', 'Canada') }}
     {{ faq_schema(page_faqs) }}
 {% endblock %}
 
@@ -139,6 +139,6 @@
 
 <!-- 7. FINAL CTA -->
 {{ cta_band('Send your bid set and get a fixed quote',
-    'Upload your drawings or share a plan link with the bid due date. Every project is quoted after drawing review — scope, fee, and delivery window confirmed before any work begins.',
+    'Upload your drawings or share a plan link with the bid due date. Your fee comes from the fee table above — scope, fee, and delivery window are confirmed before any work begins.',
     [{'label':'Upload Drawings for a Fixed Quote','href':'/contact/','primary':True},{'label':'See a sample package','href':'/samples/','primary':False}]) }}
 {% endblock %}
