@@ -25,7 +25,9 @@ There is no test suite, no linter, and no build step.
 
 ## Design (November 2026 redesign)
 
-metiger.ca mirrors the look and wording of metiger.us. `static/css/site.css` is the metiger.us stylesheet, unchanged; `static/css/ca.css` adds the Canadian coverage map, the restyle of the older pages (`main.legacy-page`), and the admin screens. `static/js/site.js` handles the menu and the quote form. No build step, no Tailwind.
+metiger.ca mirrors the look and wording of metiger.us. `static/css/site.css` is the metiger.us stylesheet with only its colours changed (see Colours below); `static/css/ca.css` adds the Canadian coverage map, the restyle of the older pages (`main.legacy-page`), and the admin screens. `static/js/site.js` handles the menu and the quote form. No build step, no Tailwind.
+
+Colours (chosen November 2026 so the Canadian site looks different from the US one): "Glacier blue and orange". Dark `#0f3550` (darker `#0a2538`), mid `#1a5078`, accent orange `#f28c28` (hover `#f6a24c`, orange text on light `#a3560a`), link/secondary-button blue `#0f6aa0` (hover `#0b4a70`), page `#f2f7fb`. The US navy/copper hex values were replaced one-for-one across `site.css`, `ca.css`, the templates and `static/brand/*`; when copying new CSS from metiger.us, apply the same swap.
 
 Hard rules for client-visible content:
 - Company name is "MeTiger Inc." only. No personal names anywhere.
