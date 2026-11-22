@@ -38,7 +38,7 @@ Hard rules for client-visible content:
 Routes added: `/technology/`, `/privacy/`, `/terms/`, `/insights/`, `/insights/<slug>/`, a styled 404. `/calculator/` and `/electrical-estimating/` (the metiger.us paths) 301 to the existing `/estimate-calculator` and `/canada-electrical-estimating-services/`. `/debug` was removed.
 
 ### Insights + admin (`insights.py`)
-Posts are JSON files in `data/insights/` (gitignored, seeded once from `content/insights_seed/`). Back up `data/` with `.env`. Admin is at `/admin/` and uses the single `ADMIN_PASSWORD` from `.env` (admin returns 404 if unset). Post bodies use a small escaped Markdown subset (see `render_body`).
+Posts are JSON files in `data/insights/` (gitignored, seeded once from `content/insights_seed/`). Back up `data/` with `.env`. Admin is at `/admin/` and uses the single `ADMIN_PASSWORD` from `.env` (admin returns 404 if unset). Post bodies use a small escaped Markdown subset (see `render_body`). Photos: the editor's "Insert photo" button uploads to `data/insights_media/` (re-encoded with Pillow, max 1600px, EXIF removed) and writes `![caption](/insights/media/<file>)` as its own paragraph; only that path is accepted as an image source.
 
 ### Rate limits
 gunicorn sits behind nginx behind Cloudflare, so `request.remote_addr` is always 127.0.0.1. Page views are limited per visitor via `client_ip()` (CF-Connecting-IP); static files are exempt; `/send_message` and admin login stay keyed on the socket address, i.e. site-wide.

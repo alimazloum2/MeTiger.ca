@@ -17,8 +17,8 @@ import tempfile
 from datetime import date, datetime, timedelta
 from functools import wraps
 
-from flask import (Blueprint, abort, redirect, render_template, request,
-                   session, url_for)
+from flask import (Blueprint, abort, jsonify, redirect, render_template,
+                   request, send_from_directory, session, url_for)
 from markupsafe import Markup, escape
 
 bp = Blueprint("insights", __name__)
@@ -26,6 +26,12 @@ bp = Blueprint("insights", __name__)
 _ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(_ROOT, "data", "insights")
 SEED_DIR = os.path.join(_ROOT, "content", "insights_seed")
+# Photos uploaded through the admin page. Lives under data/ (gitignored) so it
+# is backed up with the posts and never touched by a deploy.
+MEDIA_DIR = os.path.join(_ROOT, "data", "insights_media")
+MEDIA_NAME_RE = re.compile(r"^[a-f0-9]{20}\.(?:jpg|png)$")
+MAX_IMAGE_BYTES = 12 * 1024 * 1024
+MAX_IMAGE_SIDE = 1600
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 MAX_TITLE, MAX_DESC, MAX_BODY, MAX_TAGS = 160, 320, 60000, 8
@@ -105,6 +111,9 @@ def sitemap_entries():
 _LINK_RE = re.compile(r"\[([^\]\n]+)\]\(((?:https?://|/)[^\s)]+)\)")
 _BOLD_RE = re.compile(r"\*\*([^*\n]+)\*\*")
 _ITAL_RE = re.compile(r"(?<!\*)\*([^*\n]+)\*(?!\*)")
+# A photo is a paragraph on its own: ![caption](/insights/media/<file>).
+# Only files uploaded through the admin page are accepted as a source.
+_IMAGE_RE = re.compile(r"^!\[([^\]\n]*)\]\((/insights/media/[a-f0-9]{20}\.(?:jpg|png))\)$")
 
 
 def _inline(text):
@@ -128,7 +137,13 @@ def render_body(body):
         lines = [ln.strip() for ln in block.split("\n") if ln.strip()]
         if not lines:
             continue
-        if lines[0].startswith("### "):
+        image = _IMAGE_RE.match(lines[0]) if len(lines) == 1 else None
+        if image:
+            caption = str(escape(image.group(1).strip()))
+            html.append('<figure class="article-figure"><img src="%s" alt="%s" loading="lazy">%s</figure>'
+                        % (image.group(2), caption,
+                           "<figcaption>%s</figcaption>" % caption if caption else ""))
+        elif lines[0].startswith("### "):
             html.append("<h3>%s</h3>" % _inline(lines[0][4:]))
         elif lines[0].startswith("## "):
             html.append("<h2>%s</h2>" % _inline(lines[0][3:]))
@@ -168,6 +183,13 @@ def insights_post(slug):
     related = [p for p in all_posts() if p["slug"] != slug][:3]
     return render_template("insights_post.html", post=post,
                            body_html=render_body(post.get("body", "")), related=related)
+
+
+@bp.route("/insights/media/<name>")
+def insights_media(name):
+    if not MEDIA_NAME_RE.match(name):
+        abort(404)
+    return send_from_directory(MEDIA_DIR, name, max_age=31536000)
 
 
 # --------------------------------------------------------------------------
@@ -318,6 +340,51 @@ def admin_insight_edit(slug):
             return redirect(url_for("insights.admin_insights", saved=slug))
     return render_template("admin/edit.html", post=post, errors=errors, is_new=False,
                            csrf=_csrf_token(), preview=None)
+
+
+def _store_image(upload):
+    """Check an uploaded photo and save a clean copy. Returns (name, error).
+
+    The picture is re-encoded rather than stored as sent: that proves it really
+    is an image, shrinks phone-sized photos, and drops embedded data such as the
+    GPS location a phone camera records.
+    """
+    from PIL import Image, ImageOps, UnidentifiedImageError
+    try:
+        img = Image.open(upload.stream)
+        if img.format not in ("JPEG", "PNG", "WEBP"):
+            return None, "Use a JPG, PNG or WebP picture."
+        if img.width * img.height > 60_000_000:
+            return None, "That picture is too large."
+        img = ImageOps.exif_transpose(img)
+        img.thumbnail((MAX_IMAGE_SIDE, MAX_IMAGE_SIDE))
+        transparent = img.mode in ("RGBA", "LA") or "transparency" in img.info
+        os.makedirs(MEDIA_DIR, exist_ok=True)
+        if transparent:
+            name = secrets.token_hex(10) + ".png"
+            img.convert("RGBA").save(os.path.join(MEDIA_DIR, name), "PNG", optimize=True)
+        else:
+            name = secrets.token_hex(10) + ".jpg"
+            img.convert("RGB").save(os.path.join(MEDIA_DIR, name), "JPEG",
+                                    quality=85, optimize=True, progressive=True)
+        return name, None
+    except (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombError):
+        return None, "That file could not be read as a picture."
+
+
+@bp.route("/admin/insights/upload", methods=["POST"])
+@admin_required
+def admin_insight_upload():
+    _check_csrf()
+    upload = request.files.get("photo")
+    if not upload or not upload.filename:
+        return jsonify(ok=False, message="Choose a picture first."), 400
+    if (request.content_length or 0) > MAX_IMAGE_BYTES:
+        return jsonify(ok=False, message="That picture is over 12 MB. Use a smaller one."), 413
+    name, error = _store_image(upload)
+    if error:
+        return jsonify(ok=False, message=error), 400
+    return jsonify(ok=True, url="/insights/media/" + name)
 
 
 @bp.route("/admin/insights/<slug>/delete", methods=["POST"])

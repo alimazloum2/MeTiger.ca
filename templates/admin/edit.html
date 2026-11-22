@@ -1,5 +1,6 @@
 {% extends "admin/base.html" %}
-{% block title %}{{ 'New article' if is_new else 'Edit article' }}{% endblock %}
+{% block title %}{{ 'New article' if is_new else 'Edit article' }}<script src="{{ url_for('static', filename='js/admin.js') }}?v={{ ASSET_V }}" data-upload-url="{{ url_for('insights.admin_insight_upload') }}"></script>
+{% endblock %}
 {% block content %}
 <section class="form-panel">
 <h1 class="admin-h1">{{ 'New article' if is_new else 'Edit article' }}</h1>
@@ -29,6 +30,11 @@
 <p class="helper">Separate with commas. Up to 8.</p>
 
 <label for="body">Article text</label>
+<div class="admin-photo-bar">
+<button class="admin-photo-button" type="button" id="photo-button">Insert photo</button>
+<input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" hidden>
+<span class="helper" id="photo-status" role="status">Click where the photo should go, then press Insert photo. You can also drag a picture onto the text.</span>
+</div>
 <textarea class="admin-input admin-body-field" id="body" name="body" rows="22" required>{{ post.body or '' }}</textarea>
 <div class="trust admin-help">
 <strong>Formatting</strong>
@@ -36,6 +42,7 @@
 <li>Leave a blank line between paragraphs.</li>
 <li>Start a line with <code>## </code> for a heading, <code>### </code> for a smaller heading.</li>
 <li>Start lines with <code>- </code> for a bullet list.</li>
+<li>A photo is a line on its own: <code>![caption](address)</code>. Insert photo writes it for you; change the caption text between the square brackets, or leave it empty. To move a photo, cut that line and paste it between other paragraphs.</li>
 <li><code>**bold**</code>, <code>*italic*</code>, and links as <code>[link text](https://example.com)</code>.</li>
 </ul>
 </div>
@@ -48,4 +55,5 @@
 </div>
 </form>
 </section>
+<script src="{{ url_for('static', filename='js/admin.js') }}?v={{ ASSET_V }}" data-upload-url="{{ url_for('insights.admin_insight_upload') }}"></script>
 {% endblock %}
