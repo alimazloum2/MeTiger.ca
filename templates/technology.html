@@ -1,0 +1,48 @@
+{% extends "base_page.html" %}
+{% from "partials/ui.html" import breadcrumb_schema %}
+{% block page_title %}Commercial Electrical Estimating Technology &amp; Tools | MeTiger{% endblock %}
+{% block meta_description %}Canada-wide commercial electrical estimating methodology, representative takeoff technology, standards basis, pricing data, and planning tools from MeTiger.{% endblock %}
+{% block main_class %}technology-page{% endblock %}
+{% block head_schema %}
+    {{ breadcrumb_schema([{'name':'Home','url':'/'}, {'name':'Technology','url':'/technology/'}]) }}
+{% endblock %}
+{% block content %}
+<section class="hero technology-hero">
+<h1>Commercial electrical estimating technology and tools</h1>
+<p>MeTiger takes off quantities in Bluebeam Revu, builds material and labour workbooks in Excel on a NECA labour unit basis, and uses AI to speed up the count. A person reviews scope, assumptions and exclusions before anything is delivered.</p>
+<p>
+<a class="hero-link" href="/estimate-calculator">Open the Electrical Estimate Calculator</a>
+</p>
+</section>
+<section class="technology-grid" aria-label="Technology and methodology sections">
+<article class="post-card technology-card">
+<p class="eyebrow">Estimating &amp; takeoff technology</p>
+<h2>Estimating &amp; takeoff technology</h2>
+<p>Workflow: digital plan review, structured quantity takeoff, BOQ organization, scope notes, exclusions, pricing checks, and estimator review before delivery.</p>
+<p>The goal is transparent estimating support: a cleaner trail from drawings and assumptions to quantities, labour basis, material allowances, and review comments.</p>
+</article>
+<article class="post-card technology-card">
+<p class="eyebrow">Standards &amp; data basis</p>
+<h2>Standards &amp; data basis</h2>
+<p>Methodology: labour-unit references, current market pricing inputs, and clearly marked assumptions for local labour, material, schedule, and site conditions.</p>
+<p>This page describes how estimates are prepared. It is not design advice.</p>
+</article>
+<article class="post-card technology-card featured-tool-card">
+<p class="eyebrow">Interactive tools</p>
+<h2>Interactive tools</h2>
+<p>The Electrical Estimate Calculator builds a fast budget for a commercial or industrial fit-out from your own unit prices: enter quantities and your installed cost per item for order-of-magnitude screening.</p>
+<a class="cta" href="/estimate-calculator">Open the Electrical Estimate Calculator</a>
+</article>
+<article class="post-card technology-card">
+<p class="eyebrow">Context</p>
+<h2>Related estimating commentary</h2>
+<p>Use the Insights section for MeTiger's commercial electrical estimating perspective, including tenant-improvement scope gaps.</p>
+<a class="hero-link dark-link" href="/insights/">Read related commercial electrical insights</a>
+</article>
+</section>
+<section class="article-aside technology-cta" aria-label="Technology page contact call to action">
+<h2>Want a detailed, project-specific estimate?</h2>
+<p>Share the project scope, drawings, and assumptions you want reviewed. MeTiger replies with a fixed estimating quote.</p>
+<a class="cta" href="/contact/">Contact MeTiger</a>
+</section>
+{% endblock %}

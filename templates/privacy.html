@@ -1,0 +1,27 @@
+{% extends "base_page.html" %}
+{% from "partials/ui.html" import breadcrumb_schema %}
+{% block page_title %}Privacy Policy | MeTiger{% endblock %}
+{% block meta_description %}Read the MeTiger privacy policy for commercial electrical estimating inquiries, contact forms, project information, and website usage.{% endblock %}
+{% block main_class %}legal-page{% endblock %}
+{% block head_schema %}
+    {{ breadcrumb_schema([{"name":"Home","url":"/"}, {"name":"Privacy Policy","url":"/privacy/"}]) }}
+{% endblock %}
+{% block content %}
+<section class="article-page">
+<p class="kicker">MeTiger Legal</p>
+<h1>Privacy Policy</h1>
+<p>MeTiger collects information that visitors choose to submit through contact and quote forms, including names, work email addresses, company details, project scope, due dates, messages, and drawing or file links.</p>
+<h2>How information is used</h2>
+<p>Submitted information is used to respond to inquiries, evaluate estimating requests, coordinate project communication, improve website content, and maintain business records.</p>
+<h2>Phone calls</h2>
+<p>Calls to MeTiger's phone line are answered by an AI assistant that takes the caller's name, contact details, project information, and bid date. Calls may be recorded or transcribed so an estimator can follow up accurately. These details are handled the same way as a quote-form submission, and an estimator follows up by email or phone.</p>
+<h2>Project information</h2>
+<p>Bid documents, drawings, specifications, and project notes are treated as confidential business information and are used for estimating-related communication and review.</p>
+<p>Files shared by link or uploaded through our Dropbox upload page are stored in MeTiger's Dropbox and treated as confidential. Drawings and bid documents are kept for up to 12 months after the estimate is delivered — and deleted earlier at the client's request — so addenda, revisions, and follow-up bids are easy to support.</p>
+<h2>Website data</h2>
+<p>The site may collect basic technical information such as pages visited, browser type, and device information through hosting, analytics, or security tools.</p>
+<h2>Contact</h2>
+<p>Questions about this policy can be submitted through the <a href="/contact/">MeTiger contact page</a>.</p>
+<p class="legal-updated">MeTiger Inc. · Last updated: November 22, 2026.</p>
+</section>
+{% endblock %}

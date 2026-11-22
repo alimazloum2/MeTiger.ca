@@ -6,6 +6,7 @@ from threading import Lock
 from dotenv import load_dotenv
 import segno
 import pages as page_registry
+import insights as insights_module
 
 # Load environment variables from .env file (explicit path so it loads no
 # matter what CWD the service starts in).
@@ -26,7 +27,30 @@ app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-producti
 app.config["TURNSTILE_SITE_KEY"] = os.getenv("TURNSTILE_SITE_KEY", "0x4AAAAAAB8Wgm9wM6xbP-yW")
 TURNSTILE_SECRET = os.getenv("TURNSTILE_SECRET", "")
 EL_WEBHOOK_SECRET = os.getenv("EL_WEBHOOK_SECRET", "")
-limiter = Limiter(get_remote_address, app=app, default_limits=["100/hour"])
+
+
+def client_ip():
+    """Visitor IP for per-visitor rate limits and Turnstile.
+
+    gunicorn only listens on 127.0.0.1 behind nginx (behind Cloudflare), so
+    request.remote_addr is always 127.0.0.1. Prefer Cloudflare's header, then
+    the one nginx sets. These headers can be forged by anyone who reaches the
+    origin directly, so the strict limits below (form posts, admin login) do
+    NOT use this function; they stay keyed on the socket address, i.e. site-wide.
+    """
+    return (request.headers.get("CF-Connecting-IP")
+            or request.headers.get("X-Real-IP")
+            or request.remote_addr or "unknown")
+
+
+# Page views: per visitor. Static files are exempt (see below).
+limiter = Limiter(client_ip, app=app, default_limits=["600/hour"])
+
+
+@limiter.request_filter
+def _exempt_static():
+    return request.endpoint == "static"
+
 
 # Drawing uploads on the quote form. Files are emailed as attachments (there is
 # no object store), so the total is capped well under typical 25 MB mailbox
@@ -59,7 +83,28 @@ def inject_globals():
     return {
         "TURNSTILE_SITE_KEY": app.config["TURNSTILE_SITE_KEY"],
         "START_TS": int(time.time()),
+        "ASSET_V": ASSET_V,
     }
+
+
+def _asset_version():
+    """Cache-buster for CSS/JS: newest mtime under static/css and static/js."""
+    newest = 0
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    for sub in ("css", "js"):
+        folder = os.path.join(base, sub)
+        if os.path.isdir(folder):
+            for name in os.listdir(folder):
+                newest = max(newest, int(os.path.getmtime(os.path.join(folder, name))))
+    return str(newest)
+
+
+ASSET_V = _asset_version()
+
+
+@app.errorhandler(404)
+def _not_found(_e):
+    return render_template("404.html"), 404
 
 
 URL_RE = re.compile(r'https?://', re.I)
@@ -95,10 +140,13 @@ def verify_turnstile(token, remote_ip):
             _VERIFIED_TOKENS.popitem(last=False)
         if token in _VERIFIED_TOKENS:
             return True
+    payload = {"secret": TURNSTILE_SECRET, "response": token}
+    if remote_ip and not remote_ip.startswith("127.") and remote_ip != "unknown":
+        payload["remoteip"] = remote_ip
     try:
         r = requests.post(
             "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-            data={"secret": TURNSTILE_SECRET, "response": token, "remoteip": remote_ip},
+            data=payload,
             timeout=5,
         )
         if r.json().get("success", False):
@@ -134,7 +182,7 @@ def robots_txt():
         "# robots.txt for metiger.ca",
         "User-agent: *",
         "Allow: /",
-        "Disallow: /debug",
+        "Disallow: /admin",
         "",
     ]
     for ua in _AI_USER_AGENTS:
@@ -164,6 +212,14 @@ def sitemap_xml():
         + "</url>"
         for path, tmpl in page_registry.sitemap_entries()
     )
+    posts = "\n".join(
+        f"<url><loc>{BASE_URL}{path}</loc>"
+        + (f"<lastmod>{lastmod}</lastmod>" if lastmod else "")
+        + "</url>"
+        for path, lastmod in insights_module.sitemap_entries()
+    )
+    if posts:
+        urls = urls + "\n" + posts
     xml = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -194,7 +250,7 @@ coordination support, not sealed or stamped engineering.
 - Founded: 2022
 - Office: 620 Nine Mile Drive, Bedford, NS B4A 0H4, Canada
 - Email: info@metiger.ca
-- Phone: +1 (782) 640-5557
+- Phone: +1 (838) 638-4437 (answered by an AI assistant; an estimator follows up)
 - Area served: Canada (remote delivery across all provinces and territories)
 - NDA available on request
 
@@ -224,9 +280,14 @@ mixed-use, and service upgrades / distribution work.
 - Electrical Takeoffs: https://metiger.ca/electrical-takeoff-services-canada/
 - Bid Review: https://metiger.ca/electrical-bid-review-canada/
 - Pricing: https://metiger.ca/pricing/
+- Calculator: https://metiger.ca/estimate-calculator
+- Technology: https://metiger.ca/technology/
+- Insights: https://metiger.ca/insights/
 - Samples: https://metiger.ca/samples/
 - Case Studies: https://metiger.ca/case-studies/
 - Contact / Quote: https://metiger.ca/contact/
+- Privacy: https://metiger.ca/privacy/
+- Terms: https://metiger.ca/terms/
 - USA estimating: https://metiger.us
 - LinkedIn: https://www.linkedin.com/company/metiger
 - YouTube: https://www.youtube.com/@MeTigerCa
@@ -238,28 +299,6 @@ mixed-use, and service upgrades / distribution work.
 def llms_txt():
     return Response(_LLMS_TXT, mimetype="text/plain")
 
-
-@app.route("/debug")
-def debug():
-    sendgrid_key = os.getenv('SENDGRID_API_KEY', 'Not set')
-    from_email = os.getenv('FROM_EMAIL', 'Not set')
-    to_email = os.getenv('TO_EMAIL', 'Not set')
-    
-    return f"""
-    <html>
-    <head><title>Debug Info</title></head>
-    <body>
-        <h1>Debug Information</h1>
-        <p>Turnstile Site Key: {app.config['TURNSTILE_SITE_KEY']}</p>
-        <p>Turnstile Secret: {TURNSTILE_SECRET[:10] if TURNSTILE_SECRET else 'Not set'}...</p>
-        <p>SendGrid API Key: {sendgrid_key[:10] if sendgrid_key != 'Not set' else 'Not set'}...</p>
-        <p>From Email: {from_email}</p>
-        <p>To Email: {to_email}</p>
-        <div class="cf-turnstile" data-sitekey="{app.config['TURNSTILE_SITE_KEY']}"></div>
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    </body>
-    </html>
-    """
 
 @app.route("/services")
 def services():
@@ -278,6 +317,34 @@ def estimate_calculator():
 @app.route("/electrical-budget-guide")
 def electrical_budget_guide():
     return render_template("budget_guide.html")
+
+@app.route("/technology/")
+def technology():
+    return render_template("technology.html")
+
+
+@app.route("/privacy/")
+def privacy():
+    return render_template("privacy.html")
+
+
+@app.route("/terms/")
+def terms():
+    return render_template("terms.html")
+
+
+# metiger.us paths -> the existing metiger.ca URLs (kept for ranking).
+@app.route("/calculator/")
+@app.route("/calculator")
+def calculator_alias():
+    return redirect("/estimate-calculator", code=301)
+
+
+@app.route("/electrical-estimating/")
+@app.route("/electrical-estimating")
+def estimating_alias():
+    return redirect("/canada-electrical-estimating-services/", code=301)
+
 
 @app.route("/test_turnstile")
 def test_turnstile():
@@ -385,13 +452,13 @@ def _build_qr_svg(text):
 
 
 @app.post("/api/reveal-payment")
-@limiter.limit("10/minute")
+@limiter.limit("10/minute", key_func=get_remote_address)
 def reveal_payment():
     token = request.form.get("cf-turnstile-response", "").strip()
     if not token:
         payload = request.get_json(silent=True) or {}
         token = (payload.get("token") or "").strip()
-    if not verify_turnstile(token, request.remote_addr):
+    if not verify_turnstile(token, client_ip()):
         return jsonify(success=False, message="Verification required."), 403
     return jsonify(
         success=True,
@@ -401,7 +468,7 @@ def reveal_payment():
 
 
 @app.post("/send_message")
-@limiter.limit("3/minute")
+@limiter.limit("3/minute", key_func=get_remote_address)
 def send_message():
     name = (request.form.get("name") or "").strip()
     email = (request.form.get("email") or "").strip().lower()
@@ -424,7 +491,7 @@ def send_message():
     if time.time() - started < 3:
         return jsonify(success=False, message="Please take a moment and try again."), 400
 
-    if not verify_turnstile(token, request.remote_addr):
+    if not verify_turnstile(token, client_ip()):
         return jsonify(success=False, message="Verification failed."), 400
 
     url_count = len(URL_RE.findall(msg))
@@ -439,8 +506,11 @@ def send_message():
     if domain in DISPOSABLE:
         return jsonify(success=False, message="Use a real email address."), 400
 
+    plan_link = (request.form.get("plan_link") or "").strip()
+    if len(msg) < 6 and len(plan_link) > 5:
+        msg = (msg + "\n" if msg else "") + "(No message entered; drawings shared by plan link.)"
     if not name or len(msg) < 6:
-        return jsonify(success=False, message="Please complete all fields."), 400
+        return jsonify(success=False, message="Please add your name and a drawing link or a short message."), 400
 
     # Collect optional quote-form fields. All optional — the required name /
     # email / message above keep the simple contact path working unchanged.
@@ -581,6 +651,9 @@ def payments():
     # Crypto / TigerCoin consultation payments, kept off the main estimating
     # funnel. Still served by the Turnstile-gated /api/reveal-payment endpoint.
     return render_template("payments.html")
+
+
+insights_module.init_app(app, limiter=limiter, strict_key=get_remote_address)
 
 
 if __name__ == "__main__":

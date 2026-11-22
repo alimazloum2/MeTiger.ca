@@ -23,6 +23,26 @@ venv/bin/pip install -r requirements.txt
 
 There is no test suite, no linter, and no build step.
 
+## Design (November 2026 redesign)
+
+metiger.ca mirrors the look and wording of metiger.us. `static/css/site.css` is the metiger.us stylesheet, unchanged; `static/css/ca.css` adds the Canadian coverage map, the restyle of the older pages (`main.legacy-page`), and the admin screens. `static/js/site.js` handles the menu and the quote form. No build step, no Tailwind.
+
+Hard rules for client-visible content:
+- Company name is "MeTiger Inc." only. No personal names anywhere.
+- The only phone number is +1 (838) 638-4437, printed only in the top strip (`partials/site_header.html`). The mobile bar's "Call" button links to it without printing it.
+- Email is info@metiger.ca. Footer cross-link reads "US projects → metiger.us".
+- Fees are published in CAD plus GST/HST in `partials/fee_table.html` (used by the estimating page and `/pricing/`).
+- Credentials wording lives only in `partials/credentials.html`.
+- Never invent facts (prices, response times, counts, testimonials, legal text).
+
+Routes added: `/technology/`, `/privacy/`, `/terms/`, `/insights/`, `/insights/<slug>/`, a styled 404. `/calculator/` and `/electrical-estimating/` (the metiger.us paths) 301 to the existing `/estimate-calculator` and `/canada-electrical-estimating-services/`. `/debug` was removed.
+
+### Insights + admin (`insights.py`)
+Posts are JSON files in `data/insights/` (gitignored, seeded once from `content/insights_seed/`). Back up `data/` with `.env`. Admin is at `/admin/` and uses the single `ADMIN_PASSWORD` from `.env` (admin returns 404 if unset). Post bodies use a small escaped Markdown subset (see `render_body`).
+
+### Rate limits
+gunicorn sits behind nginx behind Cloudflare, so `request.remote_addr` is always 127.0.0.1. Page views are limited per visitor via `client_ip()` (CF-Connecting-IP); static files are exempt; `/send_message` and admin login stay keyed on the socket address, i.e. site-wide.
+
 ## Market positioning
 
 `metiger.ca` is the **Canada** market site (this repo). `metiger.us` is a **separate** USA site. Keep USA-only language (Florida/Texas/NEC/NECA/"United States") OFF metiger.ca except the single "Looking for USA estimating? Visit metiger.us" cross-link. Use Canadian positioning: CSA C22.1 / Canadian Electrical Code, "CEC-aware", labour/colour/centre spelling. MeTiger provides **estimating and coordination support, not stamped/sealed engineering** — never claim otherwise.

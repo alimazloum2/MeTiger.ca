@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ 'New article' if is_new else 'Edit article' }}{% endblock %}
+{% block content %}
+<section class="form-panel">
+<h1 class="admin-h1">{{ 'New article' if is_new else 'Edit article' }}</h1>
+{% for e in errors %}<p class="validation" role="alert">{{ e }}</p>{% endfor %}
+<form method="post">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="title">Title</label>
+<input class="admin-input" id="title" name="title" type="text" maxlength="160" required value="{{ post.title or '' }}">
+
+{% if is_new %}
+<label for="slug">Web address (optional)</label>
+<input class="admin-input" id="slug" name="slug" type="text" maxlength="80" value="{{ post.slug or '' }}" placeholder="made-from-the-title-if-left-blank">
+<p class="helper">Becomes metiger.ca/insights/your-address/. Lowercase letters, numbers and dashes. It cannot be changed later.</p>
+{% else %}
+<p class="helper">Web address: /insights/{{ post.slug }}/ (fixed, so links and Google results keep working)</p>
+{% endif %}
+
+<label for="date">Date</label>
+<input class="admin-input" id="date" name="date" type="date" required value="{{ post.date or '' }}">
+
+<label for="description">Short summary</label>
+<textarea class="admin-input" id="description" name="description" rows="2" maxlength="320">{{ post.description or '' }}</textarea>
+<p class="helper">Shown on the Insights list and in Google results. One or two sentences.</p>
+
+<label for="tags">Tags</label>
+<input class="admin-input" id="tags" name="tags" type="text" value="{{ (post.tags or []) | join(', ') }}" placeholder="scope gaps, commercial bids">
+<p class="helper">Separate with commas. Up to 8.</p>
+
+<label for="body">Article text</label>
+<textarea class="admin-input admin-body-field" id="body" name="body" rows="22" required>{{ post.body or '' }}</textarea>
+<div class="trust admin-help">
+<strong>Formatting</strong>
+<ul>
+<li>Leave a blank line between paragraphs.</li>
+<li>Start a line with <code>## </code> for a heading, <code>### </code> for a smaller heading.</li>
+<li>Start lines with <code>- </code> for a bullet list.</li>
+<li><code>**bold**</code>, <code>*italic*</code>, and links as <code>[link text](https://example.com)</code>.</li>
+</ul>
+</div>
+
+<label class="check"><input type="checkbox" name="published" value="yes" {{ 'checked' if post.get('published', True) }}> <span>Published (untick to keep it as a hidden draft)</span></label>
+
+<div class="admin-buttons">
+<button class="cta" type="submit">Save</button>
+<a class="admin-cancel" href="{{ url_for('insights.admin_insights') }}">Cancel</a>
+</div>
+</form>
+</section>
+{% endblock %}
