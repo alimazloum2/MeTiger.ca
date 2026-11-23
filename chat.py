@@ -19,6 +19,7 @@ are not stored: the browser holds the history and resends it with each message.
 import json
 import os
 import re
+import secrets
 import time
 from threading import Lock
 from urllib.parse import urlparse
@@ -257,6 +258,13 @@ def chat():
         return jsonify(ok=False, message=FALLBACK), 503
 
     headers = {"Content-Type": "application/json"}
+    # One id per visitor conversation, so the gateway never mixes two visitors
+    # whose chats happen to start with the same words. The id is the random
+    # per-tab value from the browser, or a fresh random one if it is missing.
+    cid = data.get("cid")
+    if not (isinstance(cid, str) and _CID_RE.match(cid)):
+        cid = secrets.token_hex(12)
+    headers["X-Hermes-Session-Id"] = "web-" + cid
     if key:
         headers["Authorization"] = "Bearer " + key
     payload = {
