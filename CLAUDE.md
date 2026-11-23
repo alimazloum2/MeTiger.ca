@@ -25,7 +25,9 @@ There is no test suite, no linter, and no build step.
 
 ## Design (November 2026 redesign)
 
-metiger.ca mirrors the look and wording of metiger.us. `static/css/site.css` is the metiger.us stylesheet, unchanged; `static/css/ca.css` adds the Canadian coverage map, the restyle of the older pages (`main.legacy-page`), and the admin screens. `static/js/site.js` handles the menu and the quote form. No build step, no Tailwind.
+metiger.ca mirrors the look and wording of metiger.us. `static/css/site.css` is the metiger.us stylesheet with only its colours changed (see Colours below); `static/css/ca.css` adds the Canadian coverage map, the restyle of the older pages (`main.legacy-page`), and the admin screens. `static/js/site.js` handles the menu and the quote form. No build step, no Tailwind.
+
+Colours (chosen November 2026 so the Canadian site looks different from the US one): "Glacier blue and orange". Dark `#0f3550` (darker `#0a2538`), mid `#1a5078`, accent orange `#f28c28` (hover `#f6a24c`, orange text on light `#a3560a`), link/secondary-button blue `#0f6aa0` (hover `#0b4a70`), page `#f2f7fb`. The US navy/copper hex values were replaced one-for-one across `site.css`, `ca.css`, the templates and `static/brand/*`; when copying new CSS from metiger.us, apply the same swap.
 
 Hard rules for client-visible content:
 - Company name is "MeTiger Inc." only. No personal names anywhere.
@@ -39,6 +41,9 @@ Routes added: `/technology/`, `/privacy/`, `/terms/`, `/insights/`, `/insights/<
 
 ### Insights + admin (`insights.py`)
 Posts are JSON files in `data/insights/` (gitignored, seeded once from `content/insights_seed/`). Back up `data/` with `.env`. Admin is at `/admin/` and uses the single `ADMIN_PASSWORD` from `.env` (admin returns 404 if unset). Post bodies use a small escaped Markdown subset (see `render_body`). Photos: the editor's "Insert photo" button uploads to `data/insights_media/` (re-encoded with Pillow, max 1600px, EXIF removed) and writes `![caption](/insights/media/<file>)` as its own paragraph; only that path is accepted as an image source.
+
+### Website chat assistant (`chat.py`)
+Corner chat widget (`partials/chat_widget.html`, `static/js/chat.js`) posting to `POST /api/chat`, which forwards to an OpenAI-compatible server. Off until `.env` has `CHAT_API_BASE` (ending in `/v1`) and `CHAT_MODEL` (optional `CHAT_API_KEY`, `CHAT_DAILY_CAP` default 400): while unset, the widget is not rendered and the endpoint 404s. The assistant ("Maple") is managed in the Hermes profile `metiger-ca` on the Mac mini: its instructions and knowledge live there and the website sends only the conversation (set `CHAT_SEND_RULES=1` to also send `chat.RULES` + `content/chat_knowledge.md` from here). Reference copy of the rules stays in `chat.RULES` (no invented prices/times, no phone number, no personal names, not engineering advice). Each answered question and its answer is appended to `data/chat_log/YYYY-MM-DD.jsonl` (time, a random per-tab conversation id, question, answer; no IP or browser details), kept 90 days (`LOG_KEEP_DAYS`), and shown on the admin page `/admin/chats`. Safeguards: same-origin check, honeypot, per-visitor limits (8/min, 40/hour, 80/day), site-wide daily cap, capped message and reply length. An AI call can hold a gunicorn worker for up to 25 s.
 
 ### Rate limits
 gunicorn sits behind nginx behind Cloudflare, so `request.remote_addr` is always 127.0.0.1. Page views are limited per visitor via `client_ip()` (CF-Connecting-IP); static files are exempt; `/send_message` and admin login stay keyed on the socket address, i.e. site-wide.

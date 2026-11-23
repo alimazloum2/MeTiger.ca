@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}Chats{% endblock %}
+{% block content %}
+<section class="form-panel">
+<div class="admin-head">
+<h1 class="admin-h1">Chats with Maple</h1>
+</div>
+<p class="helper">What visitors asked the website assistant, and what it answered. Kept for {{ keep_days }} days, then deleted automatically. Times are UTC. No names, IP addresses or browser details are recorded unless a visitor typed them into the chat.</p>
+
+{% if not days %}
+<p class="trust">No chats have been recorded yet.</p>
+{% else %}
+<form method="get" class="admin-daypick">
+<label for="day">Day</label>
+<select class="admin-input" id="day" name="day" onchange="this.form.submit()">
+{% for d, n in days %}<option value="{{ d }}" {{ 'selected' if d == day }}>{{ d | pretty_date }} — {{ n }} question{{ '' if n == 1 else 's' }}</option>
+{% endfor %}
+</select>
+<noscript><button class="cta" type="submit">Show</button></noscript>
+</form>
+
+<div class="admin-stats">
+<div><strong>{{ convs | length }}</strong><span>conversation{{ '' if convs | length == 1 else 's' }}</span></div>
+<div><strong>{{ total_questions }}</strong><span>question{{ '' if total_questions == 1 else 's' }}</span></div>
+<div><strong>{{ unanswered | length }}</strong><span>not answered</span></div>
+</div>
+
+{% if unanswered %}
+<h2 class="admin-h2">Questions Maple could not answer</h2>
+<p class="helper">These show what is missing from the website or from Maple's facts.</p>
+<ul class="admin-unanswered">
+{% for t in unanswered %}<li>{{ t.q }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<h2 class="admin-h2">Conversations</h2>
+{% for c in convs %}
+<article class="admin-conv">
+<p class="admin-conv-head">{{ c.start[11:16] }} UTC · {{ c.turns | length }} question{{ '' if c.turns | length == 1 else 's' }}</p>
+{% for t in c.turns %}
+<p class="admin-q"><span>Visitor</span>{{ t.q }}</p>
+<p class="admin-a{{ ' admin-a-miss' if t.unanswered }}"><span>Maple</span>{{ t.a }}</p>
+{% endfor %}
+</article>
+{% else %}
+<p class="trust">No chats on this day.</p>
+{% endfor %}
+{% endif %}
+</section>
+{% endblock %}
